@@ -18,7 +18,7 @@ import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
-import Strings from '../../../Assets/Strings/Index';
+// import Strings from '../../../Assets/Strings/Index';
 
 
 
@@ -64,8 +64,8 @@ const ResetPassword = ({ navigation }) => {
                 contentContainerStyle={styles.scrollView}
                 extraHeight={50}>
 
-                <Text style={styles.resetPassText}>{loading ? Strings.passChange : Strings.resetPass}</Text>
-                <Text style={styles.reset_guide}>{loading ? Strings.passChangeMsg : Strings.reset_guide}</Text>
+                {/* <Text style={styles.resetPassText}>{loading ? Strings.passChange : Strings.resetPass}</Text>
+                <Text style={styles.reset_guide}>{loading ? Strings.passChangeMsg : Strings.reset_guide}</Text> */}
                 {
                     loading ?
                         <View style={{

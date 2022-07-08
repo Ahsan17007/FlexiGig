@@ -17,12 +17,12 @@ import Preference from 'react-native-preference';
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
-import AppButton from '../../../Components/AppBtn'
-import InputField from '../../../Components/InputField'
+// import AppButton from '../../../Components/AppBtn'
+// import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index'
-import Strings from '../../../Assets/Strings/Index';
-import MsgModal from '../../../Components/MsgModal'
-import Loader from '../../../Components/Loader';
+// import Strings from '../../../Assets/Strings/Index';
+// import MsgModal from '../../../Components/MsgModal'
+// import Loader from '../../../Components/Loader';
 import { registerUser } from '../../../Redux/Actions/HasSession'
 
 
@@ -138,8 +138,8 @@ const SignUp = ({ navigation }) => {
                 keyboardShouldPersistTaps='always'
                 contentContainerStyle={styles.scrollView}>
 
-                <Text style={styles.signupText}>{Strings.Signup}</Text>
-                <Text style={styles.create}>{Strings.create}</Text>
+                {/* <Text style={styles.signupText}>{Strings.Signup}</Text>
+                <Text style={styles.create}>{Strings.create}</Text> */}
 
                 {/* ------------------------------Input Fields--------------------------- */}
 
@@ -239,16 +239,16 @@ const SignUp = ({ navigation }) => {
                 />
 
                 <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
-                    <Text style={styles.haveAccount}>{Strings.Have_Account}</Text>
+                    <Text style={styles.haveAccount}>{''}</Text>
                     <TouchableOpacity
                         activeOpacity={0.4}
                         onPress={() => navigation.navigate('SignIn')}
                     >
-                        <Text style={styles.signIn}>{Strings.SignIn}</Text>
+                        <Text style={styles.signIn}>{''}</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.OR}>{Strings.OR}</Text>
-                <Text style={styles.social}>{Strings.Social}</Text>
+                <Text style={styles.OR}>{''}</Text>
+                <Text style={styles.social}>{''}</Text>
 
                 <View style={{ flexDirection: 'row', marginTop: 5, alignSelf: 'center' }}>
                     <View style={styles.outer}>
