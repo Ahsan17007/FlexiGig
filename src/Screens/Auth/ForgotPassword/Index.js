@@ -18,7 +18,7 @@ import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField';
-import Strings from '../../../Assets/Strings/Index';
+// import Strings from '../../../Assets/Strings/Index';
 
 
 
@@ -61,8 +61,8 @@ const ForgotPassword = ({ navigation, route }) => {
                 contentContainerStyle={styles.scrollView}
                 extraHeight={50}>
 
-                <Text style={styles.forgotTitle}>{Strings.forgotTitle}</Text>
-                <Text style={styles.forgotGuide}>{Strings.forgot_guide}</Text>
+                <Text style={styles.forgotTitle}>{}</Text>
+                <Text style={styles.forgotGuide}>{}</Text>
 
 
 

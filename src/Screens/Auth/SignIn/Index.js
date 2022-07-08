@@ -11,29 +11,24 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
-import { useDispatch, useSelector } from 'react-redux'
+// import { useDispatch, useSelector } from 'react-redux'
 import Preference from 'react-native-preference';
 
 // --------------------------------------------
 import styles from './Styles'
-import Images from '../../../Assets/Images/Index'
-import AppButton from '../../../Components/AppBtn'
-import InputField from '../../../Components/InputField'
-import colors from '../../../Assets/Colors/Index'
-import Strings from '../../../Assets/Strings/Index';
-import Loader from '../../../Components/Loader';
-import MsgModal from '../../../Components/MsgModal';
-import { isLoggedIn } from '../../../Redux/Actions/HasSession';
+// import Images from '../../../Assets/Images/Index'
+// import AppButton from '../../../Components/AppBtn'
+// import InputField from '../../../Components/InputField'
+// import colors from '../../../Assets/Colors/Index'
+// import Strings from '../../../Assets/Strings/Index';
+// import Loader from '../../../Components/Loader';
+// import { isLoggedIn } from '../../../Redux/Actions/HasSession';
 
 
 
 const SignIn = ({ navigation }) => {
 
-    const { registrationData } = useSelector(state => state.Auth)
-
-
-    let storageEmail = Preference.get('email')
-    let storagePass = Preference.get('password')
+        
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -44,53 +39,54 @@ const SignIn = ({ navigation }) => {
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        console.log({ registrationData });
-    }, [])
+    // useEffect(() => {
+    //     console.log({ registrationData });
+    // }, [])
 
-    const SignIn = async () => {
+    // const SignIn = async () => {
 
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (email == '' && password == '') {
-            setIsMsgModal(true)
-            setMsg('Write your email and password')
-        } else if (email == '') {
-            setIsMsgModal(true)
-            setMsg('Email Required')
-        } else if (reg.test(email) === false) {
-            setIsMsgModal(true)
-            setMsg('Invalid Email Format')
-        } else if (password == '') {
-            setIsMsgModal(true)
-            setMsg('Password Required')
-        } else if (email != registrationData.email || password != registrationData.pass) {
-            setIsLoading(true)
-            setTimeout(() => {
-                setIsLoading(false)
-                setIsMsgModal(true)
-                setMsg('Invalid Credentials')
-            }, 1500);
-        } else {
-            setIsLoading(true)
-            dispatch(isLoggedIn({
-                email: email,
-                pass: password
-            }))
-            setTimeout(() => {
-                setIsLoading(false)
-                navigation.navigate('OTP', { routeName: 'SignIn' })
-            }, 2000);
+    //     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    //     if (email == '' && password == '') {
+    //         setIsMsgModal(true)
+    //         setMsg('Write your email and password')
+    //     } else if (email == '') {
+    //         setIsMsgModal(true)
+    //         setMsg('Email Required')
+    //     } else if (reg.test(email) === false) {
+    //         setIsMsgModal(true)
+    //         setMsg('Invalid Email Format')
+    //     } else if (password == '') {
+    //         setIsMsgModal(true)
+    //         setMsg('Password Required')
+    //     } else if (email != registrationData.email || password != registrationData.pass) {
+    //         setIsLoading(true)
+    //         setTimeout(() => {
+    //             setIsLoading(false)
+    //             setIsMsgModal(true)
+    //             setMsg('Invalid Credentials')
+    //         }, 1500);
+    //     } else {
+    //         setIsLoading(true)
+    //         dispatch(isLoggedIn({
+    //             email: email,
+    //             pass: password
+    //         }))
+    //         setTimeout(() => {
+    //             setIsLoading(false)
+    //             navigation.navigate('OTP', { routeName: 'SignIn' })
+    //         }, 2000);
 
-        }
+    //     }
 
-    };
+    // };
 
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <TouchableOpacity
+            <Text>hi</Text>
+            {/* <TouchableOpacity
                 style={styles.back}
                 activeOpacity={0.4}
                 onPress={() => {
@@ -107,10 +103,10 @@ const SignIn = ({ navigation }) => {
             <Image
                 source={Images.RightEllipse}
                 style={styles.rightEclipse}
-            />
+            /> */}
 
 
-
+{/* 
             <KeyboardAwareScrollView
                 keyboardShouldPersistTaps='always'
                 contentContainerStyle={styles.scrollView}
@@ -124,7 +120,6 @@ const SignIn = ({ navigation }) => {
                     style={styles.loginIcon}
                 />
 
-                {/* ------------------------------Input Fields--------------------------- */}
 
 
                 <InputField
@@ -215,18 +210,18 @@ const SignIn = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-            </KeyboardAwareScrollView>
+            </KeyboardAwareScrollView> */}
 
-            <Loader
+            {/* <Loader
                 visible={isLoading}
-            />
-            <MsgModal
+            /> */}
+            {/* <MsgModal
                 visible={isMsgModal}
                 msg={msg}
                 onPress={() => {
                     setIsMsgModal(false)
                 }}
-            />
+            /> */}
         </SafeAreaView>
 
 

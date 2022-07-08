@@ -19,9 +19,9 @@ import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import OTPInput from '../../../Components/OTPInput'
 import colors from '../../../Assets/Colors/Index'
-import Strings from '../../../Assets/Strings/Index';
-import Loader from '../../../Components/Loader';
-import MsgModal from '../../../Components/MsgModal';
+// import Strings from '../../../Assets/Strings/Index';
+// import Loader from '../../../Components/Loader';
+// import MsgModal from '../../../Components/MsgModal';
 
 
 
@@ -95,8 +95,8 @@ const OTP = ({ navigation, route }) => {
                 keyboardShouldPersistTaps='always'
                 contentContainerStyle={styles.scrollView}>
 
-                <Text style={styles.otp}>{isLoading ? Strings.verified : Strings.otp}</Text>
-                <Text style={styles.otpGuide}>{isLoading ? Strings.verify_msg : Strings.otp_guide}</Text>
+                {/* <Text style={styles.otp}>{isLoading ? Strings.verified : Strings.otp}</Text>
+                <Text style={styles.otpGuide}>{isLoading ? Strings.verify_msg : Strings.otp_guide}</Text> */}
 
                 {
                     isVerified ?
@@ -131,10 +131,10 @@ const OTP = ({ navigation, route }) => {
                             />
 
                             <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
-                                <Text style={styles.code}>{Strings.didnotGetCode}</Text>
+                                <Text style={styles.code}>{}</Text>
                                 <TouchableOpacity
                                     activeOpacity={0.4}>
-                                    <Text style={styles.sendAgain}>{Strings.Send_Again}</Text>
+                                    <Text style={styles.sendAgain}>{}</Text>
                                 </TouchableOpacity>
                             </View>
                         </>
