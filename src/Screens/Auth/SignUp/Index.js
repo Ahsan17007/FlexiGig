@@ -21,12 +21,16 @@ import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index';
 import { TextInput } from 'react-native-gesture-handler';
 import { CountryModalProvider } from 'react-native-country-picker-modal';
-import CountryPicker from 'react-native-country-picker-modal'
+import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
+
+import Loader from '../../../Components/Loader';
 
 
 
 const SignUp = ({ navigation }) => {
 
+    const [fetchedCountries, setFetchedCountries] = useState([])
+    const [needToFetch, setNeedToFetch] = useState(true)
 
     const [countryCode, setCountryCode] = useState('+254')
     const [country, setCountry] = useState('KE')
@@ -43,6 +47,31 @@ const SignUp = ({ navigation }) => {
     const passwordRef = useRef();
     const referalCodeRef = useRef();
 
+    useEffect(()=>{
+        phoneRef.current.focus();
+    },[])
+
+    if (needToFetch) {
+        fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
+            .then(r => r.json())
+            .then(res => {
+
+                res.data.map(v=>{
+                    getAllCountries().then((countries) => {
+                        const country = countries.find((c) => (c.name === v.attributes.name));
+                        console.log('country', country);
+                        setFetchedCountries([...fetchedCountries, country.cca2])
+                    });
+                    
+                })
+
+                setNeedToFetch(false)
+            })
+    }
+    else {
+        console.log(fetchedCountries);
+    }
+
     const registerBtnClick = async () => {
         //call-api 
         //handle
@@ -53,6 +82,7 @@ const SignUp = ({ navigation }) => {
         console.log(country);
         setCountryCode("+" + country.callingCode)
         setCountry(country.cca2)
+        phoneRef.current.focus();
     }
 
     return (
@@ -89,26 +119,36 @@ const SignUp = ({ navigation }) => {
 
                             <View style={{ justifyContent: 'center' }}>
 
-                                <CountryModalProvider>
-                                    <CountryPicker
-                                        countryCode={country}
-                                        countryCodes={['KE', 'PK']}
-                                        withFilter={true}
-                                        withFlag={true}
-                                        withCountryNameButton={false}
-                                        withCallingCodeButton={true}
-                                        withAlphaFilter={true}
-                                        withCallingCode={true}
-                                        withEmoji={true}
-                                        onSelect={onCountrySelect}
-                                        visible={popupVisibility}
-                                        onOpen={() => setPopupVisibility(true)}
-                                        onClose={() => {
-                                            setPopupVisibility(false)
-                                        }}
+                                {
+                                    fetchedCountries.length>0 ? 
+                                        <CountryModalProvider>
+                                            <CountryPicker
+                                                countryCode={fetchedCountries[0]}
+                                                countryCodes={fetchedCountries}
+                                                withFilter={true}
+                                                withFlag={true}
+                                                withCountryNameButton={true}
+                                                withCallingCodeButton={false}
+                                                withAlphaFilter={true}
+                                                withCallingCode={true}
+                                                withEmoji={true}
+                                                onSelect={onCountrySelect}
+                                                visible={popupVisibility}
+                                                onOpen={() => setPopupVisibility(true)}
+                                                onClose={() => {
+                                                    setPopupVisibility(false)
+                                                }}
 
-                                    />
-                                </CountryModalProvider>
+                                            />
+                                        </CountryModalProvider>
+
+                                        : 
+
+                                        <View></View>
+                                    }
+                                
+
+
 
                             </View>
 
@@ -130,36 +170,34 @@ const SignUp = ({ navigation }) => {
                         </View>
 
                         <Text style={styles.inputtitle}>{'Phone Number'}</Text>
-                        {/* <TextInput
-                            value={phone}
-                            onChangeText={(val) => setPhone(val)}
-                            returnKeyType={'next'}
-                            fieldRef={phoneRef}
-                            onSubmitEditing={() => {
-                                passwordRef.current.focus()
-                            }}
-                            keyboardType={'phone-pad'}
-                        /> */}
 
-                        <InputField
-                            onChangeText={val => setPhone(val)}
-                            value={phone}
-                            returnKeyType={'next'}
-                            fieldRef={phoneRef}
-                            onSubmitEditing={() => {
-                                passwordRef.current.focus()
-                            }}
-                            isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
-                            rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
-                            password={passwordVisible ? false : true}
-                            keyBoardType={'number-pad'}
-                        />
-                        {/* <Text style={styles.non_editable}>
-                            {countryCode.concat(phone)}
-                        </Text> */}
+                        <View style={[styles.non_editable, {
+                            flex: 1,
+                            flexDirection: 'row',
+                            alignItems:'center'
+                        }]}>
+
+                            <View style={{  }}>
+                                <TextInput style={styles.credentails} editable={false}>{countryCode}</TextInput>                                
+                            </View>
+
+                            <View style={{ marginLeft: 2, height:'100%', flexDirection:'column', justifyContent:'center'}}>
+
+                                <TextInput
+                                    value={phone}
+                                    onChangeText={(val) => setPhone(val)}
+                                    returnKeyType={'next'}
+                                    ref={phoneRef}
+                                    onSubmitEditing={() => {
+                                        passwordRef.current.focus()
+                                    }}
+                                    keyboardType={'phone-pad'}
+                                    style={{...styles.credentails, textAlignVertical:'center', height:'100%', borderBottomColor:'transparent', borderBottomWidth:0}}
+                                />
+                            </View>
 
 
+                        </View>
 
                         <Text style={[styles.inputtitle, {
 
@@ -218,6 +256,8 @@ const SignUp = ({ navigation }) => {
                 </KeyboardAwareScrollView>
 
             </View>
+
+            <Loader visible={needToFetch}/>
 
 
 
