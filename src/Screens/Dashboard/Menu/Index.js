@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyleSheet,
     Text,
@@ -12,18 +12,46 @@ import { useSelector, useDispatch } from 'react-redux'
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
-// import Strings from '../../Assets/Strings/Index'
-
+import AppButton from '../../../Components/AppBtn'
+import Loader from '../../../Components/Loader'
+import { onLogout } from '../../../Redux/Actions/HasSession'
 
 const Menu = ({ navigation }) => {
 
+    const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
 
+    const logOut = () => {
+        setIsLoading(true)
+        dispatch(onLogout());
+        setTimeout(() => {
+            setIsLoading(false)
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'SignIn' }],
+            });
+        }, 250);
 
+    }
 
     return (
         <View style={styles.mainContainer}>
 
-            <Text>Home</Text>
+            <View style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingHorizontal: 20,
+                paddingBottom: 20
+            }}>
+                <AppButton
+                    label={"Logout"}
+                    style={styles.btnStyle}
+                    labelStyle={styles.label}
+                    onPress={() => logOut()}
+                />
+            </View>
+
+            <Loader visible={isLoading} />
         </View>
     )
 }

@@ -27,10 +27,6 @@ export default class OTPInput extends Component {
             codeDigThreeFocus: false,
             codeDigFour: '',
             codeDigFourFocus: false,
-            // codeDigFive: '',
-            // codeDigFiveFocus: false,
-            // codeDigSix: '',
-            // codeDigSixFocus: false
         }
     }
 
@@ -61,7 +57,7 @@ export default class OTPInput extends Component {
                         width: '20%',
                         height: 50,
                         paddingHorizontal: 0,
-                        backgroundColor: colors.white,
+                        backgroundColor: colors.White,
                         borderRadius: 8,
                         elevation: 2,
                         shadowOpacity: 0.5,
@@ -100,7 +96,7 @@ export default class OTPInput extends Component {
                         width: '20%',
                         height: 50,
                         paddingHorizontal: 0,
-                        backgroundColor: colors.white,
+                        backgroundColor: colors.White,
                         borderRadius: 8,
                         elevation: 2,
                         shadowOpacity: 0.5,
@@ -141,7 +137,7 @@ export default class OTPInput extends Component {
                         width: '20%',
                         height: 50,
                         paddingHorizontal: 0,
-                        backgroundColor: colors.white,
+                        backgroundColor: colors.White,
                         borderRadius: 8,
                         elevation: 2,
                         shadowOpacity: 0.5,
@@ -182,7 +178,7 @@ export default class OTPInput extends Component {
                         width: '20%',
                         height: 50,
                         paddingHorizontal: 0,
-                        backgroundColor: colors.white,
+                        backgroundColor: colors.White,
                         borderRadius: 8,
                         elevation: 2,
                         shadowOpacity: 0.5,
@@ -210,7 +206,7 @@ export default class OTPInput extends Component {
                             this.setState({ codeDigFour: '' })
                             if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
                         } else if (/^[0-9]/g.test(event.key)) {
-                            // Keyboard.dismiss()
+                            Keyboard.dismiss()
                         }
                     }}
                     inputAccessoryViewID={inputAccessoryViewID}

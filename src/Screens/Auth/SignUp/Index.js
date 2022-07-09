@@ -13,15 +13,15 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
 import Preference from 'react-native-preference';
+import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
+import { CountryModalProvider } from 'react-native-country-picker-modal';
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index';
-import { CountryModalProvider } from 'react-native-country-picker-modal';
-import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
-
+import { userToken, loggedInData } from '../../../Redux/Actions/HasSession';
 import Loader from '../../../Components/Loader';
 
 
@@ -81,8 +81,6 @@ const SignUp = ({ navigation }) => {
     const registerUser = async () => {
 
         const phoneNumber = countryCode.concat(phone)
-        navigation.navigate('OTP')
-
         const config = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -105,23 +103,19 @@ const SignUp = ({ navigation }) => {
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signup', config)
                 const registerResult = await response.json();
                 console.log("registerUser-response", registerResult);
-                // if (response.status === 200) {
-                //     dispatch(userToken(loginResult?.token))
-                //     dispatch(loggedInData(loginResult?.data))
+                if (response.status === 200) {
                     setIsLoading(false)
-                //     SimpleToast.show("Login Successfull")
-                //     setTimeout(() => {
-                //         navigation.reset({
-                //             index: 0,
-                //             routes: [{ name: 'HomeStack' }],
-                //         })
-                //     }, 300);
-                // } else {
-                //     setIsLoading(true)
-                //     SimpleToast.show("Something went wrong")
-                // }
-
-
+                    SimpleToast.show("Account created successfully")
+                    setTimeout(() => {
+                        navigation.navigate('OTP', {userId: registerResult?.data?.id})
+                    }, 300);
+                } else if (response.status === 401) {
+                    setIsLoading(false)
+                    SimpleToast.show(registerResult?.error?.message)
+                } else {
+                    setIsLoading(true)
+                    SimpleToast.show("Something went wrong")
+                }
             } catch (error) {
                 setIsLoading(false)
                 console.log("registerUser-error", error);
@@ -278,11 +272,10 @@ const SignUp = ({ navigation }) => {
                     </View>
 
                     <AppButton
-                        gradient={true}
                         label={"Sign Up"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}
-                        onPress={()=>registerUser()}
+                        onPress={() => registerUser()}
                     />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>

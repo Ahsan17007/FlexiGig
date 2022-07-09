@@ -9,6 +9,7 @@ export const Images = {
     Notification: require('./notification.png'),
     Show: require('./show.png'),
     Hide: require('./hide.png'),
+    Checked: require('./checked.png'),
     
 
 

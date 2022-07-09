@@ -28,14 +28,12 @@ const OnBoarding = ({ navigation }) => {
             <Text style={styles.welcome}>{'Welcome'}</Text>
 
             <AppButton
-                gradient={true}
                 label={"Login"}
                 style={[styles.btnStyle, { marginTop: 55 }]}
                 labelStyle={styles.label}
                 onPress={() => navigation.navigate('SignIn')}
             />
             <AppButton
-                gradient={true}
                 label={"Sign up"}
                 style={[styles.btnStyle, { marginTop: 16 }]}
                 labelStyle={styles.label}
