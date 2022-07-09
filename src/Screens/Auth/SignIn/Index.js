@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
-// import { useDispatch, useSelector } from 'react-redux'
 import Preference from 'react-native-preference';
 
 // --------------------------------------------
@@ -19,29 +18,24 @@ import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
-import Loader from '../../../Components/Loader';
-// import { isLoggedIn } from '../../../Redux/Actions/HasSession';
+import colors from '../../../Assets/Colors/Index';
 
 
 
 const SignIn = ({ navigation }) => {
 
 
-    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [isMsgModal, setIsMsgModal] = useState(false)
     const [msg, setMsg] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const emailRef = useRef();
+    const phoneRef = useRef();
     const passwordRef = useRef();
 
     // const dispatch = useDispatch()
-
-    // useEffect(() => {
-    //     console.log({ registrationData });
-    // }, [])
 
     // const SignIn = async () => {
 
@@ -80,6 +74,11 @@ const SignIn = ({ navigation }) => {
 
     // };
 
+    const loginBtnClick = async () => {
+        //call-api 
+        //handle
+    }
+
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -89,11 +88,10 @@ const SignIn = ({ navigation }) => {
                 style={{ flex: 1, padding: 12 }}>
 
                 <View style={{
-                    flex: 2,
+                    flex: 3,
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    marginTop:20
                 }}>
                     <Image
                         source={Images.Logo}
@@ -102,59 +100,64 @@ const SignIn = ({ navigation }) => {
                 </View>
 
                 <View style={{
-                    flex: 8,
-                    justifyContent: 'center',
+                    flex: 7,
                     flexDirection: 'column',
-                    alignContent: 'center'
-                }}> 
+                    alignContent: 'center',
+                }}>
                     <Text style={styles.Login}>{'Login'}</Text>
                     <Text style={styles.credentails}>{'Please enter your credentials'}</Text>
 
-                    <InputField
-                        onChangeText={val => setEmail(val)}
-                        value={email}
-                        leftIcon={Images.email}
-                        placeholder={"Email"}
-                        returnKeyType={'next'}
-                        fieldRef={emailRef}
-                        onSubmitEditing={() => {
-                            passwordRef.current.focus()
-                        }}
-                        customStyle={{ marginTop: 56 }}
-                    />
+                    <View style={{
+                        marginVertical: 24
+                    }}>
 
-                    <InputField
-                        onChangeText={val => setPassword(val)}
-                        value={password}
-                        leftIcon={Images.password}
-                        placeholder={"Password"}
-                        returnKeyType={'done'}
-                        fieldRef={passwordRef}
-                        onSubmitEditing={() => {
-                            Keyboard.dismiss()
-                        }}
-                        isRightIcon={true}
-                        rightIcon={passwordVisible ? Images.show : Images.hide}
-                        rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
-                        password={passwordVisible ? false : true}
-                        customStyle={{ marginTop: 16 }}
-                    />
-                    <TouchableOpacity
-                        activeOpacity={0.4}
-                        onPress={() => navigation.navigate('ForgotPassword')}
-                    >
-                        <Text style={styles.forgotText}>{'Forgot Password'}</Text>
-                    </TouchableOpacity>
+                        <Text style={styles.inputtitle}>{'Phone Number'}</Text>
+                        <InputField
+                            value={phone}
+                            leftIcon={Images.phone}
+                            returnKeyType={'next'}
+                            fieldRef={phoneRef}
+                            onSubmitEditing={() => {
+                                passwordRef.current.focus()
+                            }}
+                            keyBoardType = {'phone-pad'}
+                            customStyle={{ }}
+                        />
 
+                        <Text style={[styles.inputtitle,{
+                            marginTop:16
+                        }]}>{'Password'}</Text>
+                        
+                        <InputField
+                            onChangeText={val => setPassword(val)}
+                            value={password}
+                            returnKeyType={'done'}
+                            fieldRef={passwordRef}
+                            onSubmitEditing={() => {
+                                Keyboard.dismiss()
+                            }}
+                            isRightIcon={true}
+                            rightIcon={passwordVisible ? Images.show : Images.hide}
+                            rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
+                            password={passwordVisible ? false : true}
+                        />
+                        <TouchableOpacity
+                            activeOpacity={0.4}
+                            onPress={() => navigation.navigate('ForgotPassword')}
+                            style={styles.forgot}
+                        >
+                            <Text style={styles.forgotText}>{'Forgot Password?'}</Text>
+                        </TouchableOpacity>
 
+                    </View>
 
                     <AppButton
-                        gradient={true}
-                        label={"SIGNIN"}
-                        style={styles.btnStyle}
-                        labelStyle={styles.label}
-                        onPress={() => SignIn()}
-                    />
+                            gradient={true}
+                            label={"Login"}
+                            style={styles.btnStyle}
+                            labelStyle={styles.label}
+                            onPress={loginBtnClick}
+                        />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
                         <Text style={styles.haveAccount}>{`Don't have an account?`}</Text>
@@ -162,9 +165,9 @@ const SignIn = ({ navigation }) => {
                             activeOpacity={0.4}
                             onPress={() => {
                                 Keyboard.dismiss()
-                                navigation.goBack()
+                                navigation.navigate('SignUp')
                             }}>
-                            <Text style={styles.signIn}>{` Register`}</Text>
+                            <Text style={styles.haveAccount}>{` Register`}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -174,9 +177,6 @@ const SignIn = ({ navigation }) => {
 
             </View>
 
-            {<Loader
-                visible={isLoading}
-            />}
             {/* <MsgModal
                 visible={isMsgModal}
                 msg={msg}

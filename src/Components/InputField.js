@@ -37,7 +37,7 @@ const InputField = props => {
   } = props;
 
   return (
-    <View style={[styles.mainContainer, customStyle,]}>
+    <View style={[styles.mainContainer, customStyle]}>
 
       {
         leftIcon &&
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.textInput,
     height: 52,
     width: '100%',
-    borderRadius: 11,
-    paddingHorizontal: 8
+    backgroundColor:colors.Primary,
+    padding:2,
   },
   icon: {
     height: '100%',

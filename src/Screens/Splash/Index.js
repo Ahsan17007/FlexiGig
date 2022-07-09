@@ -9,14 +9,9 @@ import {
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-// --------------------------------------------
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
-<<<<<<< HEAD
 import colors from '../../Assets/Colors/Index'
-=======
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
-
 
 const Splash = ({ navigation }) => {
 

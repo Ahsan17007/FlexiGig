@@ -10,15 +10,17 @@ const styles = StyleSheet.create({
         backgroundColor: colors.White,
     },
     btnStyle:{
-        backgroundColor:colors.Primary
+        backgroundColor:colors.Primary,
+        color:colors.Black
     },
     loginIcon:{
-        width:200,
-        height:200
+        width:'50%',
+        height:'70%',
+        alignSelf:'center'
     },
     Login:{
         fontFamily:Fonts.Bold,
-        fontWeight:'600',
+        fontWeight:'700',
         fontSize:24,
         color:colors.Black
     },
@@ -26,6 +28,32 @@ const styles = StyleSheet.create({
         color:colors.Black,
         fontFamily:Fonts.Regular,
         
+    }, 
+    inputtitle:{
+        color:colors.Black,
+        fontFamily:Fonts.Regular,
+        marginVertical:4
+    },
+    forgot:{
+        margin:4,
+        marginVertical:6,
+        alignSelf:'flex-end',
+
+    },
+    forgotText: {
+        color:colors.Black,
+        fontFamily:Fonts.Regular,
+        
+    }, 
+    label:{
+        color:colors.Black,
+        fontWeight:'500',
+        fontSize:16
+    },
+    haveAccount:{
+        color:colors.Black,
+        fontFamily:Fonts.Medium,
+        fontSize:14
     }
    
 })
