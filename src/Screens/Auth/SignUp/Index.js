@@ -7,26 +7,29 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     Keyboard,
-    ScrollView
+    ScrollView,
+    TextInput
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
 import Preference from 'react-native-preference';
 
-// --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index';
-import { TextInput } from 'react-native-gesture-handler';
 import { CountryModalProvider } from 'react-native-country-picker-modal';
-import CountryPicker from 'react-native-country-picker-modal'
+import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
+
+import Loader from '../../../Components/Loader';
 
 
 
 const SignUp = ({ navigation }) => {
 
+    const [fetchedCountries, setFetchedCountries] = useState([])
+    const [needToFetch, setNeedToFetch] = useState(true)
 
     const [countryCode, setCountryCode] = useState('+254')
     const [country, setCountry] = useState('KE')
@@ -43,6 +46,31 @@ const SignUp = ({ navigation }) => {
     const passwordRef = useRef();
     const referalCodeRef = useRef();
 
+    useEffect(()=>{
+        phoneRef.current.focus();
+    },[])
+
+    if (needToFetch) {
+        fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
+            .then(r => r.json())
+            .then(res => {
+
+                res.data.map(v=>{
+                    getAllCountries().then((countries) => {
+                        const country = countries.find((c) => (c.name === v.attributes.name));
+                        console.log('country', country);
+                        setFetchedCountries([...fetchedCountries, country.cca2])
+                    });
+                    
+                })
+
+                setNeedToFetch(false)
+            })
+    }
+    else {
+        console.log(fetchedCountries);
+    }
+
     const registerBtnClick = async () => {
         //call-api 
         //handle
@@ -53,65 +81,8 @@ const SignUp = ({ navigation }) => {
         console.log(country);
         setCountryCode("+" + country.callingCode)
         setCountry(country.cca2)
+        phoneRef.current.focus();
     }
-
-    const registerUser = () => {
-
-        let bodyData = {
-
-            phone_number: phone,
-            password: password,
-            country_id: '319962a1-bedd-48ea-b371-5aaef626a2dc',
-        }
-
-        if (phone == '' && password == '') {
-            SimpleToast.show('All fields are mandatory')
-        } else if (phone == '') {
-            SimpleToast.show('Phone Number Required')
-        } else if (password == '') {
-            SimpleToast.show('Password Required')
-        } else if (password.length < 6) {
-            SimpleToast.show('Password should be 8 characters')
-        } else {
-            setIsLoading(true)
-            // return false
-            client.post('/signup', bodyData).then(response => {
-                console.log('registerUser-responseJson', response.data)
-                // if (response.data.status == 200) {
-                //     Keyboard.dismiss()
-                //     SimpleToast.show('Verify your email')
-                //     dispatch(onRegister({
-                //         name: name,
-                //         email: email,
-                //         password: password,
-                //         confirm_password: confirmPass,
-                //         phone_number: number,
-                //         address: address,
-                //         state: state,
-                //         city: city,
-                //         country: country,
-                //         zip: zip,
-                //         dob: dob
-                //     }))
-                //     setTimeout(() => {
-                //         navigation.navigate('OTP')
-                //     }, 300);
-                // } else {
-                //     Keyboard.dismiss()
-                //     setAlertMessage(response.data.messgae)
-                //     setTimeout(() => {
-                //         setAlertModal(true)
-                //     }, 300);
-                // }
-            }).catch(error => {
-                SimpleToast.show('Something went wrong')
-                console.log('registerUser-error', error)
-            }).finally(() => {
-                setIsLoading(false)
-            })
-        }
-
-    };
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -147,26 +118,36 @@ const SignUp = ({ navigation }) => {
 
                             <View style={{ justifyContent: 'center' }}>
 
-                                <CountryModalProvider>
-                                    <CountryPicker
-                                        countryCode={country}
-                                        countryCodes={['KE', 'PK']}
-                                        withFilter={true}
-                                        withFlag={true}
-                                        withCountryNameButton={false}
-                                        withCallingCodeButton={true}
-                                        withAlphaFilter={true}
-                                        withCallingCode={true}
-                                        withEmoji={true}
-                                        onSelect={onCountrySelect}
-                                        visible={popupVisibility}
-                                        onOpen={() => setPopupVisibility(true)}
-                                        onClose={() => {
-                                            setPopupVisibility(false)
-                                        }}
+                                {
+                                    fetchedCountries.length>0 ? 
+                                        <CountryModalProvider>
+                                            <CountryPicker
+                                                countryCode={fetchedCountries[0]}
+                                                countryCodes={fetchedCountries}
+                                                withFilter={true}
+                                                withFlag={true}
+                                                withCountryNameButton={true}
+                                                withCallingCodeButton={false}
+                                                withAlphaFilter={true}
+                                                withCallingCode={true}
+                                                withEmoji={true}
+                                                onSelect={onCountrySelect}
+                                                visible={popupVisibility}
+                                                onOpen={() => setPopupVisibility(true)}
+                                                onClose={() => {
+                                                    setPopupVisibility(false)
+                                                }}
 
-                                    />
-                                </CountryModalProvider>
+                                            />
+                                        </CountryModalProvider>
+
+                                        : 
+
+                                        <View></View>
+                                    }
+                                
+
+
 
                             </View>
 
@@ -188,32 +169,33 @@ const SignUp = ({ navigation }) => {
                         </View>
 
                         <Text style={styles.inputtitle}>{'Phone Number'}</Text>
-                        {/* <TextInput
-                            value={phone}
-                            onChangeText={(val) => setPhone(val)}
-                            returnKeyType={'next'}
-                            fieldRef={phoneRef}
-                            onSubmitEditing={() => {
-                                passwordRef.current.focus()
-                            }}
-                            keyboardType={'phone-pad'}
-                        /> */}
 
-                        <InputField
-                            onChangeText={val => setPhone(val)}
-                            value={phone}
-                            returnKeyType={'next'}
-                            fieldRef={phoneRef}
-                            onSubmitEditing={() => {
-                                passwordRef.current.focus()
-                            }}
-                            keyBoardType={'number-pad'}
-                        />
-                        {/* <Text style={styles.non_editable}>
-                            {countryCode.concat(phone)}
-                        </Text> */}
+                        <View style={[styles.non_editable, {
+                            flex: 1,
+                            flexDirection: 'row',
+                            alignItems:'center'
+                        }]}>
 
+                            <View style={{  }}>
+                                <TextInput style={styles.credentails} editable={false}>{countryCode}</TextInput>                                
+                            </View>
 
+                            <View style={{ marginLeft: 2, height:'100%', flexDirection:'column', justifyContent:'center'}}>
+
+                                <TextInput
+                                    value={phone}
+                                    onChangeText={(val) => setPhone(val)}
+                                    returnKeyType={'next'}
+                                    ref={phoneRef}
+                                    onSubmitEditing={() => {
+                                        passwordRef.current.focus()
+                                    }}
+                                    keyboardType={'phone-pad'}
+                                    style={{...styles.credentails, textAlignVertical:'center', height:'100%', borderBottomColor:'transparent', borderBottomWidth:0}}
+                                />
+                            </View>
+
+                        </View>
 
                         <Text style={[styles.inputtitle, {
 
@@ -228,7 +210,7 @@ const SignUp = ({ navigation }) => {
                                 referalCodeRef.current.focus()
                             }}
                             isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.Show : Images.Hide}
+                            rightIcon={passwordVisible ? Images.show : Images.hide}
                             rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
                             password={passwordVisible ? false : true}
                         />
@@ -242,6 +224,8 @@ const SignUp = ({ navigation }) => {
                             onSubmitEditing={() => {
                                 Keyboard.dismiss()
                             }}
+                            isRightIcon={true}
+                            rightIcon={passwordVisible ? Images.show : Images.hide}
                             customStyle={{}}
                         />
 
@@ -252,7 +236,7 @@ const SignUp = ({ navigation }) => {
                         label={"Sign Up"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}
-                        onPress={() => registerUser()}
+                        onPress={registerBtnClick}
                     />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
@@ -270,6 +254,8 @@ const SignUp = ({ navigation }) => {
                 </KeyboardAwareScrollView>
 
             </View>
+
+            <Loader visible={needToFetch}/>
 
 
 
