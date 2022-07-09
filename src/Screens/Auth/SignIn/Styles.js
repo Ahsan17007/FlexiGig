@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native'
+<<<<<<< HEAD
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+=======
+>>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
 // import Fonts from '../../../Assets/Fonts/Index'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
@@ -10,6 +13,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: colors.White,
     },
+<<<<<<< HEAD
     btnStyle:{
         backgroundColor:colors.Primary
     },
@@ -28,6 +32,8 @@ const styles = StyleSheet.create({
         fontFamily:Fonts.Regular,
         
     }
+=======
+>>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
    
 })
 export default styles

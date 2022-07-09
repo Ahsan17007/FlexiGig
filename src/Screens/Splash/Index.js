@@ -12,7 +12,10 @@ import { useSelector, useDispatch } from 'react-redux'
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
+<<<<<<< HEAD
 import colors from '../../Assets/Colors/Index'
+=======
+>>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
 
 
 const Splash = ({ navigation }) => {
@@ -34,11 +37,18 @@ const Splash = ({ navigation }) => {
         // } else {
         //     navigation.replace('OnBoarding')
         // }
+<<<<<<< HEAD
         
                 setTimeout(() => {
                     navigation.replace('AuthStack')
                 }, 1500);
                 
+=======
+
+        setTimeout(() => {
+            navigation.replace('AuthStack')
+        }, 1500);
+>>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
     }, [])
 
     return (
@@ -48,6 +58,14 @@ const Splash = ({ navigation }) => {
                 source={Images.Logo}
                 style={styles.logo}
             />
+<<<<<<< HEAD
+=======
+
+            {/* <Image
+                source={Images.LeftEllipse}
+                style={styles.leftEclipse}
+            /> */}
+>>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
         </View>
     )
 }
