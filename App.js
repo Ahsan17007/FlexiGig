@@ -8,25 +8,31 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  View,
+  LogBox
 } from 'react-native';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
+import { store, persistor } from './src/Redux/Store/Index'
+
 
 import MainStack from './src/Stacks/MainStack';
-import Home from './src/Screens/Dashboard/Home/Index';
 
 
 
-
+LogBox.ignoreAllLogs();
 const App = () => {
 
 
   return (
-    // <Home />
-    <MainStack />
+
+
+    <Provider store={store}>
+      <PersistGate
+        persistor={persistor}>
+        <MainStack />
+      </PersistGate>
+    </Provider>
 
   );
 };

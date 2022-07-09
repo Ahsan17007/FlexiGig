@@ -1,8 +1,8 @@
-import { HAS_SESSION, REGISTRATION_DATA, LOGOUT } from '../Types/Index';
+import { HAS_SESSION, LOGGEDIN_USER_DATA, LOGOUT } from '../Types/Index';
 
 const initialState = {
     loginUserData: null,
-    registrationData: null
+    token: null
 };
 
 const AuthReducer = (state = initialState, action = {}) => {
@@ -12,16 +12,16 @@ const AuthReducer = (state = initialState, action = {}) => {
         case HAS_SESSION:
             return {
                 ...state,
-                loginUserData: action.payload,
+                token: action.payload,
             };
-        case REGISTRATION_DATA:
+        case LOGGEDIN_USER_DATA:
             return {
                 ...state,
-                registrationData: action.payload,
+                loginUserData: action.payload,
             };
         default:
             return state;
     }
-} 
+}
 
 export { AuthReducer }
