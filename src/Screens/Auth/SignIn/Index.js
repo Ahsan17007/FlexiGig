@@ -16,30 +16,17 @@ import Preference from 'react-native-preference';
 
 // --------------------------------------------
 import styles from './Styles'
-<<<<<<< HEAD
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
 import Loader from '../../../Components/Loader';
-=======
-// import Images from '../../../Assets/Images/Index'
-// import AppButton from '../../../Components/AppBtn'
-// import InputField from '../../../Components/InputField'
-// import colors from '../../../Assets/Colors/Index'
-// import Strings from '../../../Assets/Strings/Index';
-// import Loader from '../../../Components/Loader';
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
 // import { isLoggedIn } from '../../../Redux/Actions/HasSession';
 
 
 
 const SignIn = ({ navigation }) => {
 
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -96,34 +83,8 @@ const SignIn = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-<<<<<<< HEAD
 
             <View
-=======
-            <Text>hi</Text>
-            {/* <TouchableOpacity
-                style={styles.back}
-                activeOpacity={0.4}
-                onPress={() => {
-                    Keyboard.dismiss()
-                    setTimeout(() => {
-                        navigation.goBack()
-                    }, 25);
-                }}>
-                <Image
-                    source={Images.arrow}
-                    style={styles.arrow}
-                />
-            </TouchableOpacity>
-            <Image
-                source={Images.RightEllipse}
-                style={styles.rightEclipse}
-            /> */}
-
-
-{/* 
-            <KeyboardAwareScrollView
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
                 keyboardShouldPersistTaps='always'
                 style={{ flex: 1, padding: 12 }}>
 
@@ -149,7 +110,6 @@ const SignIn = ({ navigation }) => {
                     <Text style={styles.Login}>{'Login'}</Text>
                     <Text style={styles.credentails}>{'Please enter your credentials'}</Text>
 
-<<<<<<< HEAD
                     <InputField
                         onChangeText={val => setEmail(val)}
                         value={email}
@@ -162,8 +122,6 @@ const SignIn = ({ navigation }) => {
                         }}
                         customStyle={{ marginTop: 56 }}
                     />
-=======
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
 
                     <InputField
                         onChangeText={val => setPassword(val)}
@@ -210,7 +168,6 @@ const SignIn = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-<<<<<<< HEAD
 
 
 
@@ -220,13 +177,6 @@ const SignIn = ({ navigation }) => {
             {<Loader
                 visible={isLoading}
             />}
-=======
-            </KeyboardAwareScrollView> */}
-
-            {/* <Loader
-                visible={isLoading}
-            /> */}
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
             {/* <MsgModal
                 visible={isMsgModal}
                 msg={msg}

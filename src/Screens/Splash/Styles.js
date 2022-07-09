@@ -10,15 +10,11 @@ const styles = StyleSheet.create({
         backgroundColor:colors.White,
         padding:'10%'
     },
-<<<<<<< HEAD
 
     logo:{
         width:'100%',
         height:'40%',
     }
-=======
-    
->>>>>>> 6b72de774df631fcbeca1505c15c85157471bfd8
 })
 
 
