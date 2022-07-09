@@ -35,14 +35,13 @@ const HomeStack = ({ navigation }) => {
                 const { navigation, state } = props
                 return (
 
-                    <View style={styles.mainTabContainer}>
+                   
                         <View style={{
                             flexDirection: "row",
-                            marginTop: 10,
                             height: 80,
                             width: "100%",
-                            elevation: 5,
-                            backgroundColor: colors.White
+                            // elevation: 5,
+                            backgroundColor: colors.Primary
                         }}>
                             <TouchableOpacity
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
@@ -59,7 +58,7 @@ const HomeStack = ({ navigation }) => {
 
                             <TouchableOpacity
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-                                onPress={() => { navigation.navigate("MyJobs") }}>
+                                onPress={() => { navigation.navigate("Universe") }}>
                                 <Image
                                     source={Images.Universe}
                                     resizeMode='contain'
@@ -72,7 +71,7 @@ const HomeStack = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => { navigation.navigate("Chat") }}
+                                onPress={() => { navigation.navigate("Inventory") }}
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Image
                                     source={Images.Inventory}
@@ -85,7 +84,7 @@ const HomeStack = ({ navigation }) => {
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => { navigation.navigate("Profile") }}
+                                onPress={() => { navigation.navigate("Academy") }}
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Image
                                     source={Images.Academy}
@@ -99,7 +98,7 @@ const HomeStack = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => { navigation.navigate("Profile") }}
+                                onPress={() => { navigation.navigate("Menu") }}
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <Image
                                     source={Images.Menu}
@@ -107,12 +106,12 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 3 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 4 ? colors.Black : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>
                         </View>
-                    </View>
+                 
                 )
             }}
 
@@ -141,30 +140,6 @@ const HomeStack = ({ navigation }) => {
     )
 }
 
-const styles = StyleSheet.create({
 
-    mainTabContainer: {
-        height: 85,
-        width: '100%',
-        backgroundColor: colors.Primary,
-        // position: 'absolute',
-        bottom: 0,
-        justifyContent: 'flex-end'
-    },
-    shadow: {
-        elevation: 8,
-        backgroundColor: colors.White,
-        width: '100%',
-        height: 85,
-        // zIndex: 0,
-    },
-    container: {
-        flex: 1,
-    },
-    add: {
-        width: 16,
-        height: 16,
-    }
-})
 
 export default HomeStack;

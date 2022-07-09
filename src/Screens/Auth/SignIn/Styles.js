@@ -7,54 +7,55 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         flexDirection: 'column',
+        justifyContent: 'center',
+
         backgroundColor: colors.White,
     },
-    btnStyle:{
-        backgroundColor:colors.Primary,
-        color:colors.Black
+    btnStyle: {
+        backgroundColor: colors.Primary,
+        color: colors.Black
     },
-    loginIcon:{
-        width:'50%',
-        height:'70%',
-        alignSelf:'center'
+    loginIcon: {
+        width: 150,
+        height: 150,
+        alignSelf: 'center'
     },
-    Login:{
-        fontFamily:Fonts.Bold,
-        fontWeight:'700',
-        fontSize:24,
-        color:colors.Black
+    Login: {
+        fontFamily: Fonts.SemiBold,
+        fontSize: 24,
+        color: colors.Black
     },
-    credentails:{
-        color:colors.Black,
-        fontFamily:Fonts.Regular,
-        
-    }, 
-    inputtitle:{
-        color:colors.Black,
-        fontFamily:Fonts.Regular,
-        marginVertical:4
+    credentails: {
+        color: colors.Black,
+        fontFamily: Fonts.Regular,
+
     },
-    forgot:{
-        margin:4,
-        marginVertical:6,
-        alignSelf:'flex-end',
+    inputtitle: {
+        color: colors.Black,
+        fontFamily: Fonts.Regular,
+        marginVertical: 4
+    },
+    forgot: {
+        margin: 4,
+        marginVertical: 6,
+        alignSelf: 'flex-end',
 
     },
     forgotText: {
-        color:colors.Black,
-        fontFamily:Fonts.Regular,
-        
-    }, 
-    label:{
-        color:colors.Black,
-        fontWeight:'500',
-        fontSize:16
+        color: colors.Black,
+        fontFamily: Fonts.Regular,
+
     },
-    haveAccount:{
-        color:colors.Black,
-        fontFamily:Fonts.Medium,
-        fontSize:14
+    label: {
+        color: colors.Black,
+        fontWeight: '500',
+        fontSize: 16
+    },
+    haveAccount: {
+        color: colors.Black,
+        fontFamily: Fonts.Medium,
+        fontSize: 14
     }
-   
+
 })
 export default styles

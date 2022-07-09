@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        // borderRadius: 10,
         flexDirection: 'row',
     },
     btnText: {

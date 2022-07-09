@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     height: 52,
     width: '100%',
     backgroundColor:colors.Primary,
-    padding:2,
+    paddingHorizontal:8
   },
   icon: {
     height: '100%',

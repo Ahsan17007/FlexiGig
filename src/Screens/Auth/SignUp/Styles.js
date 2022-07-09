@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         flexDirection: 'column',
+        justifyContent:'center',
         backgroundColor: colors.White,
     },
     btnStyle: {
@@ -13,8 +14,8 @@ const styles = StyleSheet.create({
         color: colors.Black
     },
     loginIcon: {
-        width: '50%',
-        height: '70%',
+        width: 150,
+        height: 150,
         alignSelf: 'center'
     },
     Login: {

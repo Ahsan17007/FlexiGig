@@ -34,7 +34,7 @@ const Splash = ({ navigation }) => {
         // }
 
         setTimeout(() => {
-            navigation.replace('AuthStack')
+            navigation.replace('OnBoarding')
         }, 1500);
     }, [])
 

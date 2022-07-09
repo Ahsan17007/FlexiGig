@@ -25,7 +25,8 @@ const App = () => {
 
 
   return (
-    <Home />
+    // <Home />
+    <MainStack />
 
   );
 };

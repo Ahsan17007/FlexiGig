@@ -77,33 +77,28 @@ const SignIn = ({ navigation }) => {
     const loginBtnClick = async () => {
         //call-api 
         //handle
+        navigation.navigate('HomeStack')
     }
 
 
     return (
         <SafeAreaView style={styles.mainContainer}>
 
-            <View
-                keyboardShouldPersistTaps='always'
-                style={{ flex: 1, padding: 12 }}>
-
-                <View style={{
-                    flex: 3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                }}>
+            <View style={{
+                paddingHorizontal: 20,
+                justifyContent: 'center',
+                paddingBottom: 20
+            }}>
+                <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps='always'
+                    showsVerticalScrollIndicator={false} >
                     <Image
                         source={Images.Logo}
                         style={styles.loginIcon}
                     />
-                </View>
 
-                <View style={{
-                    flex: 7,
-                    flexDirection: 'column',
-                    alignContent: 'center',
-                }}>
+
+
                     <Text style={styles.Login}>{'Login'}</Text>
                     <Text style={styles.credentails}>{'Please enter your credentials'}</Text>
 
@@ -113,6 +108,7 @@ const SignIn = ({ navigation }) => {
 
                         <Text style={styles.inputtitle}>{'Phone Number'}</Text>
                         <InputField
+                            onChangeText={val => setPhone(val)}
                             value={phone}
                             leftIcon={Images.phone}
                             returnKeyType={'next'}
@@ -120,14 +116,14 @@ const SignIn = ({ navigation }) => {
                             onSubmitEditing={() => {
                                 passwordRef.current.focus()
                             }}
-                            keyBoardType = {'phone-pad'}
-                            customStyle={{ }}
+                            keyBoardType={'phone-pad'}
+                            customStyle={{}}
                         />
 
-                        <Text style={[styles.inputtitle,{
-                            marginTop:16
+                        <Text style={[styles.inputtitle, {
+                            marginTop: 16
                         }]}>{'Password'}</Text>
-                        
+
                         <InputField
                             onChangeText={val => setPassword(val)}
                             value={password}
@@ -152,12 +148,12 @@ const SignIn = ({ navigation }) => {
                     </View>
 
                     <AppButton
-                            gradient={true}
-                            label={"Login"}
-                            style={styles.btnStyle}
-                            labelStyle={styles.label}
-                            onPress={loginBtnClick}
-                        />
+                        gradient={true}
+                        label={"Login"}
+                        style={styles.btnStyle}
+                        labelStyle={styles.label}
+                        onPress={loginBtnClick}
+                    />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
                         <Text style={styles.haveAccount}>{`Don't have an account?`}</Text>
@@ -170,10 +166,8 @@ const SignIn = ({ navigation }) => {
                             <Text style={styles.haveAccount}>{` Register`}</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
 
-
-
+                </KeyboardAwareScrollView>
 
             </View>
 

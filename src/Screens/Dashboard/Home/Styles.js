@@ -5,11 +5,13 @@ import colors from '../../../Assets/Colors/Index';
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
+        backgroundColor: colors.White
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
-        paddingTop: 30
+        paddingTop: 30,
+        backgroundColor: colors.White
         // alignItems: 'center',
         // justifyContent: 'center',
     },
