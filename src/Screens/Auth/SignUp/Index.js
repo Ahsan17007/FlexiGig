@@ -55,6 +55,64 @@ const SignUp = ({ navigation }) => {
         setCountry(country.cca2)
     }
 
+    const registerUser = () => {
+
+        let bodyData = {
+
+            phone_number: phone,
+            password: password,
+            country_id: '319962a1-bedd-48ea-b371-5aaef626a2dc',
+        }
+
+        if (phone == '' && password == '') {
+            SimpleToast.show('All fields are mandatory')
+        } else if (phone == '') {
+            SimpleToast.show('Phone Number Required')
+        } else if (password == '') {
+            SimpleToast.show('Password Required')
+        } else if (password.length < 6) {
+            SimpleToast.show('Password should be 8 characters')
+        } else {
+            setIsLoading(true)
+            // return false
+            client.post('/signup', bodyData).then(response => {
+                console.log('registerUser-responseJson', response.data)
+                // if (response.data.status == 200) {
+                //     Keyboard.dismiss()
+                //     SimpleToast.show('Verify your email')
+                //     dispatch(onRegister({
+                //         name: name,
+                //         email: email,
+                //         password: password,
+                //         confirm_password: confirmPass,
+                //         phone_number: number,
+                //         address: address,
+                //         state: state,
+                //         city: city,
+                //         country: country,
+                //         zip: zip,
+                //         dob: dob
+                //     }))
+                //     setTimeout(() => {
+                //         navigation.navigate('OTP')
+                //     }, 300);
+                // } else {
+                //     Keyboard.dismiss()
+                //     setAlertMessage(response.data.messgae)
+                //     setTimeout(() => {
+                //         setAlertModal(true)
+                //     }, 300);
+                // }
+            }).catch(error => {
+                SimpleToast.show('Something went wrong')
+                console.log('registerUser-error', error)
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        }
+
+    };
+
     return (
         <SafeAreaView style={styles.mainContainer}>
 
@@ -149,10 +207,6 @@ const SignUp = ({ navigation }) => {
                             onSubmitEditing={() => {
                                 passwordRef.current.focus()
                             }}
-                            isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
-                            rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
-                            password={passwordVisible ? false : true}
                             keyBoardType={'number-pad'}
                         />
                         {/* <Text style={styles.non_editable}>
@@ -174,7 +228,7 @@ const SignUp = ({ navigation }) => {
                                 referalCodeRef.current.focus()
                             }}
                             isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
+                            rightIcon={passwordVisible ? Images.Show : Images.Hide}
                             rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
                             password={passwordVisible ? false : true}
                         />
@@ -188,8 +242,6 @@ const SignUp = ({ navigation }) => {
                             onSubmitEditing={() => {
                                 Keyboard.dismiss()
                             }}
-                            isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
                             customStyle={{}}
                         />
 
@@ -200,7 +252,7 @@ const SignUp = ({ navigation }) => {
                         label={"Sign Up"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}
-                        onPress={registerBtnClick}
+                        onPress={() => registerUser()}
                     />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>

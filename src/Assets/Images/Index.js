@@ -7,6 +7,8 @@ export const Images = {
     Menu: require('./menu.png'),
     DummyUser: require('./dummyUser.jpg'),
     Notification: require('./notification.png'),
+    Show: require('./show.png'),
+    Hide: require('./hide.png'),
     
 
 

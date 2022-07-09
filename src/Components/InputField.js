@@ -50,7 +50,7 @@ const InputField = props => {
         <Text>{label}</Text>
       }
       <View style={[styles.input, {
-        width: (leftIcon && !isRightIcon) ? '88%' : (leftIcon && isRightIcon) ? '76%' : '100%',
+        width: isRightIcon ? '88%' : '100%',
         justifyContent: multiline ? 'flex-start' : 'center'
       }]}>
         <TextInput
@@ -78,7 +78,7 @@ const InputField = props => {
             onPress={rightIconOnPress}
             activeOpacity={0.4}
           >
-            <Image source={rightIcon} style={[styles.rightIconStyle, rightIconStyle]} />
+            <Image source={rightIcon} style={[styles.rightIconStyle]} />
           </TouchableOpacity>
         </View>
       }
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
     //tintColor: colors.iconPrimary
   },
   rightIconStyle: {
-    height: 22,
-    width: 22,
+    height: 19,
+    width: 19,
     resizeMode: 'contain',
     tintColor: '#808080'
   },
