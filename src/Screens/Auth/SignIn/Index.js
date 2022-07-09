@@ -70,7 +70,7 @@ const SignIn = ({ navigation }) => {
                 setIsLoading(true)
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signin', config)
                 const loginResult = await response.json();
-                console.log("loginUser-response", loginResult);
+                console.log("loginUser-response", response);
                 if (response.status === 200) {
                     dispatch(userToken(loginResult?.token))
                     dispatch(loggedInData(loginResult?.data))
@@ -82,6 +82,9 @@ const SignIn = ({ navigation }) => {
                             routes: [{ name: 'HomeStack' }],
                         })
                     }, 300);
+                } else if (response.status === 401) {
+                    setIsLoading(false)
+                    SimpleToast.show(loginResult?.error?.message)
                 } else {
                     setIsLoading(false)
                     SimpleToast.show("Something went wrong")
@@ -166,7 +169,6 @@ const SignIn = ({ navigation }) => {
                     </View>
 
                     <AppButton
-                        gradient={true}
                         label={"Login"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}

@@ -28,14 +28,12 @@ const Splash = ({ navigation }) => {
                     index: 0,
                     routes: [{ name: 'HomeStack' }],
                 })
-            }, 500);
+            }, 1000);
         } else {
-            navigation.replace('OnBoarding')
+            setTimeout(() => {
+                navigation.replace('OnBoarding')
+            }, 1000);
         }
-
-        // setTimeout(() => {
-        //     navigation.replace('OnBoarding')
-        // }, 1500);
     }, [])
 
     return (

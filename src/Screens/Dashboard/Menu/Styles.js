@@ -5,10 +5,20 @@ import colors from '../../../Assets/Colors/Index';
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: colors.White
     },
-    
+    btnStyle: {
+        backgroundColor: colors.Primary,
+        color: colors.Black,
+        position: 'absolute',
+        bottom: 20
+    },
+    label: {
+        color: colors.Black,
+        fontWeight: '500',
+        fontSize: 16,
+    },
 })
 
 

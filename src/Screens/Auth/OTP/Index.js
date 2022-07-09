@@ -26,6 +26,8 @@ import Loader from '../../../Components/Loader';
 
 const OTP = ({ navigation, route }) => {
 
+    const userId = route?.params?.userId
+
     let randomOTP = '090078'
     const [otp, setOtp] = useState('')
     const [isMsgModal, setIsMsgModal] = useState(false)
@@ -34,137 +36,89 @@ const OTP = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isVerified, setIsVerified] = useState(false)
 
-    useEffect(() => {
-        console.log(route);
-    }, [])
 
     const verifyOTP = async () => {
 
+        const config = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: userId,
+                verification_code: otp
+            })
+        };
+
         if (otp == '') {
-            setIsMsgModal(true)
-            setMsg('Please enter OTP to verify.')
-        } else if (otp != randomOTP) {
-            setIsLoading(true)
-            setTimeout(() => {
-                setIsLoading(false)
-                setIsMsgModal(true)
-                setMsg("Invalid OTP")
-            }, 2000);
+            SimpleToast.show('Enter verification code')
         } else {
-            setIsLoading(true)
-            setTimeout(() => {
+            try {
+                setIsLoading(true)
+                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/verify_user_code', config)
+                console.log(response.status);
+                const verifyResult = await response.json();
+                console.log("verifyOTP-response", verifyResult);
+                if (response.status === 200) {
+                    setIsLoading(false)
+                    SimpleToast.show(verifyResult?.message)
+                    setTimeout(() => {
+                        navigation.replace('SignIn')
+                    }, 300);
+                } else {
+                    setIsLoading(false)
+                    SimpleToast.show(verifyResult?.message)
+
+                }
+            } catch (error) {
                 setIsLoading(false)
-                setIsVerified(true)
-                setTimeout(() => {
-                    route?.params?.routeName === 'ForgotPassword' ?
-                        navigation.navigate('ResetPassword')
-                        :
-                        navigation.navigate('HomeStack')
-                }, 1500);
-            }, 2000);
+                console.log("registerUser-error", error);
+            }
 
         }
 
     };
 
-    const onReceiveOTP = (code) => {
-        console.log(code);
-        setOtp(code)
-    }
-
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <TouchableOpacity
-                style={styles.back}
-                activeOpacity={0.4}
-                onPress={() => {
-                    Keyboard.dismiss()
-                    setTimeout(() => {
-                        navigation.goBack()
-                    }, 25);
-                }}>
-                <Image
-                    source={Images.arrow}
-                    style={styles.arrow}
-                />
-            </TouchableOpacity>
-            <Image
-                source={Images.RightEllipse}
-                style={styles.rightEclipse}
-            />
 
 
 
-            <KeyboardAwareScrollView
-                keyboardShouldPersistTaps='always'
-                contentContainerStyle={styles.scrollView}>
+            <View style={{
+                paddingHorizontal: 20,
+                paddingBottom: 20
+            }}>
 
-                {/* <Text style={styles.otp}>{isLoading ? Strings.verified : Strings.otp}</Text>
-                <Text style={styles.otpGuide}>{isLoading ? Strings.verify_msg : Strings.otp_guide}</Text> */}
+                <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps='always'
+                    showsVerticalScrollIndicator={false} >
+                    <Image
+                        source={Images.Logo}
+                        style={styles.loginIcon}
+                    />
+                    <Text style={styles.Verify}>{'Verify OTP'}</Text>
+                    <Text style={styles.credentails}>{'Please enter the code below, we sent on your number.'}</Text>
 
-                {
-                    isVerified ?
-                        <View style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '47%'
-                        }}>
-                            <View style={styles.verifiedView}>
-                                <View style={styles.innerView}>
-                                    <Image
-                                        source={Images.tick}
-                                        style={styles.checked}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                        :
-                        <>
-                            <Image
-                                source={route?.params?.routeName === 'ForgotPassword' ? Images.authenticationTwo : Images.authentication}
-                                style={route?.params?.routeName === 'ForgotPassword' ? styles.authenticationIconTwo : styles.authenticationIcon}
-                            />
+                    <OTPInput
+                        onComplete={(code) => {
+                            setOtp(code)
+                        }}
+                    />
 
-                            {/* ------------------------------OTPInput--------------------------- */}
+                    <AppButton
+                        label={"Verify"}
+                        style={styles.btnStyle}
+                        labelStyle={styles.label}
+                        onPress={() => verifyOTP()}
+                    />
 
-                            <OTPInput
-                                onComplete={onReceiveOTP}
-                            />
 
-                            <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
-                                <Text style={styles.code}>{}</Text>
-                                <TouchableOpacity
-                                    activeOpacity={0.4}>
-                                    <Text style={styles.sendAgain}>{}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </>
-                }
 
-                <AppButton
-                    gradient={true}
-                    label={"Continue"}
-                    style={styles.btnStyle}
-                    labelStyle={styles.label}
-                    onPress={() => {
-                        verifyOTP()
-                    }}
-                />
+                </KeyboardAwareScrollView>
 
-            </KeyboardAwareScrollView>
-
+            </View>
             <Loader
                 visible={isLoading}
             />
-            {/*}
-            <MsgModal
-                visible={isMsgModal}
-                msg={msg}
-                onPress={() => {
-                    setIsMsgModal(false)
-                }}
-            />
-            */}
+
         </SafeAreaView>
 
 

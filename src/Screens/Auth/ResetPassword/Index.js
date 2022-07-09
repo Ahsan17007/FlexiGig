@@ -132,7 +132,6 @@ const ResetPassword = ({ navigation }) => {
 
 
                 <AppButton
-                    gradient={true}
                     label={"Confirm"}
                     style={styles.btnStyle}
                     labelStyle={styles.label}

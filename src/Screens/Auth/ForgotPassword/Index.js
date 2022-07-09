@@ -67,7 +67,7 @@ const ForgotPassword = ({ navigation }) => {
 
     // };
 
-    const loginBtnClick = async () => {
+    const sendCode = async () => {
         //call-api 
         //handle
     }
@@ -91,8 +91,8 @@ const ForgotPassword = ({ navigation }) => {
 
 
 
-                    <Text style={styles.Login}>{'Login'}</Text>
-                    <Text style={styles.credentails}>{'Please enter your credentials'}</Text>
+                    <Text style={styles.Login}>{'Forgot Password'}</Text>
+                    <Text style={styles.credentails}>{'Please enter your number to reset your password.'}</Text>
 
                     <View style={{
                         marginVertical: 24
@@ -118,11 +118,10 @@ const ForgotPassword = ({ navigation }) => {
                     </View>
 
                     <AppButton
-                        gradient={true}
-                        label={"Login"}
+                        label={"Send Code"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}
-                        onPress={loginBtnClick}
+                        onPress={() => sendCode()}
                     />
 
 
