@@ -7,19 +7,18 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     Keyboard,
-    ScrollView
+    ScrollView,
+    TextInput
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
 import Preference from 'react-native-preference';
 
-// --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index';
-import { TextInput } from 'react-native-gesture-handler';
 import { CountryModalProvider } from 'react-native-country-picker-modal';
 import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
 
@@ -195,7 +194,6 @@ const SignUp = ({ navigation }) => {
                                     style={{...styles.credentails, textAlignVertical:'center', height:'100%', borderBottomColor:'transparent', borderBottomWidth:0}}
                                 />
                             </View>
-
 
                         </View>
 
