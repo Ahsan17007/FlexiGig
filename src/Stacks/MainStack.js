@@ -9,6 +9,7 @@ import SignUp from '../Screens/Auth/SignUp/Index';
 import ForgotPassword from '../Screens/Auth/ForgotPassword/Index';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
+import OTP from '../Screens/Auth/OTP/Index';
 
 
 
@@ -26,6 +27,7 @@ const MainStack = () => {
                 <Stack.Screen name="OnBoarding" component={OnBoarding} />
                 <Stack.Screen name="SignIn" component={SignIn} />
                 <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="OTP" component={OTP} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                 <Stack.Screen name="AuthStack" component={AuthStack} />
                 <Stack.Screen name="HomeStack" component={HomeStack} />

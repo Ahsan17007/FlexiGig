@@ -20,9 +20,8 @@ import AppButton from '../../../Components/AppBtn'
 import OTPInput from '../../../Components/OTPInput'
 import colors from '../../../Assets/Colors/Index'
 // import Strings from '../../../Assets/Strings/Index';
-// import Loader from '../../../Components/Loader';
+import Loader from '../../../Components/Loader';
 // import MsgModal from '../../../Components/MsgModal';
-
 
 
 const OTP = ({ navigation, route }) => {
@@ -155,6 +154,7 @@ const OTP = ({ navigation, route }) => {
             <Loader
                 visible={isLoading}
             />
+            {/*}
             <MsgModal
                 visible={isMsgModal}
                 msg={msg}
@@ -162,6 +162,7 @@ const OTP = ({ navigation, route }) => {
                     setIsMsgModal(false)
                 }}
             />
+            */}
         </SafeAreaView>
 
 

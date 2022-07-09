@@ -81,6 +81,7 @@ const SignUp = ({ navigation }) => {
     const registerUser = async () => {
 
         const phoneNumber = countryCode.concat(phone)
+        navigation.navigate('OTP')
 
         const config = {
             method: 'POST',
