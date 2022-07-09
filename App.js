@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 import MainStack from './src/Stacks/MainStack';
-
+import Home from './src/Screens/Dashboard/Home/Index';
 
 
 
@@ -25,7 +25,7 @@ const App = () => {
 
 
   return (
-    <MainStack />
+    <Home />
 
   );
 };
