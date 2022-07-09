@@ -16,19 +16,17 @@ import Preference from 'react-native-preference';
 
 // --------------------------------------------
 import styles from './Styles'
-// import Images from '../../../Assets/Images/Index'
-// import AppButton from '../../../Components/AppBtn'
-// import InputField from '../../../Components/InputField'
-// import colors from '../../../Assets/Colors/Index'
-// import Strings from '../../../Assets/Strings/Index';
-// import Loader from '../../../Components/Loader';
+import Images from '../../../Assets/Images/Index'
+import AppButton from '../../../Components/AppBtn'
+import InputField from '../../../Components/InputField'
+import Loader from '../../../Components/Loader';
 // import { isLoggedIn } from '../../../Redux/Actions/HasSession';
 
 
 
 const SignIn = ({ navigation }) => {
 
-        
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -85,136 +83,100 @@ const SignIn = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <Text>hi</Text>
-            {/* <TouchableOpacity
-                style={styles.back}
-                activeOpacity={0.4}
-                onPress={() => {
-                    Keyboard.dismiss()
-                    setTimeout(() => {
-                        navigation.goBack()
-                    }, 25);
-                }}>
-                <Image
-                    source={Images.arrow}
-                    style={styles.arrow}
-                />
-            </TouchableOpacity>
-            <Image
-                source={Images.RightEllipse}
-                style={styles.rightEclipse}
-            /> */}
 
-
-{/* 
-            <KeyboardAwareScrollView
+            <View
                 keyboardShouldPersistTaps='always'
-                contentContainerStyle={styles.scrollView}
-                extraHeight={50}>
+                style={{ flex: 1, padding: 12 }}>
 
-                <Text style={styles.signInText}>{Strings.SignIn}</Text>
-                <Text style={styles.Login}>{Strings.Login}</Text>
+                <View style={{
+                    flex: 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    marginTop:20
+                }}>
+                    <Image
+                        source={Images.Logo}
+                        style={styles.loginIcon}
+                    />
+                </View>
 
-                <Image
-                    source={Images.login}
-                    style={styles.loginIcon}
-                />
+                <View style={{
+                    flex: 8,
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignContent: 'center'
+                }}> 
+                    <Text style={styles.Login}>{'Login'}</Text>
+                    <Text style={styles.credentails}>{'Please enter your credentials'}</Text>
 
+                    <InputField
+                        onChangeText={val => setEmail(val)}
+                        value={email}
+                        leftIcon={Images.email}
+                        placeholder={"Email"}
+                        returnKeyType={'next'}
+                        fieldRef={emailRef}
+                        onSubmitEditing={() => {
+                            passwordRef.current.focus()
+                        }}
+                        customStyle={{ marginTop: 56 }}
+                    />
 
-
-                <InputField
-                    onChangeText={val => setEmail(val)}
-                    value={email}
-                    leftIcon={Images.email}
-                    placeholder={"Email"}
-                    returnKeyType={'next'}
-                    fieldRef={emailRef}
-                    onSubmitEditing={() => {
-                        passwordRef.current.focus()
-                    }}
-                    customStyle={{ marginTop: 56 }}
-                />
-
-                <InputField
-                    onChangeText={val => setPassword(val)}
-                    value={password}
-                    leftIcon={Images.password}
-                    placeholder={"Password"}
-                    returnKeyType={'done'}
-                    fieldRef={passwordRef}
-                    onSubmitEditing={() => {
-                        Keyboard.dismiss()
-                    }}
-                    isRightIcon={true}
-                    rightIcon={passwordVisible ? Images.show : Images.hide}
-                    rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
-                    password={passwordVisible ? false : true}
-                    customStyle={{ marginTop: 16 }}
-                />
-                <TouchableOpacity
-                    activeOpacity={0.4}
-                    onPress={() => navigation.navigate('ForgotPassword')}
-                >
-                    <Text style={styles.forgotText}>{Strings.forgot}</Text>
-                </TouchableOpacity>
-
-
-
-                <AppButton
-                    gradient={true}
-                    label={"SIGNIN"}
-                    style={styles.btnStyle}
-                    labelStyle={styles.label}
-                    onPress={() => SignIn()}
-                />
-
-                <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
-                    <Text style={styles.haveAccount}>{Strings.no_Account}</Text>
+                    <InputField
+                        onChangeText={val => setPassword(val)}
+                        value={password}
+                        leftIcon={Images.password}
+                        placeholder={"Password"}
+                        returnKeyType={'done'}
+                        fieldRef={passwordRef}
+                        onSubmitEditing={() => {
+                            Keyboard.dismiss()
+                        }}
+                        isRightIcon={true}
+                        rightIcon={passwordVisible ? Images.show : Images.hide}
+                        rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
+                        password={passwordVisible ? false : true}
+                        customStyle={{ marginTop: 16 }}
+                    />
                     <TouchableOpacity
                         activeOpacity={0.4}
-                        onPress={() => {
-                            Keyboard.dismiss()
-                            navigation.goBack()
-                        }}>
-                        <Text style={styles.signIn}>{Strings.Signup}</Text>
+                        onPress={() => navigation.navigate('ForgotPassword')}
+                    >
+                        <Text style={styles.forgotText}>{'Forgot Password'}</Text>
                     </TouchableOpacity>
-                </View>
-                <Text style={styles.OR}>{Strings.OR}</Text>
-                <Text style={styles.social}>{Strings.Social}</Text>
 
-                <View style={{ flexDirection: 'row', marginTop: 5, alignSelf: 'center' }}>
-                    <View style={styles.outer}>
-                        <View style={styles.inner}>
-                            <Image
-                                source={Images.google}
-                                style={styles.socialIcon}
-                            />
-                        </View>
-                    </View>
 
-                    <View style={styles.outer}>
-                        <View style={styles.inner}>
-                            <Image
-                                source={Images.facebook}
-                                style={styles.socialIcon}
-                            />
-                        </View>
-                    </View>
 
-                    <View style={styles.outer}>
-                        <View style={styles.inner}>
-                            <Image
-                                source={Images.apple}
-                                style={styles.socialIcon}
-                            />
-                        </View>
+                    <AppButton
+                        gradient={true}
+                        label={"SIGNIN"}
+                        style={styles.btnStyle}
+                        labelStyle={styles.label}
+                        onPress={() => SignIn()}
+                    />
+
+                    <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
+                        <Text style={styles.haveAccount}>{`Don't have an account?`}</Text>
+                        <TouchableOpacity
+                            activeOpacity={0.4}
+                            onPress={() => {
+                                Keyboard.dismiss()
+                                navigation.goBack()
+                            }}>
+                            <Text style={styles.signIn}>{` Register`}</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAwareScrollView> */}
 
-            {/* <Loader
+
+
+
+            </View>
+
+            {<Loader
                 visible={isLoading}
-            /> */}
+            />}
             {/* <MsgModal
                 visible={isMsgModal}
                 msg={msg}

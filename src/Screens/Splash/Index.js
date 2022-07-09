@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
+import colors from '../../Assets/Colors/Index'
 
 
 const Splash = ({ navigation }) => {
@@ -33,10 +34,11 @@ const Splash = ({ navigation }) => {
         // } else {
         //     navigation.replace('OnBoarding')
         // }
-
-        setTimeout(() => {
-            navigation.replace('AuthStack')
-        }, 1500);
+        
+                setTimeout(() => {
+                    navigation.replace('AuthStack')
+                }, 1500);
+                
     }, [])
 
     return (
@@ -46,11 +48,6 @@ const Splash = ({ navigation }) => {
                 source={Images.Logo}
                 style={styles.logo}
             />
-
-            {/* <Image
-                source={Images.LeftEllipse}
-                style={styles.leftEclipse}
-            /> */}
         </View>
     )
 }
