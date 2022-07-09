@@ -7,8 +7,14 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor:colors.White,
+        padding:'10%'
     },
-    
+
+    logo:{
+        width:'100%',
+        height:'40%',
+    }
 })
 
 
