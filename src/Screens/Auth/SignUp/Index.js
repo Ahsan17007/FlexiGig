@@ -46,43 +46,89 @@ const SignUp = ({ navigation }) => {
     const passwordRef = useRef();
     const referalCodeRef = useRef();
 
-    useEffect(()=>{
-        phoneRef.current.focus();
-    },[])
+    // useEffect(() => {
+    //     phoneRef.current.focus();
+    // }, [])
 
     if (needToFetch) {
         fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             .then(r => r.json())
             .then(res => {
 
-                res.data.map(v=>{
+                res.data.map(v => {
                     getAllCountries().then((countries) => {
                         const country = countries.find((c) => (c.name === v.attributes.name));
                         console.log('country', country);
                         setFetchedCountries([...fetchedCountries, country.cca2])
                     });
-                    
+
                 })
 
                 setNeedToFetch(false)
             })
     }
     else {
-        console.log(fetchedCountries);
+        // console.log(fetchedCountries);
     }
 
-    const registerBtnClick = async () => {
-        //call-api 
-        //handle
-        const phoneNumber = countryCode.concat(phone)
-    }
 
     const onCountrySelect = (country) => {
-        console.log(country);
         setCountryCode("+" + country.callingCode)
         setCountry(country.cca2)
         phoneRef.current.focus();
     }
+
+    const registerUser = async () => {
+
+        const phoneNumber = countryCode.concat(phone)
+
+        const config = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone_number: phoneNumber,
+                password: password,
+                country_id: '319962a1-bedd-48ea-b371-5aaef626a2dc'
+            })
+        };
+
+        if (phone == '' && password == '') {
+            SimpleToast.show('All fields are mandatory')
+        } else if (phone == '') {
+            SimpleToast.show('Phone Number Required')
+        } else if (password == '') {
+            SimpleToast.show('Password Required')
+        } else {
+            try {
+                setIsLoading(true)
+                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signup', config)
+                const registerResult = await response.json();
+                console.log("registerUser-response", registerResult);
+                // if (response.status === 200) {
+                //     dispatch(userToken(loginResult?.token))
+                //     dispatch(loggedInData(loginResult?.data))
+                    setIsLoading(false)
+                //     SimpleToast.show("Login Successfull")
+                //     setTimeout(() => {
+                //         navigation.reset({
+                //             index: 0,
+                //             routes: [{ name: 'HomeStack' }],
+                //         })
+                //     }, 300);
+                // } else {
+                //     setIsLoading(true)
+                //     SimpleToast.show("Something went wrong")
+                // }
+
+
+            } catch (error) {
+                setIsLoading(false)
+                console.log("registerUser-error", error);
+            }
+
+        }
+
+    };
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -119,7 +165,7 @@ const SignUp = ({ navigation }) => {
                             <View style={{ justifyContent: 'center' }}>
 
                                 {
-                                    fetchedCountries.length>0 ? 
+                                    fetchedCountries.length > 0 ?
                                         <CountryModalProvider>
                                             <CountryPicker
                                                 countryCode={fetchedCountries[0]}
@@ -141,11 +187,11 @@ const SignUp = ({ navigation }) => {
                                             />
                                         </CountryModalProvider>
 
-                                        : 
+                                        :
 
                                         <View></View>
-                                    }
-                                
+                                }
+
 
 
 
@@ -171,16 +217,15 @@ const SignUp = ({ navigation }) => {
                         <Text style={styles.inputtitle}>{'Phone Number'}</Text>
 
                         <View style={[styles.non_editable, {
-                            flex: 1,
                             flexDirection: 'row',
-                            alignItems:'center'
+                            alignItems: 'center',
                         }]}>
 
-                            <View style={{  }}>
-                                <TextInput style={styles.credentails} editable={false}>{countryCode}</TextInput>                                
+                            <View style={{}}>
+                                <Text style={styles.credentails} editable={false}>{countryCode}</Text>
                             </View>
 
-                            <View style={{ marginLeft: 2, height:'100%', flexDirection:'column', justifyContent:'center'}}>
+                            <View style={{ marginLeft: 2, height: 52, flexDirection: 'column', justifyContent: 'center' }}>
 
                                 <TextInput
                                     value={phone}
@@ -191,7 +236,7 @@ const SignUp = ({ navigation }) => {
                                         passwordRef.current.focus()
                                     }}
                                     keyboardType={'phone-pad'}
-                                    style={{...styles.credentails, textAlignVertical:'center', height:'100%', borderBottomColor:'transparent', borderBottomWidth:0}}
+                                    style={{ ...styles.credentails, textAlignVertical: 'center', height: '100%', borderBottomColor: 'transparent', borderBottomWidth: 0 }}
                                 />
                             </View>
 
@@ -210,7 +255,7 @@ const SignUp = ({ navigation }) => {
                                 referalCodeRef.current.focus()
                             }}
                             isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
+                            rightIcon={passwordVisible ? Images.Show : Images.Hide}
                             rightIconOnPress={() => setPasswordVisible(!passwordVisible)}
                             password={passwordVisible ? false : true}
                         />
@@ -236,7 +281,7 @@ const SignUp = ({ navigation }) => {
                         label={"Sign Up"}
                         style={styles.btnStyle}
                         labelStyle={styles.label}
-                        onPress={registerBtnClick}
+                        onPress={()=>registerUser()}
                     />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>
@@ -255,8 +300,9 @@ const SignUp = ({ navigation }) => {
 
             </View>
 
-            <Loader visible={needToFetch}/>
+            {/* <Loader visible={needToFetch} /> */}
 
+            <Loader visible={isLoading} />
 
 
 

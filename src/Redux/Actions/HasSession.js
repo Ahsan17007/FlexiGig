@@ -1,19 +1,18 @@
-import { HAS_SESSION, REGISTRATION_DATA, LOGOUT } from '../Types/Index'
+import { HAS_SESSION, LOGGEDIN_USER_DATA, LOGOUT } from '../Types/Index'
 
 
-const isLoggedIn = (payload) => ({
+const userToken = (payload) => ({
     type: HAS_SESSION,
     payload
 })
 
-const registerUser = (payload) => ({
-    type: REGISTRATION_DATA,
+const loggedInData = (payload) => ({
+    type: LOGGEDIN_USER_DATA,
     payload
 })
-
 const onLogout = (payload) => ({
     type: LOGOUT
 })
 
 
-export { isLoggedIn, registerUser, onLogout }
+export { userToken, loggedInData, onLogout }

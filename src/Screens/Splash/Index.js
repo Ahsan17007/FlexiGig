@@ -15,27 +15,27 @@ import colors from '../../Assets/Colors/Index'
 
 const Splash = ({ navigation }) => {
 
-    // const { loginUserData } = useSelector(state => state.Auth)
+    const { token } = useSelector(state => state.Auth)
 
 
     useEffect(() => {
 
 
-        // if (loginUserData) {
-        //     console.log("if");
-        //     setTimeout(() => {
-        //         navigation.reset({
-        //             index: 0,
-        //             routes: [{ name: 'HomeStack' }],
-        //         })
-        //     }, 1500);
-        // } else {
-        //     navigation.replace('OnBoarding')
-        // }
-
-        setTimeout(() => {
+        if (token) {
+            console.log("if");
+            setTimeout(() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'HomeStack' }],
+                })
+            }, 500);
+        } else {
             navigation.replace('OnBoarding')
-        }, 1500);
+        }
+
+        // setTimeout(() => {
+        //     navigation.replace('OnBoarding')
+        // }, 1500);
     }, [])
 
     return (
