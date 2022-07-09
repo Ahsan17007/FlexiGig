@@ -23,7 +23,7 @@ const Academy = ({ navigation }) => {
     return (
         <View style={styles.mainContainer}>
 
-            <Text>Home</Text>
+            <Text>Academy</Text>
         </View>
     )
 }

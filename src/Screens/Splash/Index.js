@@ -22,7 +22,7 @@ const Splash = ({ navigation }) => {
 
 
         if (token) {
-            console.log("if");
+            console.log(token);
             setTimeout(() => {
                 navigation.reset({
                     index: 0,

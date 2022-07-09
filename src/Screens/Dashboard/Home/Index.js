@@ -9,11 +9,10 @@ import {
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-// --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import EarningHistory from '../../../Components/EarningHistory'
-// import Strings from '../../Assets/Strings/Index'
+
 
 const earningHistory = [
     {
@@ -44,11 +43,36 @@ const earningHistory = [
 
 const Home = ({ navigation }) => {
 
+
+    const { token } = useSelector(state => state.Auth)
+
+    useEffect(async ()=>{
+        // This is just for test 
+        // Check logs by Ahsan Iqbal 10-07-2022
+        // 
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}`}
+        };
+
+            try {
+                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/work_experiences', config)
+                const registerResult = await response.json();
+                console.log("registerUser-dashboard", registerResult);
+                
+            } catch (error) {
+                console.log("registerUser-dashboard-error", error);
+            }
+
+        
+    }, [])
+
     const renderItem = ({ item }) => {
         return (
             <EarningHistory Item={item} />
         )
     }
+
 
     const listHeaderComponent = () => {
         return (
@@ -168,7 +192,7 @@ const Home = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     keyExtractor={item => item.id}
                     renderItem={(item) => renderItem(item)}
-                    style={{ width: '100%'}}
+                    style={{ width: '100%' }}
                     contentContainerStyle={{ paddingBottom: 20 }}
                     ItemSeparatorComponent={() =>
                         <View style={{ height: 12 }}>

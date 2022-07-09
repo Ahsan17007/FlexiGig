@@ -23,7 +23,7 @@ const Universe = ({ navigation }) => {
     return (
         <View style={styles.mainContainer}>
 
-            <Text>Home</Text>
+            <Text>Universe</Text>
         </View>
     )
 }

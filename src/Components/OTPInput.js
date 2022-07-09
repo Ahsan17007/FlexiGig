@@ -187,45 +187,33 @@ export default class OTPInput extends Component {
                         shadowColor: '#000',
                         shadowOffset: { width: 2, height: 0 },
 
-                    <FloatingLabelInputField
-                        fieldRef={ref => this.fieldCodeDigOne = ref}
-                        hideLabel={true}
-                        onParentPress={() => { if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus() }}
-                        value={codeDigOne}
-                        inputContainer={{
-                            width: '20%',
-                            height: 50,
-                            paddingHorizontal: 0,
-                            backgroundColor: colors.white,
-                            borderRadius: 1,
-                            elevation: 1,
-                            shadowOpacity: 0.4,
-                            shadowColor: '#000',
-                            shadowOffset: { width: 1.5, height: 0 },
-
-                        }}
-                        inputStyle={{ fontSize: 24, textAlign: 'center' }}
-                        autoCapitalize={'none'}
-                        placeholder={''}
-                        caretHidden={true}
-                        keyboardType={'numeric'}
-                        onChangeText={(text) => {
-                            if (text.length <= 1) this.setState({ codeDigOne: text }, () => {
-                                if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
-                            })
-                        }}
-                        onFocus={(event) => {
-                            this.setState({ codeDigOne: '', codeDigTwo: '', codeDigThree: '', codeDigFour: '', codeDigOneFocus: true })
-                        }}
-                        onKeyPress={(event) => {
-                            if (event.key == 'Backspace') {
-                                this.setState({ codeDigOne: '' })
-                            } else if (/^[0-9]/g.test(event.key)) {
-                                // if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                    }}
+                    inputStyle={{ fontSize: 24, textAlign: 'center' }}
+                    autoCapitalize={'none'}
+                    placeholder={''}
+                    caretHidden={true}
+                    keyboardType={'numeric'}
+                    onChangeText={(text) => {
+                        if (text.length < 2) this.setState({ codeDigFour: text }, () => {
+                            if (this.fieldCodeDigFour) {
+                                Keyboard.dismiss()
+                                onComplete(this.getCode())
                             }
-                        }}
-                        inputAccessoryViewID={inputAccessoryViewID}
-                    />
+                        })
+                    }}
+                    onFocus={() => {
+                        if (codeDigTwo == '') if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                        this.setState({ codeDigFour: '' })
+                    }}
+                    onKeyPress={(event) => {
+                        if (event.key == 'Backspace') {
+                            this.setState({ codeDigFour: '' })
+                            if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
+                        } else if (/^[0-9]/g.test(event.key)) {
+                            // if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus()
+                        }
+                    }}
+                    inputAccessoryViewID={inputAccessoryViewID}/>
             </View>
 
         )

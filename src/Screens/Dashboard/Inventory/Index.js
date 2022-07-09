@@ -23,7 +23,7 @@ const Inventory = ({ navigation }) => {
     return (
         <View style={styles.mainContainer}>
 
-            <Text>Home</Text>
+            <Text>Inventory</Text>
         </View>
     )
 }
