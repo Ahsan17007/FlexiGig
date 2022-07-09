@@ -121,10 +121,10 @@ export default class FloatingLabelInputField extends Component {
 const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
-        height: 55,
+        height: 60,
         alignItems: 'center',
         // backgroundColor: 'white',
-        margin: 20,
+        margin: 4,
         paddingHorizontal: 15,
         // borderBottomWidth:1,
         // borderRadius: 8,

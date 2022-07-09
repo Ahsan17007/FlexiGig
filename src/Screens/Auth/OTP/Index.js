@@ -67,6 +67,11 @@ const OTP = ({ navigation, route }) => {
 
     };
 
+    const onReceiveOTP = (code) => {
+        console.log(code);
+        setOtp(code)
+    }
+
     return (
         <SafeAreaView style={styles.mainContainer}>
             <TouchableOpacity
@@ -123,10 +128,7 @@ const OTP = ({ navigation, route }) => {
                             {/* ------------------------------OTPInput--------------------------- */}
 
                             <OTPInput
-                                onComplete={(code) => {
-                                    console.log(code);
-                                    setOtp(code)
-                                }}
+                                onComplete={onReceiveOTP}
                             />
 
                             <View style={{ flexDirection: 'row', marginTop: 15, alignSelf: 'center' }}>

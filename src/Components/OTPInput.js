@@ -9,6 +9,7 @@ import {
     Keyboard,
 } from 'react-native';
 import colors from '../Assets/Colors/Index';
+import Fonts from '../Assets/Fonts/Index'
 
 import FloatingLabelInputField from './FloatingLabelInputField'
 
@@ -50,173 +51,188 @@ export default class OTPInput extends Component {
     render() {
         const { codeDigOne, codeDigTwo, codeDigThree, codeDigFour } = this.state
         const { onComplete } = this.props
+
         return (
-            <View style={{ flexDirection: 'row', justifyContent: "space-evenly", marginTop: 20, width: '100%' }}>
-                <FloatingLabelInputField
-                    fieldRef={ref => this.fieldCodeDigOne = ref}
-                    hideLabel={true}
-                    onParentPress={() => { if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus() }}
-                    value={codeDigOne}
-                    inputContainer={{
-                        width: '20%',
-                        height: 50,
-                        paddingHorizontal: 0,
-                        backgroundColor: colors.white,
-                        borderRadius: 8,
-                        elevation: 2,
-                        shadowOpacity: 0.5,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 2, height: 0 },
 
-                    }}
-                    inputStyle={{ fontSize: 24, textAlign: 'center' }}
-                    autoCapitalize={'none'}
-                    placeholder={''}
-                    caretHidden={true}
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => {
-                        if (text.length <= 1) this.setState({ codeDigOne: text }, () => {
-                            if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
-                        })
-                    }}
-                    onFocus={(event) => {
-                        this.setState({ codeDigOne: '', codeDigTwo: '', codeDigThree: '', codeDigFour: '', codeDigOneFocus: true })
-                    }}
-                    onKeyPress={(event) => {
-                        if (event.key == 'Backspace') {
-                            this.setState({ codeDigOne: '' })
-                        } else if (/^[0-9]/g.test(event.key)) {
-                            // if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
-                        }
-                    }}
-                    inputAccessoryViewID={inputAccessoryViewID}
-                />
-                <FloatingLabelInputField
-                    fieldRef={ref => this.fieldCodeDigTwo = ref}
-                    onParentPress={() => { if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus() }}
-                    value={codeDigTwo}
-                    hideLabel={true}
-                    inputContainer={{
-                        width: '20%',
-                        height: 50,
-                        paddingHorizontal: 0,
-                        backgroundColor: colors.white,
-                        borderRadius: 8,
-                        elevation: 2,
-                        shadowOpacity: 0.5,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 2, height: 0 },
+            <View style={{ flex: 1, justifyContent:'center' }}>
 
-                    }} inputStyle={{ fontSize: 24, textAlign: 'center' }}
-                    autoCapitalize={'none'}
-                    placeholder={''}
-                    caretHidden={true}
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => {
-                        if (text.length < 2) this.setState({ codeDigTwo: text }, () => {
-                            // if(onComplete && typeof onComplete == 'function') onComplete(this.getCode())
-                            if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
-                        })
-                    }}
-                    onFocus={() => {
-                        if (codeDigOne == '') if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus()
-                        this.setState({ codeDigTwo: '', codeDigThree: '', codeDigFour: '', })
-                    }}
-                    onKeyPress={(event) => {
-                        if (event.key == 'Backspace') {
-                            this.setState({ codeDigTwo: '' })
-                            if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus()
-                        } else if (/^[0-9]/g.test(event.key)) {
-                            // if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
-                        }
-                    }}
-                    inputAccessoryViewID={inputAccessoryViewID}
-                />
-                <FloatingLabelInputField
-                    fieldRef={ref => this.fieldCodeDigThree = ref}
-                    onParentPress={() => { if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus() }}
-                    value={codeDigThree}
-                    hideLabel={true}
-                    inputContainer={{
-                        width: '20%',
-                        height: 50,
-                        paddingHorizontal: 0,
-                        backgroundColor: colors.white,
-                        borderRadius: 8,
-                        elevation: 2,
-                        shadowOpacity: 0.5,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 2, height: 0 },
+                <Text style={{
+                    fontFamily:Fonts.Bold,
+                    color: colors.Black,
+                    textAlign:'center',
+                    margin:16,
+                    fontSize:24
+                }}>{'Enter 4 digit OTP'}</Text>
 
-                    }}
-                    inputStyle={{ fontSize: 24, textAlign: 'center' }}
-                    autoCapitalize={'none'}
-                    placeholder={''}
-                    caretHidden={true}
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => {
-                        if (text.length < 2) this.setState({ codeDigThree: text }, () => {
-                            if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus()
-                        })
-                    }}
-                    onFocus={() => {
-                        if (codeDigTwo == '') if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
-                        this.setState({ codeDigThree: '', codeDigFour: '' })
-                    }}
-                    onKeyPress={(event) => {
-                        if (event.key == 'Backspace') {
-                            this.setState({ codeDigThree: '' })
-                            if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
-                        } else if (/^[0-9]/g.test(event.key)) {
-                            // if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus()
-                        }
-                    }}
-                    inputAccessoryViewID={inputAccessoryViewID}
-                />
-                <FloatingLabelInputField
-                    fieldRef={ref => this.fieldCodeDigFour = ref}
-                    onParentPress={() => { if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus() }}
-                    value={codeDigFour}
-                    hideLabel={true}
-                    inputContainer={{
-                        width: '20%',
-                        height: 50,
-                        paddingHorizontal: 0,
-                        backgroundColor: colors.white,
-                        borderRadius: 8,
-                        elevation: 2,
-                        shadowOpacity: 0.5,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 2, height: 0 },
+                <View style={{ flexDirection: 'row', justifyContent: "center", marginTop: 20, width: '100%' }}>
 
-                    }}
-                    inputStyle={{ fontSize: 24, textAlign: 'center' }}
-                    autoCapitalize={'none'}
-                    placeholder={''}
-                    caretHidden={true}
-                    keyboardType={'numeric'}
-                    onChangeText={(text) => {
-                        if (text.length < 2) this.setState({ codeDigFour: text }, () => {
-                            if (onComplete && typeof onComplete == 'function') onComplete(this.getCode())
-                            // if (this.fieldCodeDigFive) this.fieldCodeDigFive.focus()
-                        })
-                    }}
-                    onFocus={() => {
-                        if (codeDigThree == '') if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
-                        this.setState({ codeDigFour: '' })
-                    }}
-                    onKeyPress={(event) => {
-                        if (event.key == 'Backspace') {
+                    <FloatingLabelInputField
+                        fieldRef={ref => this.fieldCodeDigOne = ref}
+                        hideLabel={true}
+                        onParentPress={() => { if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus() }}
+                        value={codeDigOne}
+                        inputContainer={{
+                            width: '20%',
+                            height: 50,
+                            paddingHorizontal: 0,
+                            backgroundColor: colors.white,
+                            borderRadius: 1,
+                            elevation: 1,
+                            shadowOpacity: 0.4,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 1.5, height: 0 },
+
+                        }}
+                        inputStyle={{ fontSize: 24, textAlign: 'center' }}
+                        autoCapitalize={'none'}
+                        placeholder={''}
+                        caretHidden={true}
+                        keyboardType={'numeric'}
+                        onChangeText={(text) => {
+                            if (text.length <= 1) this.setState({ codeDigOne: text }, () => {
+                                if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                            })
+                        }}
+                        onFocus={(event) => {
+                            this.setState({ codeDigOne: '', codeDigTwo: '', codeDigThree: '', codeDigFour: '', codeDigOneFocus: true })
+                        }}
+                        onKeyPress={(event) => {
+                            if (event.key == 'Backspace') {
+                                this.setState({ codeDigOne: '' })
+                            } else if (/^[0-9]/g.test(event.key)) {
+                                // if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                            }
+                        }}
+                        inputAccessoryViewID={inputAccessoryViewID}
+                    />
+                    <FloatingLabelInputField
+                        fieldRef={ref => this.fieldCodeDigTwo = ref}
+                        onParentPress={() => { if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus() }}
+                        value={codeDigTwo}
+                        hideLabel={true}
+                        inputContainer={{
+                            width: '20%',
+                            height: 50,
+                            paddingHorizontal: 0,
+                            backgroundColor: colors.white,
+                            borderRadius: 1,
+                            elevation: 1,
+                            shadowOpacity: 0.4,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 1.5, height: 0 },
+
+                        }} inputStyle={{ fontSize: 24, textAlign: 'center' }}
+                        autoCapitalize={'none'}
+                        placeholder={''}
+                        caretHidden={true}
+                        keyboardType={'numeric'}
+                        onChangeText={(text) => {
+                            if (text.length < 2) this.setState({ codeDigTwo: text }, () => {
+                                // if(onComplete && typeof onComplete == 'function') onComplete(this.getCode())
+                                if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
+                            })
+                        }}
+                        onFocus={() => {
+                            if (codeDigOne == '') if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus()
+                            this.setState({ codeDigTwo: '', codeDigThree: '', codeDigFour: '', })
+                        }}
+                        onKeyPress={(event) => {
+                            if (event.key == 'Backspace') {
+                                this.setState({ codeDigTwo: '' })
+                                if (this.fieldCodeDigOne) this.fieldCodeDigOne.focus()
+                            } else if (/^[0-9]/g.test(event.key)) {
+                                // if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
+                            }
+                        }}
+                        inputAccessoryViewID={inputAccessoryViewID}
+                    />
+                    <FloatingLabelInputField
+                        fieldRef={ref => this.fieldCodeDigThree = ref}
+                        onParentPress={() => { if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus() }}
+                        value={codeDigThree}
+                        hideLabel={true}
+                        inputContainer={{
+                            width: '20%',
+                            height: 50,
+                            paddingHorizontal: 0,
+                            backgroundColor: colors.white,
+                            borderRadius: 1,
+                            elevation: 1,
+                            shadowOpacity: 0.4,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 1.5, height: 0 },
+
+                        }}
+                        inputStyle={{ fontSize: 24, textAlign: 'center' }}
+                        autoCapitalize={'none'}
+                        placeholder={''}
+                        caretHidden={true}
+                        keyboardType={'numeric'}
+                        onChangeText={(text) => {
+                            if (text.length < 2) this.setState({ codeDigThree: text }, () => {
+                                if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus()
+                            })
+                        }}
+                        onFocus={() => {
+                            if (codeDigTwo == '') if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                            this.setState({ codeDigThree: '', codeDigFour: '' })
+                        }}
+                        onKeyPress={(event) => {
+                            if (event.key == 'Backspace') {
+                                this.setState({ codeDigThree: '' })
+                                if (this.fieldCodeDigTwo) this.fieldCodeDigTwo.focus()
+                            } else if (/^[0-9]/g.test(event.key)) {
+                                // if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus()
+                            }
+                        }}
+                        inputAccessoryViewID={inputAccessoryViewID}
+                    />
+                    <FloatingLabelInputField
+                        fieldRef={ref => this.fieldCodeDigFour = ref}
+                        onParentPress={() => { if (this.fieldCodeDigFour) this.fieldCodeDigFour.focus() }}
+                        value={codeDigFour}
+                        hideLabel={true}
+                        inputContainer={{
+                            width: '20%',
+                            height: 50,
+                            paddingHorizontal: 0,
+                            backgroundColor: colors.white,
+                            borderRadius: 1,
+                            elevation: 1,
+                            shadowOpacity: 0.4,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 1.5, height: 0 },
+
+                        }}
+                        inputStyle={{ fontSize: 24, textAlign: 'center' }}
+                        autoCapitalize={'none'}
+                        placeholder={''}
+                        caretHidden={true}
+                        keyboardType={'numeric'}
+                        onChangeText={(text) => {
+                            if (text.length < 2) this.setState({ codeDigFour: text }, () => {
+                                if (onComplete && typeof onComplete == 'function') onComplete(this.getCode())
+                                // if (this.fieldCodeDigFive) this.fieldCodeDigFive.focus()
+                            })
+                        }}
+                        onFocus={() => {
+                            if (codeDigThree == '') if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
                             this.setState({ codeDigFour: '' })
-                            if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
-                        } else if (/^[0-9]/g.test(event.key)) {
-                            // Keyboard.dismiss()
-                        }
-                    }}
-                    inputAccessoryViewID={inputAccessoryViewID}
-                />
+                        }}
+                        onKeyPress={(event) => {
+                            if (event.key == 'Backspace') {
+                                this.setState({ codeDigFour: '' })
+                                if (this.fieldCodeDigThree) this.fieldCodeDigThree.focus()
+                            } else if (/^[0-9]/g.test(event.key)) {
+                                // Keyboard.dismiss()
+                            }
+                        }}
+                        inputAccessoryViewID={inputAccessoryViewID}
+                    />
 
+                </View>
             </View>
+
         )
     }
 }
