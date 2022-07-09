@@ -12,7 +12,7 @@ const Loader = (props) => {
             animationType='fade'
             transparent
         >
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.1)' }}>
                 <ActivityIndicator
                     size={'large'}
                     color={colors.iconPrimary}
