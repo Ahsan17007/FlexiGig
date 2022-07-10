@@ -14,8 +14,11 @@ import Images from '../../Assets/Images/Index'
 import colors from '../../Assets/Colors/Index'
 import AppButton from '../../Components/AppBtn'
 
-const OnBoarding = ({ navigation }) => {
+const OnBoarding = ({ navigation, route }) => {
 
+    const data = {
+        countries: route?.params?.countries
+    }
 
     return (
         <View style={styles.mainContainer}>
@@ -31,13 +34,13 @@ const OnBoarding = ({ navigation }) => {
                 label={"Login"}
                 style={[styles.btnStyle, { marginTop: 55 }]}
                 labelStyle={styles.label}
-                onPress={() => navigation.navigate('SignIn')}
+                onPress={() => navigation.navigate('SignIn', data)}
             />
             <AppButton
                 label={"Sign up"}
                 style={[styles.btnStyle, { marginTop: 16 }]}
                 labelStyle={styles.label}
-                onPress={() => navigation.navigate('SignUp')}
+                onPress={() => navigation.navigate('SignUp', data)}
             />
 
             {/* <Image

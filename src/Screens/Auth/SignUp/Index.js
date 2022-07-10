@@ -26,10 +26,10 @@ import Loader from '../../../Components/Loader';
 
 
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({ navigation, route }) => {
 
-    const [fetchedCountries, setFetchedCountries] = useState([])
-    const [needToFetch, setNeedToFetch] = useState(true)
+    //const [fetchedCountries, setFetchedCountries] = useState([])
+    //const [needToFetch, setNeedToFetch] = useState(true)
 
     const [countryCode, setCountryCode] = useState('+254')
     const [country, setCountry] = useState('KE')
@@ -46,30 +46,29 @@ const SignUp = ({ navigation }) => {
     const passwordRef = useRef();
     const referalCodeRef = useRef();
 
-    // useEffect(() => {
-    //     phoneRef.current.focus();
-    // }, [])
+    useEffect(() => {
+        phoneRef.current.focus();
+    }, [])
 
-    if (needToFetch) {
-        fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
-            .then(r => r.json())
-            .then(res => {
+    // if (needToFetch) {
+    //     fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
+    //         .then(r => r.json())
+    //         .then(res => {
 
-                res.data.map(v => {
-                    getAllCountries().then((countries) => {
-                        const country = countries.find((c) => (c.name === v.attributes.name));
-                        console.log('country', country);
-                        setFetchedCountries([...fetchedCountries, country.cca2])
-                    });
+    //             res.data.map(v => {
+    //                 getAllCountries().then((countries) => {
+    //                     const country = countries.find((c) => (c.name === v.attributes.name));
+    //                     console.log('country', country);
+    //                     setFetchedCountries([...fetchedCountries, country.cca2])
+    //                 });
 
-                })
+    //             })
 
-                setNeedToFetch(false)
-            })
-    }
-    else {
-        // console.log(fetchedCountries);
-    }
+    //             setNeedToFetch(false)
+    //         });
+    // }
+    // else {
+    // }
 
 
     const onCountrySelect = (country) => {
@@ -107,14 +106,24 @@ const SignUp = ({ navigation }) => {
                     setIsLoading(false)
                     SimpleToast.show("Account created successfully")
                     setTimeout(() => {
-                        navigation.navigate('OTP', {userId: registerResult?.data?.id})
+                        navigation.navigate('OTP', { userId: registerResult?.data?.id, userPhone: phoneNumber })
                     }, 300);
                 } else if (response.status === 401) {
                     setIsLoading(false)
                     SimpleToast.show(registerResult?.error?.message)
                 } else {
-                    setIsLoading(true)
-                    SimpleToast.show("Something went wrong")
+                    setIsLoading(false)
+
+                    if (registerResult?.message == 'Phone number is already registered') {
+                        SimpleToast.show(registerResult.message + ". Need to Verify with previous OTP")
+                        setTimeout(() => {
+                            navigation.navigate('OTP', { userId: registerResult?.data?.id, userPhone: phoneNumber })
+                        }, 300);
+                    }
+                    else {
+                        SimpleToast.show("Something went wrong. " + registerResult.message)
+                    }
+
                 }
             } catch (error) {
                 setIsLoading(false)
@@ -160,11 +169,11 @@ const SignUp = ({ navigation }) => {
                             <View style={{ justifyContent: 'center' }}>
 
                                 {
-                                    fetchedCountries.length > 0 ?
+                                    route?.params?.countries.length > 0 ?
                                         <CountryModalProvider>
                                             <CountryPicker
-                                                countryCode={fetchedCountries[0]}
-                                                countryCodes={fetchedCountries}
+                                                countryCode={route?.params?.countries[0]}
+                                                countryCodes={route?.params?.countries}
                                                 withFilter={true}
                                                 withFlag={true}
                                                 withCountryNameButton={true}
@@ -177,6 +186,7 @@ const SignUp = ({ navigation }) => {
                                                 onOpen={() => setPopupVisibility(true)}
                                                 onClose={() => {
                                                     setPopupVisibility(false)
+                                                    phoneRef.current.focus()
                                                 }}
 
                                             />
@@ -220,7 +230,7 @@ const SignUp = ({ navigation }) => {
                                 <Text style={styles.credentails} editable={false}>{countryCode}</Text>
                             </View>
 
-                            <View style={{ marginLeft: 2, height: 52, flexDirection: 'column', justifyContent: 'center' }}>
+                            <View style={{ marginLeft: 2, height: 52, flexDirection: 'column', justifyContent: 'center', flex: 1 }}>
 
                                 <TextInput
                                     value={phone}
@@ -264,8 +274,7 @@ const SignUp = ({ navigation }) => {
                             onSubmitEditing={() => {
                                 Keyboard.dismiss()
                             }}
-                            isRightIcon={true}
-                            rightIcon={passwordVisible ? Images.show : Images.hide}
+                            isRightIcon={false}
                             customStyle={{}}
                         />
 

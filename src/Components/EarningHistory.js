@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         width: '100%',
         // height: 75,
         borderRadius: 10,
-        backgroundColor: colors.Primary,
+        backgroundColor: colors.PrimaryContainer,
         paddingHorizontal: 12,
         paddingVertical: 12,
         flexDirection: 'row',

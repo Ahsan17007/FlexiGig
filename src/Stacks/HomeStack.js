@@ -41,7 +41,7 @@ const HomeStack = ({ navigation }) => {
                             height: 80,
                             width: "100%",
                             // elevation: 5,
-                            backgroundColor: colors.Primary
+                            backgroundColor: colors.PrimaryContainer
                         }}>
                             <TouchableOpacity
                                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}

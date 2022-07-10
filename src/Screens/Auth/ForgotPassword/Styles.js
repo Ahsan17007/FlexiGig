@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 
     },
     label: {
-        color: colors.Black,
         fontWeight: '500',
         fontSize: 16
     },

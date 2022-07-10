@@ -45,7 +45,7 @@ const Home = ({ navigation }) => {
 
 
     const { token } = useSelector(state => state.Auth)
-
+/*
     useEffect(async ()=>{
         // This is just for test 
         // Check logs by Ahsan Iqbal 10-07-2022
@@ -66,8 +66,8 @@ const Home = ({ navigation }) => {
 
         
     }, [])
-
-    const renderItem = ({ item }) => {
+*/
+    const renderItem = ({ item }) => { 
         return (
             <EarningHistory Item={item} />
         )

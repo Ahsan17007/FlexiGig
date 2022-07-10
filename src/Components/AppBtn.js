@@ -15,7 +15,7 @@ const AppButton = (props) => {
                 onPress={onPress}
                 activeOpacity={0.4}
                 style={[styles.mainContainer, style]} >
-                <Text style={labelStyle}>{label}</Text>
+                <Text style={[styles.btnText,labelStyle]}>{label}</Text>
             </TouchableOpacity>
 
     )
@@ -33,14 +33,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     btnText: {
-        color: colors.white,
+        color: colors.White,
         fontSize: 15,
     },
     btnImage: {
         height: 35,
         width: 35,
         resizeMode: 'contain',
-        tintColor: colors.white,
+        tintColor: colors.White,
         marginRight: 12
     }
 })

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.Primary,
     },
     label: {
-        color: colors.Black,
         fontSize: 16,
         fontFamily: Fonts.Regular
     },

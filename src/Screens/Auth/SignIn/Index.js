@@ -25,7 +25,7 @@ import { userToken, loggedInData } from '../../../Redux/Actions/HasSession';
 
 
 
-const SignIn = ({ navigation }) => {
+const SignIn = ({ navigation, route }) => {
 
 
     const [phone, setPhone] = useState('')
@@ -40,7 +40,14 @@ const SignIn = ({ navigation }) => {
 
     const dispatch = useDispatch()
 
+    let userPhone = route?.params?.userPhone
 
+    useEffect(()=>{
+        if (userPhone) {
+            setPhone(userPhone)
+            userPhone = null;
+        }
+    },[])
 
     const loginBtnClick = async () => {
         //call-api 
@@ -87,7 +94,7 @@ const SignIn = ({ navigation }) => {
                     SimpleToast.show(loginResult?.error?.message)
                 } else {
                     setIsLoading(false)
-                    SimpleToast.show("Something went wrong")
+                    SimpleToast.show("Something went wrong. "+loginResult.message)
                 }
                 // .then(response => response.json())
                 // .then(data => console.log(data))

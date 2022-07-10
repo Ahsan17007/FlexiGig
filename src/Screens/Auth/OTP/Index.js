@@ -27,6 +27,7 @@ import Loader from '../../../Components/Loader';
 const OTP = ({ navigation, route }) => {
 
     const userId = route?.params?.userId
+    const userPhone = route?.params?.userPhone
 
     let randomOTP = '090078'
     const [otp, setOtp] = useState('')
@@ -48,8 +49,8 @@ const OTP = ({ navigation, route }) => {
             })
         };
 
-        if (otp == '') {
-            SimpleToast.show('Enter verification code')
+        if (otp == '' || otp.length < 4) {
+            SimpleToast.show('Enter complete verification code')
         } else {
             try {
                 setIsLoading(true)
@@ -61,7 +62,7 @@ const OTP = ({ navigation, route }) => {
                     setIsLoading(false)
                     SimpleToast.show(verifyResult?.message)
                     setTimeout(() => {
-                        navigation.replace('SignIn')
+                        navigation.replace('SignIn', {userPhone: userPhone})
                     }, 300);
                 } else {
                     setIsLoading(false)
@@ -95,7 +96,7 @@ const OTP = ({ navigation, route }) => {
                         style={styles.loginIcon}
                     />
                     <Text style={styles.Verify}>{'Verify OTP'}</Text>
-                    <Text style={styles.credentails}>{'Please enter the code below, we sent on your number.'}</Text>
+                    <Text style={styles.credentails}>{`Please enter the code below, we sent on ${userPhone}`}</Text>
 
                     <OTPInput
                         onComplete={(code) => {

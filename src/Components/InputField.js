@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.textInput,
     height: 52,
     width: '100%',
-    backgroundColor:colors.Primary,
+    backgroundColor:colors.PrimaryContainer,
     paddingHorizontal:8
   },
   icon: {

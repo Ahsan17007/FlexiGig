@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     recordsContainer: {
         // height: 165,
         width: '100%',
-        backgroundColor: colors.Primary,
+        backgroundColor: colors.PrimaryContainer,
         borderRadius: 10,
         paddingHorizontal: 18,
         paddingVertical: 21

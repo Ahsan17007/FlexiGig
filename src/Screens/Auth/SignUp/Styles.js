@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
 
     },
     label: {
-        color: colors.Black,
         fontWeight: '500',
         fontSize: 16
     },
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
         color: colors.Black,
         height: 52,
         width: '100%',
-        backgroundColor: colors.Primary,
+        backgroundColor: colors.PrimaryContainer,
         padding: 8,
         textAlignVertical:'center'
     }
