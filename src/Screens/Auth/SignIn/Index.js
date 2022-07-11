@@ -34,7 +34,7 @@ const SignIn = ({ navigation, route }) => {
 
     const [phone, setPhone] = useState('')
     const [storagePhone, setStoragePhone] = useState(loginNumber ? loginNumber : '')
-    const [countryCode, setCountryCode] = useState('')
+    const [countryCode, setCountryCode] = useState('+254')
     const [popupVisibility, setPopupVisibility] = useState(false)
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
