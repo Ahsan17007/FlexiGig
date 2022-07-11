@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     inputtitle: {
         color: colors.Black,
         fontFamily: Fonts.Regular,
-        marginVertical: 4
+        marginVertical: 4,
+        marginTop:16
     },
     forgot: {
         margin: 4,
@@ -54,6 +55,14 @@ const styles = StyleSheet.create({
         color: colors.Black,
         fontFamily: Fonts.Medium,
         fontSize: 14
+    },
+    non_editable: {
+        color: colors.Black,
+        height: 52,
+        width: '100%',
+        backgroundColor: colors.PrimaryContainer,
+        padding: 8,
+        textAlignVertical:'center'
     }
 
 })

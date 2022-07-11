@@ -2,7 +2,7 @@ import { HAS_SESSION, LOGGEDIN_USER_DATA, LOGOUT } from '../Types/Index';
 
 const initialState = {
     loginUserData: null,
-    token: null
+    token: null,
 };
 
 const AuthReducer = (state = initialState, action = {}) => {

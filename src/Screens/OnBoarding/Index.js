@@ -16,9 +16,7 @@ import AppButton from '../../Components/AppBtn'
 
 const OnBoarding = ({ navigation, route }) => {
 
-    const data = {
-        countries: route?.params?.countries
-    }
+   
 
     return (
         <View style={styles.mainContainer}>
@@ -34,13 +32,13 @@ const OnBoarding = ({ navigation, route }) => {
                 label={"Login"}
                 style={[styles.btnStyle, { marginTop: 55 }]}
                 labelStyle={styles.label}
-                onPress={() => navigation.navigate('SignIn', data)}
+                onPress={() => navigation.navigate('SignIn')}
             />
             <AppButton
                 label={"Sign up"}
                 style={[styles.btnStyle, { marginTop: 16 }]}
                 labelStyle={styles.label}
-                onPress={() => navigation.navigate('SignUp', data)}
+                onPress={() => navigation.navigate('SignUp')}
             />
 
             {/* <Image

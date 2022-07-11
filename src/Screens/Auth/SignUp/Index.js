@@ -15,6 +15,7 @@ import SimpleToast from 'react-native-simple-toast';
 import Preference from 'react-native-preference';
 import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
 import { CountryModalProvider } from 'react-native-country-picker-modal';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
@@ -30,6 +31,8 @@ const SignUp = ({ navigation, route }) => {
 
     //const [fetchedCountries, setFetchedCountries] = useState([])
     //const [needToFetch, setNeedToFetch] = useState(true)
+    const { countries } = useSelector(state => state.CountriesList)
+
 
     const [countryCode, setCountryCode] = useState('+254')
     const [country, setCountry] = useState('KE')
@@ -47,6 +50,7 @@ const SignUp = ({ navigation, route }) => {
     const referalCodeRef = useRef();
 
     useEffect(() => {
+        console.log("countries list...", countries);
         phoneRef.current.focus();
     }, [])
 
@@ -167,38 +171,29 @@ const SignUp = ({ navigation, route }) => {
                         }]}>
 
                             <View style={{ justifyContent: 'center' }}>
+                                <CountryModalProvider>
+                                    <CountryPicker
+                                        // countryCode={route?.params?.countries[0]}
+                                        countryCode={countries}
+                                        // countryCodes={route?.params?.countries}
+                                        countryCodes={countries}
+                                        withFilter={true}
+                                        withFlag={true}
+                                        withCountryNameButton={true}
+                                        withCallingCodeButton={false}
+                                        withAlphaFilter={true}
+                                        withCallingCode={true}
+                                        withEmoji={true}
+                                        onSelect={onCountrySelect}
+                                        visible={popupVisibility}
+                                        onOpen={() => setPopupVisibility(true)}
+                                        onClose={() => {
+                                            setPopupVisibility(false)
+                                            phoneRef.current.focus()
+                                        }}
 
-                                {
-                                    route?.params?.countries.length > 0 ?
-                                        <CountryModalProvider>
-                                            <CountryPicker
-                                                countryCode={route?.params?.countries[0]}
-                                                countryCodes={route?.params?.countries}
-                                                withFilter={true}
-                                                withFlag={true}
-                                                withCountryNameButton={true}
-                                                withCallingCodeButton={false}
-                                                withAlphaFilter={true}
-                                                withCallingCode={true}
-                                                withEmoji={true}
-                                                onSelect={onCountrySelect}
-                                                visible={popupVisibility}
-                                                onOpen={() => setPopupVisibility(true)}
-                                                onClose={() => {
-                                                    setPopupVisibility(false)
-                                                    phoneRef.current.focus()
-                                                }}
-
-                                            />
-                                        </CountryModalProvider>
-
-                                        :
-
-                                        <View></View>
-                                }
-
-
-
+                                    />
+                                </CountryModalProvider>
 
                             </View>
 

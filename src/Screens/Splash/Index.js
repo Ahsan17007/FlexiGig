@@ -20,24 +20,24 @@ const Splash = ({ navigation }) => {
     const { token } = useSelector(state => state.Auth)
     // const { countries } = useSelector(state => state.CountriesList)
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         // dispatch(countriesData([]))
         fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             .then(r => r.json())
             .then(res => {
-
                 const newArr = []
-
-                res.data.map(v => {
+                let finalObj = ''
+                res.data.map(a => {
                     getAllCountries().then((offlineCountries) => {
-                        const country = offlineCountries.find((c) => (c.name === v.attributes.name));
+                        const country = offlineCountries.find((b) => (b.name === a.attributes.name));
                         console.log('country', country);
 
                         newArr.push(country.cca2)
 
                         if (newArr.length == res.data.length) {
+                            dispatch(countriesData(newArr))
                             if (token) {
                                 setTimeout(() => {
                                     navigation.reset({
@@ -47,19 +47,18 @@ const Splash = ({ navigation }) => {
                                 }, 1000);
                             } else {
                                 setTimeout(() => {
-                                    navigation.replace('OnBoarding', {countries: newArr})
+                                    navigation.replace('OnBoarding')
                                 }, 500);
                             }
                         }
 
-                        // dispatch(countriesData([...countries, country.cca2]))
                     })
 
                 })
             })
 
 
-        
+
     }, [])
 
     return (
