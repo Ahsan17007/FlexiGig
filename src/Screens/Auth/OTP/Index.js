@@ -38,6 +38,9 @@ const OTP = ({ navigation, route }) => {
     const [isVerified, setIsVerified] = useState(false)
 
 
+    const dispatch = useDispatch()
+
+
     const verifyOTP = async () => {
 
         const config = {
@@ -59,6 +62,7 @@ const OTP = ({ navigation, route }) => {
                 const verifyResult = await response.json();
                 console.log("verifyOTP-response", verifyResult);
                 if (response.status === 200) {
+                    dispatch(loggedInNumber(userPhone))
                     setIsLoading(false)
                     SimpleToast.show(verifyResult?.message)
                     setTimeout(() => {

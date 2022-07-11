@@ -118,15 +118,17 @@ const SignUp = ({ navigation, route }) => {
                 } else {
                     setIsLoading(false)
 
-                    if (registerResult?.message == 'Phone number is already registered') {
-                        SimpleToast.show(registerResult.message + ". Need to Verify with previous OTP")
-                        setTimeout(() => {
-                            navigation.navigate('OTP', { userId: registerResult?.data?.id, userPhone: phoneNumber })
-                        }, 300);
-                    }
-                    else {
-                        SimpleToast.show("Something went wrong. " + registerResult.message)
-                    }
+                    // if (registerResult?.message == 'Phone number is already registered') {
+                    //     SimpleToast.show(registerResult.message + ". Need to Verify with previous OTP")
+                    //     setTimeout(() => {
+                    //         navigation.navigate('OTP', { userId: registerResult?.data?.id, userPhone: phoneNumber })
+                    //     }, 300);
+                    // }
+                    // else {
+                    //     SimpleToast.show("Something went wrong. " + registerResult.message)
+                    // }
+
+                    SimpleToast.show("Something went wrong. " + registerResult.message)
 
                 }
             } catch (error) {
@@ -174,7 +176,7 @@ const SignUp = ({ navigation, route }) => {
                                 <CountryModalProvider>
                                     <CountryPicker
                                         // countryCode={route?.params?.countries[0]}
-                                        countryCode={countries}
+                                        countryCode={countries[0]}
                                         // countryCodes={route?.params?.countries}
                                         countryCodes={countries}
                                         withFilter={true}

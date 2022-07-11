@@ -63,7 +63,6 @@ const SignIn = ({ navigation, route }) => {
 
         const newNumber = countryCode.concat(phone)
 
-
         const config = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
