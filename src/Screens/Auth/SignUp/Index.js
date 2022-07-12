@@ -24,6 +24,7 @@ import InputField from '../../../Components/InputField'
 import colors from '../../../Assets/Colors/Index';
 import { userToken, loggedInData } from '../../../Redux/Actions/HasSession';
 import Loader from '../../../Components/Loader';
+import CountrySelector from '../../../Components/CountrySelector/Index'
 
 
 
@@ -34,8 +35,9 @@ const SignUp = ({ navigation, route }) => {
     const { countries } = useSelector(state => state.CountriesList)
 
 
-    const [countryCode, setCountryCode] = useState('+254')
-    const [country, setCountry] = useState('KE')
+    const [countryCode, setCountryCode] = useState('')
+    const [countryID, setCountryID] = useState('')
+    const [select, setSelect] = useState(true)
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [referalCode, setReferalCode] = useState('')
@@ -50,7 +52,9 @@ const SignUp = ({ navigation, route }) => {
     const referalCodeRef = useRef();
 
     useEffect(() => {
-        console.log("countries list...", countries);
+        if (countryCode === '' || countryID === '') {
+            setSelect(true)
+        }
         phoneRef.current.focus();
     }, [])
 
@@ -75,10 +79,13 @@ const SignUp = ({ navigation, route }) => {
     // }
 
 
+
+
     const onCountrySelect = (country) => {
-        setCountryCode("+" + country.callingCode)
-        setCountry(country.cca2)
-        phoneRef.current.focus();
+        setCountryCode(country?.attributes?.country_code)
+        setCountryID(country?.id)
+        console.log(countryID);
+        //
     }
 
     const registerUser = async () => {
@@ -90,7 +97,8 @@ const SignUp = ({ navigation, route }) => {
             body: JSON.stringify({
                 phone_number: phoneNumber,
                 password: password,
-                country_id: '319962a1-bedd-48ea-b371-5aaef626a2dc'
+                country_id: countryID ? countryID : '',
+                referal_code: referalCode
             })
         };
 
@@ -173,7 +181,7 @@ const SignUp = ({ navigation, route }) => {
                         }]}>
 
                             <View style={{ justifyContent: 'center' }}>
-                                <CountryModalProvider>
+                                {/* <CountryModalProvider>
                                     <CountryPicker
                                         // countryCode={route?.params?.countries[0]}
                                         countryCode={countries[0]}
@@ -195,7 +203,18 @@ const SignUp = ({ navigation, route }) => {
                                         }}
 
                                     />
-                                </CountryModalProvider>
+                                </CountryModalProvider> */}
+
+                                <CountrySelector data={countries}
+                                onCountryItemClick={(data) => {
+                                    onCountrySelect(data) 
+                                    
+                                }} 
+                                firstCountry = {(data) => {
+                                    onCountrySelect(data)
+                                }}
+                                select = {select}
+                                setSelect = {setSelect}/>
 
                             </View>
 

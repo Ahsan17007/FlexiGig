@@ -25,6 +25,8 @@ import Loader from '../../../Components/Loader';
 import { client } from '../../../Api/config';
 import { userToken, loggedInData, loggedInNumber } from '../../../Redux/Actions/HasSession';
 
+import CountrySelector from '../../../Components/CountrySelector/Index'
+
 
 
 const SignIn = ({ navigation, route }) => {
@@ -34,7 +36,9 @@ const SignIn = ({ navigation, route }) => {
 
     const [phone, setPhone] = useState('')
     const [storagePhone, setStoragePhone] = useState(loginNumber ? loginNumber : '')
-    const [countryCode, setCountryCode] = useState('+254')
+    const [countryCode, setCountryCode] = useState('')
+    const [countryID, setCountryID] = useState('')
+    const [select, setSelect] = useState(true)
     const [popupVisibility, setPopupVisibility] = useState(false)
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
@@ -49,15 +53,12 @@ const SignIn = ({ navigation, route }) => {
 
 
     useEffect(() => {
-        console.log("countries list...", countries);
-        console.log("Login Number from store...", loginNumber);
+        //console.log("countries list...", countries);
+        //console.log("Login Number from store...", loginNumber);
+        if (countryCode === '' || countryID === '') {
+            setSelect(true)
+        }
     }, [])
-
-    const loginBtnClick = async () => {
-        //call-api 
-        //handle
-        navigation.navigate('HomeStack')
-    }
 
     const loginUser = async () => {
 
@@ -116,10 +117,12 @@ const SignIn = ({ navigation, route }) => {
     };
 
     const onCountrySelect = (country) => {
-        setCountryCode("+" + country.callingCode)
-        // setCountry(country.cca2)
-        // phoneRef.current.focus();
+        setCountryCode(country?.attributes?.country_code)
+        setCountryID(country?.id)
+        console.log(countryID);
+        //
     }
+
     return (
         <SafeAreaView style={styles.mainContainer}>
 
@@ -155,29 +158,16 @@ const SignIn = ({ navigation, route }) => {
                                     <View style={{ justifyContent: 'center' }}>
 
 
-                                        <CountryModalProvider>
-                                            <CountryPicker
-                                                // countryCode={route?.params?.countries[0]}
-                                                countryCode={countries}
-                                                // countryCodes={route?.params?.countries}
-                                                countryCodes={countries}
-                                                withFilter={true}
-                                                withFlag={true}
-                                                withCountryNameButton={true}
-                                                withCallingCodeButton={false}
-                                                withAlphaFilter={true}
-                                                withCallingCode={true}
-                                                withEmoji={true}
-                                                onSelect={onCountrySelect}
-                                                visible={popupVisibility}
-                                                onOpen={() => setPopupVisibility(true)}
-                                                onClose={() => {
-                                                    setPopupVisibility(false)
-                                                    phoneRef.current.focus()
-                                                }}
+                                        <CountrySelector data={countries}
+                                            onCountryItemClick={(data) => {
+                                                onCountrySelect(data)
 
-                                            />
-                                        </CountryModalProvider>
+                                            }}
+                                            firstCountry={(data) => {
+                                                onCountrySelect(data)
+                                            }}
+                                            select={select}
+                                            setSelect={setSelect} />
                                     </View>
 
                                 </View>

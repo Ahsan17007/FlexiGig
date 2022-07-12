@@ -21,6 +21,7 @@ import OTPInput from '../../../Components/OTPInput'
 import colors from '../../../Assets/Colors/Index'
 // import Strings from '../../../Assets/Strings/Index';
 import Loader from '../../../Components/Loader';
+import { loggedInNumber } from '../../../Redux/Actions/HasSession';
 // import MsgModal from '../../../Components/MsgModal';
 
 
@@ -55,28 +56,25 @@ const OTP = ({ navigation, route }) => {
         if (otp == '' || otp.length < 4) {
             SimpleToast.show('Enter complete verification code')
         } else {
-            try {
+            
                 setIsLoading(true)
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/verify_user_code', config)
-                console.log(response.status);
+                console.log('Verification Response Code ' + response.status);
                 const verifyResult = await response.json();
                 console.log("verifyOTP-response", verifyResult);
-                if (response.status === 200) {
-                    dispatch(loggedInNumber(userPhone))
+
+                //verifyResult?.data[0]?.verification_status Because On Verification Still Not Getting Response 200 //Ahsan Iqbal
+                if (response.status === 200 || verifyResult?.data[0]?.verification_status) {
                     setIsLoading(false)
                     SimpleToast.show(verifyResult?.message)
                     setTimeout(() => {
+                        dispatch(loggedInNumber(userPhone))
                         navigation.replace('SignIn', {userPhone: userPhone})
-                    }, 300);
+                    }, 200);
                 } else {
                     setIsLoading(false)
                     SimpleToast.show(verifyResult?.message)
-
                 }
-            } catch (error) {
-                setIsLoading(false)
-                console.log("registerUser-error", error);
-            }
 
         }
 
@@ -100,7 +98,7 @@ const OTP = ({ navigation, route }) => {
                         style={styles.loginIcon}
                     />
                     <Text style={styles.Verify}>{'Verify OTP'}</Text>
-                    <Text style={styles.credentails}>{`Please enter the code below, we sent on ${userPhone}`}</Text>
+                    <Text style={styles.credentails}>{`Please enter the code below, we sent on your phone`}</Text>
 
                     <OTPInput
                         onComplete={(code) => {

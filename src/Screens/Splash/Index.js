@@ -27,6 +27,22 @@ const Splash = ({ navigation }) => {
         fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             .then(r => r.json())
             .then(res => {
+
+                dispatch(countriesData(res?.data))
+                            if (token) {
+                                setTimeout(() => {
+                                    navigation.reset({
+                                        index: 0,
+                                        routes: [{ name: 'HomeStack' }],
+                                    })
+                                }, 500);
+                            } else {
+                                setTimeout(() => {
+                                    navigation.replace('OnBoarding')
+                                }, 500);
+                            }
+
+/*
                 const newArr = []
                 let finalObj = ''
                 res.data.map(a => {
@@ -55,6 +71,8 @@ const Splash = ({ navigation }) => {
                     })
 
                 })
+
+                */
             })
 
 
