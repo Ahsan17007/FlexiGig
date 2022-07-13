@@ -30,8 +30,6 @@ import CountrySelector from '../../../Components/CountrySelector/Index'
 
 const SignUp = ({ navigation, route }) => {
 
-    //const [fetchedCountries, setFetchedCountries] = useState([])
-    //const [needToFetch, setNeedToFetch] = useState(true)
     const { countries } = useSelector(state => state.CountriesList)
 
 
@@ -42,14 +40,13 @@ const SignUp = ({ navigation, route }) => {
     const [password, setPassword] = useState('')
     const [referalCode, setReferalCode] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
-    const [popupVisibility, setPopupVisibility] = useState(false)
-    const [isMsgModal, setIsMsgModal] = useState(false)
-    const [msg, setMsg] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const phoneRef = useRef();
     const passwordRef = useRef();
     const referalCodeRef = useRef();
+
+    const maxLengthPhone = (countryCode.length==4) ? 9 : ((countryCode.length==3) ? 10 : ((countryCode.length==2) ? 10 : 12))
 
     useEffect(() => {
         if (countryCode === '' || countryID === '') {
@@ -58,49 +55,17 @@ const SignUp = ({ navigation, route }) => {
         phoneRef.current.focus();
     }, [])
 
-    // if (needToFetch) {
-    //     fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
-    //         .then(r => r.json())
-    //         .then(res => {
-
-    //             res.data.map(v => {
-    //                 getAllCountries().then((countries) => {
-    //                     const country = countries.find((c) => (c.name === v.attributes.name));
-    //                     console.log('country', country);
-    //                     setFetchedCountries([...fetchedCountries, country.cca2])
-    //                 });
-
-    //             })
-
-    //             setNeedToFetch(false)
-    //         });
-    // }
-    // else {
-    // }
-
-
-
 
     const onCountrySelect = (country) => {
         setCountryCode(country?.attributes?.country_code)
         setCountryID(country?.id)
         console.log(countryID);
-        //
+        
     }
 
     const registerUser = async () => {
 
         const phoneNumber = countryCode.concat(phone)
-        const config = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                phone_number: phoneNumber,
-                password: password,
-                country_id: countryID ? countryID : '',
-                referal_code: referalCode
-            })
-        };
 
         if (phone == '' && password == '') {
             SimpleToast.show('All fields are mandatory')
@@ -108,9 +73,21 @@ const SignUp = ({ navigation, route }) => {
             SimpleToast.show('Phone Number Required')
         } else if (password == '') {
             SimpleToast.show('Password Required')
+        } else if (password.length <= 6) {
+            SimpleToast.show('Password Should be more than 6 characters')
         } else {
             try {
                 setIsLoading(true)
+                const config = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phone_number: phoneNumber,
+                        password: password,
+                        country_id: countryID ? countryID : '',
+                        referal_code: referalCode
+                    })
+                };
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signup', config)
                 const registerResult = await response.json();
                 console.log("registerUser-response", registerResult);
@@ -181,29 +158,6 @@ const SignUp = ({ navigation, route }) => {
                         }]}>
 
                             <View style={{ justifyContent: 'center' }}>
-                                {/* <CountryModalProvider>
-                                    <CountryPicker
-                                        // countryCode={route?.params?.countries[0]}
-                                        countryCode={countries[0]}
-                                        // countryCodes={route?.params?.countries}
-                                        countryCodes={countries}
-                                        withFilter={true}
-                                        withFlag={true}
-                                        withCountryNameButton={true}
-                                        withCallingCodeButton={false}
-                                        withAlphaFilter={true}
-                                        withCallingCode={true}
-                                        withEmoji={true}
-                                        onSelect={onCountrySelect}
-                                        visible={popupVisibility}
-                                        onOpen={() => setPopupVisibility(true)}
-                                        onClose={() => {
-                                            setPopupVisibility(false)
-                                            phoneRef.current.focus()
-                                        }}
-
-                                    />
-                                </CountryModalProvider> */}
 
                                 <CountrySelector data={countries}
                                 onCountryItemClick={(data) => {
@@ -217,20 +171,6 @@ const SignUp = ({ navigation, route }) => {
                                 setSelect = {setSelect}/>
 
                             </View>
-
-                            {/* <View style={{ marginLeft: 8, backgroundColor:'pink' }}>
-
-                                <TextInput
-                                    value={phone}
-                                    onChangeText={(val) => setPhone(val)}
-                                    returnKeyType={'next'}
-                                    fieldRef={phoneRef}
-                                    onSubmitEditing={() => {
-                                        passwordRef.current.focus()
-                                    }}
-                                    keyboardType={'phone-pad'}
-                                />
-                            </View> */}
 
 
                         </View>
@@ -257,6 +197,7 @@ const SignUp = ({ navigation, route }) => {
                                         passwordRef.current.focus()
                                     }}
                                     keyboardType={'phone-pad'}
+                                    maxLength = {maxLengthPhone}
                                     style={{ ...styles.credentails, textAlignVertical: 'center', height: '100%', borderBottomColor: 'transparent', borderBottomWidth: 0 }}
                                 />
                             </View>
@@ -318,8 +259,6 @@ const SignUp = ({ navigation, route }) => {
                 </KeyboardAwareScrollView>
 
             </View>
-
-            {/* <Loader visible={needToFetch} /> */}
 
             <Loader visible={isLoading} />
 

@@ -1,13 +1,13 @@
 import { forModalPresentationIOS } from "@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators";
-import React from "react";
-import { Text, TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View, Image, StyleSheet, ActivityIndicator as Loading } from "react-native";
 import colors from '../../Assets/Colors/Index';
 import Fonts from "../../Assets/Fonts/Index";
 
 const CountryView = ({ countryData, clickable = false, onCountryItemClick, isCallingCodeVisible = false, arrow = false, elevated = false, selectedCountryCode }) => {
 
-    
-    
+    const [isLoading, setIsLoading] = useState(false)
+
     if (!countryData) {
         return (
             <View style={styles.mainContainer}>
@@ -33,12 +33,34 @@ const CountryView = ({ countryData, clickable = false, onCountryItemClick, isCal
                     <View style={{ flexDirection: 'row', padding: 4, elevation: (elevated) ? 4 : 0 }}>
                         <View style={styles.innerContainer}>
 
+                            <View style={{ height: 20, width: 30, justifyContent: 'center', alignItems: 'center', display:(isLoading)? "flex" : 'none' }}>
+                                <Loading
+                                    size='small'
+                                    color={colors.Primary}
+                                />
+                            </View>
+
                             <Image source={{
                                 uri: countryData?.attributes?.flag,
                                 height: 20,
-                                width: 30
-                            }} 
-                            style={styles.flagImage} />
+                                width: 30,
+                            }}
+                            style={[{
+                                display:(isLoading)? "none" : 'flex'
+                            }, styles.flagImage]}
+                                onLoadStart={() => {
+
+                                    setIsLoading(true)
+
+                                }}
+                                onLoadEnd={() => {
+                                    setTimeout(()=> {
+                                        setIsLoading(false)
+                                    }, 250)
+                                    
+                                }} />
+
+
 
 
                             <Text style={styles.countryNameText}>{countryData?.attributes?.name}</Text>

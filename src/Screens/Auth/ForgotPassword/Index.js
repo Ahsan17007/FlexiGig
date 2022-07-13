@@ -109,6 +109,7 @@ const ForgotPassword = ({ navigation }) => {
                             }}
                             keyBoardType={'phone-pad'}
                             customStyle={{}}
+                            maxLength = {13}
                         />
 
 

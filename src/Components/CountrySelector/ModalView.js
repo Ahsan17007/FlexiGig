@@ -8,23 +8,39 @@ const ModalView = ({ visibility, setVisibility, data, onCountryItemClick, setDis
 
 
     return (
-        <Modal visible={visibility} style={{ height: '100%', width: '100%' }}>
+        <Modal visible={visibility} style={{ height: '100%', width: '100%' }} animationType='slide'>
 
             <View style={{
                 flex: 1,
                 flexDirection: 'column',
-                margin:8
+                margin: 8
             }}>
 
-                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ flex: 1, flexDirection:'row', alignItems:'center' }}>
 
-                    <TouchableOpacity onPress={() => {
-                        setVisibility(false)
-                    }} style={{justifyContent:'flex-end', alignItems:'flex-end', marginHorizontal:8}}>
+                    <View style={{ flex: 5, paddingLeft:4 }}>
 
-                        <Image source={require('../../Assets/Images/cross.png')} style={{ width: 24, height: 24 }} />
+                        <Text style={{
+                            fontFamily:Fonts.Bold,
+                            color:colors.Black,
+                            fontSize:18,
 
-                    </TouchableOpacity>
+                        }}>
+                            {`Select Your Country`}
+                        </Text>
+
+                    </View>
+                    <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+
+                        <TouchableOpacity onPress={() => {
+                            setVisibility(false)
+                        }} style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginHorizontal: 8 }}>
+
+                            <Image source={require('../../Assets/Images/cross.png')} style={{ width: 14, height: 14 }} />
+
+                        </TouchableOpacity>
+
+                    </View>
 
                 </View>
 

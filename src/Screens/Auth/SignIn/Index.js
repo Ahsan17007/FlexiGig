@@ -51,6 +51,8 @@ const SignIn = ({ navigation, route }) => {
 
     const dispatch = useDispatch()
 
+    const maxLengthPhone = (countryCode.length==4) ? 9 : ((countryCode.length==3) ? 10 : ((countryCode.length==2) ? 10 : 12))
+
 
     useEffect(() => {
         //console.log("countries list...", countries);
@@ -64,24 +66,25 @@ const SignIn = ({ navigation, route }) => {
 
         const newNumber = countryCode.concat(phone)
 
-        const config = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                phone_number: storagePhone.length > 0 ? storagePhone : newNumber,
-                password: password,
-            })
-        };
-
         if ((phone && storagePhone == '') && password == '') {
             SimpleToast.show('All fields are mandatory')
         } else if (phone == '' && storagePhone == '') {
             SimpleToast.show('Phone Number Required')
         } else if (password == '') {
             SimpleToast.show('Password Required')
+        }else if (password.length <= 6) {
+            SimpleToast.show('Password Should be more than 6 characters')
         } else {
             try {
                 setIsLoading(true)
+                const config = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phone_number: storagePhone.length > 0 ? storagePhone : newNumber,
+                        password: password,
+                    })
+                };
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signin', config)
                 const loginResult = await response.json();
                 console.log("loginUser-response", response);
@@ -193,6 +196,7 @@ const SignIn = ({ navigation, route }) => {
                                                 passwordRef.current.focus()
                                             }}
                                             keyboardType={'phone-pad'}
+                                            maxLength = {maxLengthPhone}
                                             style={{ ...styles.credentails, textAlignVertical: 'center', height: '100%', borderBottomColor: 'transparent', borderBottomWidth: 0 }}
                                         />
                                     </View>
@@ -210,6 +214,7 @@ const SignIn = ({ navigation, route }) => {
                                     leftIcon={Images.phone}
                                     returnKeyType={'next'}
                                     fieldRef={phoneRef}
+                                    maxLength = {maxLengthPhone+countryCode.length}
                                     onSubmitEditing={() => {
                                         passwordRef.current.focus()
                                     }}
