@@ -3,8 +3,6 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
-
 import Home from '../Screens/Dashboard/Home/Index'
 import Universe from '../Screens/Dashboard/Universe/Index'
 import Inventory from '../Screens/Dashboard/Inventory/Index'
@@ -16,8 +14,6 @@ import colors from '../Assets/Colors/Index';
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator();
-
-
 
 
 const HomeStack = ({ navigation }) => {

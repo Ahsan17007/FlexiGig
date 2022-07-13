@@ -79,7 +79,13 @@ const Home = ({ navigation }) => {
             <>
                 <View style={styles.topHeaderContainer}>
                     <View style={styles.userInfoContainer}>
+
+                        <TouchableOpacity style={styles.profilePic} onPress={()=>{
+                            navigation.navigate('Profile')
+                        }}>
                         <Image source={Images.DummyUser} style={styles.profilePic} />
+                        </TouchableOpacity>
+
                         <View style={{ marginLeft: 12 }}>
                             <Text style={styles.welcomeText}>{'Welcome'}</Text>
                             <Text style={styles.name}>{'Jack Sparrow'}</Text>
