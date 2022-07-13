@@ -27,36 +27,22 @@ const Splash = ({ navigation }) => {
         fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             .then(r => r.json())
             .then(res => {
-                // console.log('API Country List...', res);
-                const newArr = []
-                let finalObj = ''
-                res.data.map(a => {
-                    console.log('API Country...', a);
-                    getAllCountries().then((offlineCountries) => {
-                        const country = offlineCountries.find((b) => (b.name === a.attributes.name));
-                        // console.log('country', country);
 
-                        newArr.push(country.cca2)
-
-                        if (newArr.length == res.data.length) {
-                            dispatch(countriesData(newArr))
+                dispatch(countriesData(res?.data))
                             if (token) {
                                 setTimeout(() => {
                                     navigation.reset({
                                         index: 0,
                                         routes: [{ name: 'HomeStack' }],
                                     })
-                                }, 1000);
+                                }, 500);
                             } else {
                                 setTimeout(() => {
                                     navigation.replace('OnBoarding')
                                 }, 500);
                             }
-                        }
 
-                    })
 
-                })
             })
 
 

@@ -33,7 +33,8 @@ const InputField = props => {
     label,
     multiline,
     rightIconStyle,
-    editable
+    editable,
+    maxLength
   } = props;
 
   return (
@@ -68,6 +69,7 @@ const InputField = props => {
           editable={editable}
           ref={fieldRef}
           blurOnSubmit={false}
+          maxLength={maxLength}
         />
       </View>
 

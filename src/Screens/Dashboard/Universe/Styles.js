@@ -4,9 +4,9 @@ import colors from '../../../Assets/Colors/Index';
 
 const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        height:'100%',
+        width:'100%',
+        backgroundColor:colors.White
     },
     
 })

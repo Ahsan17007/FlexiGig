@@ -12,18 +12,18 @@ import { useSelector, useDispatch } from 'react-redux'
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
-// import Strings from '../../Assets/Strings/Index'
+import CountrySelector from '../../../Components/CountrySelector/Index'
+
 
 
 const Universe = ({ navigation }) => {
-
-
 
 
     return (
         <View style={styles.mainContainer}>
 
             <Text>Universe</Text>
+
         </View>
     )
 }
