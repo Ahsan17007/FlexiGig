@@ -75,11 +75,13 @@ const styles = StyleSheet.create({
         padding: 8,
         margin: 8,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingVertical: 16
     },
     message: {
         fontFamily: Fonts.Medium,
         color: colors.Black,
+        marginVertical:16
 
     },
     buttonsContainer: {
