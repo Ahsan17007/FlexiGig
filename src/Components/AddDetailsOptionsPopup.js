@@ -9,40 +9,52 @@ const AddDetailsOptionPopup = ({
     setVisibility,
     message = 'Do you know by populating your Personal Details you stand a chance of getting better jobs?',
     onCancelBtnClick = () => {
-        setVisibility(false)
+        setVisibility([visibility[0], false])
     }, onContinueBtnClick }) => {
 
 
     return (
-        <Modal visible={visibility} style={{
-            alignSelf: 'center',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }} animationType='fade'
-            presentationStyle='overFullScreen'>
-            <View style={styles.mainView}>
-                <Text style={styles.message}>{message}</Text>
-                <View style={styles.buttonsContainer}>
+        <Modal
+            visible={visibility}
+            style={{
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
 
-                    <TouchableOpacity style={styles.button} onPress={() => { onCancelBtnClick() }}>
-                        <Text style={styles.btnText}>
-                            {'Cancel'}
-                        </Text>
-                    </TouchableOpacity>
+            presentationStyle='fullScreen'
+            animationType='fade'
+            transparent={true}>
+            <View style={{
+                flex: 1,
+                backgroundColor: 'transparent',
+                justifyContent:'center',
+                alignItems:'center'
+            }}>
+                <View style={styles.mainView}>
+                    <Text style={styles.message}>{message}</Text>
+                    <View style={styles.buttonsContainer}>
 
-                    <TouchableOpacity style={styles.button} onPress={() => {
-                        setVisibility(false)
-                        onContinueBtnClick()
-                    }}>
-                        <Text style={styles.btnText}>
-                            {'Continue'}
-                        </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => { onCancelBtnClick() }}>
+                            <Text style={styles.btnText}>
+                                {'Cancel'}
+                            </Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity style={styles.button} onPress={() => {
+                            setVisibility([visibility[0], false])
+                            onContinueBtnClick()
+                        }}>
+                            <Text style={styles.btnText}>
+                                {'Continue'}
+                            </Text>
+                        </TouchableOpacity>
+
+                    </View>
                 </View>
+
             </View>
         </Modal>
-
     )
 
 
@@ -55,7 +67,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '80%',
         borderRadius: 16,
-        backgroundColor: colors.PrimaryContainer,
+        backgroundColor: colors.White,
+        elevation: 0.8,
         borderWidth: 1,
         borderColor: colors.Primary,
         flexDirection: 'column',
