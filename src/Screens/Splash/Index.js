@@ -27,12 +27,14 @@ const Splash = ({ navigation }) => {
         fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             .then(r => r.json())
             .then(res => {
+                // console.log('API Country List...', res);
                 const newArr = []
                 let finalObj = ''
                 res.data.map(a => {
+                    console.log('API Country...', a);
                     getAllCountries().then((offlineCountries) => {
                         const country = offlineCountries.find((b) => (b.name === a.attributes.name));
-                        console.log('country', country);
+                        // console.log('country', country);
 
                         newArr.push(country.cca2)
 
