@@ -51,7 +51,7 @@ const SignIn = ({ navigation, route }) => {
 
     const dispatch = useDispatch()
 
-    const maxLengthPhone = (countryCode.length==4) ? 9 : ((countryCode.length==3) ? 10 : ((countryCode.length==2) ? 10 : 12))
+    const maxLengthPhone = (countryCode?.length == 4) ? 9 : ((countryCode?.length == 3) ? 10 : ((countryCode?.length == 2) ? 10 : 13))
 
 
     useEffect(() => {
@@ -65,14 +65,13 @@ const SignIn = ({ navigation, route }) => {
     const loginUser = async () => {
 
         const newNumber = countryCode.concat(phone)
-
         if ((phone && storagePhone == '') && password == '') {
             SimpleToast.show('All fields are mandatory')
         } else if (phone == '' && storagePhone == '') {
             SimpleToast.show('Phone Number Required')
         } else if (password == '') {
             SimpleToast.show('Password Required')
-        }else if (password.length <= 6) {
+        } else if (password.length <= 6) {
             SimpleToast.show('Password Should be more than 6 characters')
         } else {
             try {
@@ -196,7 +195,7 @@ const SignIn = ({ navigation, route }) => {
                                                 passwordRef.current.focus()
                                             }}
                                             keyboardType={'phone-pad'}
-                                            maxLength = {maxLengthPhone}
+                                            maxLength={maxLengthPhone}
                                             style={{ ...styles.credentails, textAlignVertical: 'center', height: '100%', borderBottomColor: 'transparent', borderBottomWidth: 0 }}
                                         />
                                     </View>
@@ -214,7 +213,7 @@ const SignIn = ({ navigation, route }) => {
                                     leftIcon={Images.phone}
                                     returnKeyType={'next'}
                                     fieldRef={phoneRef}
-                                    maxLength = {maxLengthPhone+countryCode.length}
+                                    maxLength={maxLengthPhone + countryCode.length}
                                     onSubmitEditing={() => {
                                         passwordRef.current.focus()
                                     }}

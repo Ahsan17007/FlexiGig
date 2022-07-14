@@ -13,7 +13,7 @@ const TopTabbar = createMaterialTopTabNavigator()
 
 const Index = () => {
     return (
-        <View style={{ width: '100%', height: '100%' }}>
+        <View style={{ width: '100%', height: '100%', }}>
 
             <TopTabbar.Navigator screenOptions={{
                 tabBarActiveTintColor: colors.Secondary,

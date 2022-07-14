@@ -24,7 +24,7 @@ function MyTabBar({ state, navigation }) {
 
                             <View style={{
                                 width: '100%',
-                                height: 4,
+                                height: 3,
                                 marginHorizontal: 4,
                                 backgroundColor: (state.index === state.routeNames.indexOf(ele)) ? colors.Secondary : 'transparent',
                                 display: (state.index === state.routeNames.indexOf(ele)) ? 'flex' : 'none'

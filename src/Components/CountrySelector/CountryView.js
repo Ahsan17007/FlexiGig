@@ -33,7 +33,7 @@ const CountryView = ({ countryData, clickable = false, onCountryItemClick, isCal
                     <View style={{ flexDirection: 'row', padding: 4, elevation: (elevated) ? 4 : 0 }}>
                         <View style={styles.innerContainer}>
 
-                            <View style={{ height: 20, width: 30, justifyContent: 'center', alignItems: 'center', display:(isLoading)? "flex" : 'none' }}>
+                            <View style={{ height: 20, width: 30, justifyContent: 'center', alignItems: 'center', display: (isLoading) ? "flex" : 'none' }}>
                                 <Loading
                                     size='small'
                                     color={colors.Primary}
@@ -45,19 +45,19 @@ const CountryView = ({ countryData, clickable = false, onCountryItemClick, isCal
                                 height: 20,
                                 width: 30,
                             }}
-                            style={[{
-                                display:(isLoading)? "none" : 'flex'
-                            }, styles.flagImage]}
+                                style={[{
+                                    display: (isLoading) ? "none" : 'flex'
+                                }, styles.flagImage]}
                                 onLoadStart={() => {
 
                                     setIsLoading(true)
 
                                 }}
                                 onLoadEnd={() => {
-                                    setTimeout(()=> {
+                                    setTimeout(() => {
                                         setIsLoading(false)
                                     }, 250)
-                                    
+
                                 }} />
 
 
