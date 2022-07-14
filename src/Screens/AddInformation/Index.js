@@ -24,8 +24,8 @@ const Index = () => {
 
             }} tabBar={({ state, navigation }) => <MyTabBar state={state} navigation={navigation}/>}>
 
-                <TopTabbar.Screen name='Personal Info' component={AddExperience} />
-                <TopTabbar.Screen name='Next of Kin' component={AddExperience} />
+                <TopTabbar.Screen name='Personal Info' component={AddPersonalInfo} />
+                <TopTabbar.Screen name='Next of Kin' component={AddKinInfo} />
                 <TopTabbar.Screen name='Experience' component={AddExperience} />
 
             </TopTabbar.Navigator>
