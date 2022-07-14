@@ -29,6 +29,7 @@ const HomeStack = ({ navigation }) => {
             }}
             tabBar={(props) => {
                 const { navigation, state } = props
+                const activeColor = colors.Primary
                 return (
 
                    
@@ -47,7 +48,7 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 0 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 0 ? activeColor : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -61,7 +62,7 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 1 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 1 ? activeColor : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -75,7 +76,7 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 2 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 2 ? activeColor : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -88,7 +89,7 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 3 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 3 ? activeColor : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -102,7 +103,7 @@ const HomeStack = ({ navigation }) => {
                                     style={{
                                         width: 24,
                                         height: 24,
-                                        tintColor: state.index === 4 ? colors.Black : '#CCCCCC'
+                                        tintColor: state.index === 4 ? activeColor : '#CCCCCC'
                                     }}
                                 />
                             </TouchableOpacity>

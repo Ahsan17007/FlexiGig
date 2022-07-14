@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyleSheet,
     Text,
     View,
     Image,
     TouchableOpacity,
-    FlatList
+    FlatList,
+
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import EarningHistory from '../../../Components/EarningHistory'
+import AddDetailsOptionPopup from '../../../Components/AddDetailsOptionsPopup'
 
 
 const earningHistory = [
@@ -43,30 +45,33 @@ const earningHistory = [
 
 const Home = ({ navigation }) => {
 
+    const [visibility, setVisibility]  = useState([true, false])
 
     const { token } = useSelector(state => state.Auth)
-/*
+
     useEffect(async ()=>{
-        // This is just for test 
-        // Check logs by Ahsan Iqbal 10-07-2022
-        // 
-        const config = {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}`}
-        };
 
-            try {
-                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/work_experiences', config)
-                const registerResult = await response.json();
-                console.log("registerUser-dashboard", registerResult);
-                
-            } catch (error) {
-                console.log("registerUser-dashboard-error", error);
-            }
+        if (visibility[0]) {
+            const config = {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}`}
+            };
+    
+                try {
+                    const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
+                    const registerResult = await response.json();
 
+                    if (registerResult?.data == null) {
+                        setVisibility([false, true])
+                    }
+                    
+                } catch (error) {
+                }
+    
+        }
         
     }, [])
-*/
+
     const renderItem = ({ item }) => { 
         return (
             <EarningHistory Item={item} />
@@ -188,6 +193,14 @@ const Home = ({ navigation }) => {
         )
     }
 
+    useEffect(()=>{
+        //API TO CHECK EXISTING DATA
+        //IN CASE DATA IS EMPTY
+        // setTimeout(()=>{
+        //     setVisibility(true)
+        // }, 1000)
+    })
+
     return (
         <View style={styles.mainContainer}>
 
@@ -207,6 +220,13 @@ const Home = ({ navigation }) => {
                     }
                 />
             </View>
+
+            <AddDetailsOptionPopup 
+            visibility={visibility[1]}
+            setVisibility={setVisibility}
+            onContinueBtnClick={()=> {
+                navigation.navigate('AddInformation')
+            }} />
         </View>
     )
 }
