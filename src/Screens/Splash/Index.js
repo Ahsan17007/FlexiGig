@@ -29,23 +29,20 @@ const Splash = ({ navigation }) => {
             .then(res => {
 
                 dispatch(countriesData(res?.data))
-                            if (token) {
-                                setTimeout(() => {
-                                    navigation.reset({
-                                        index: 0,
-                                        routes: [{ name: 'HomeStack' }],
-                                    })
-                                }, 500);
-                            } else {
-                                setTimeout(() => {
-                                    navigation.replace('OnBoarding')
-                                }, 500);
-                            }
-
+                if (token) {
+                    setTimeout(() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'HomeStack' }],
+                        })
+                    }, 500);
+                } else {
+                    setTimeout(() => {
+                        navigation.replace('OnBoarding')
+                    }, 500);
+                }
 
             })
-
-
 
     }, [])
 
