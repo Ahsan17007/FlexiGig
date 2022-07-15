@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput } from 'react-native'
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Modal } from 'react-native'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
-import { Picker } from '@react-native-picker/picker';
+
+import DatePicker from 'react-native-date-picker'
 
 
 const Title = ({ text }) => {
@@ -24,43 +25,43 @@ const Title = ({ text }) => {
     )
 }
 
-
-const Dropdown = ({ value, setValue, items }) => {
-
+const Dropdown = ({ date, setDate, fieldName, shown, isShown }) => {
     return (
-
-        <Picker
-            selectedValue={value}
-            onValueChange={(itemValue, itemIndex) => {
-                setValue(itemValue)
-            }}
-            mode='dropdown'>
-                {
-                    (()=>{
-                        if (value==='') {
-                            return <Picker.Item label={'Select Gender'} value={''} />
-                        }
-                    })()
-                    
-                }
-                {
-                    items.map(e=>{
-                        return <Picker.Item label={e?.label} value={e?.value} />
-                    })
-                }
-
-        </Picker>
+        <>
+            <TouchableOpacity onPress={isShown(true)}>
+                <Text style={{
+                    fontFamily: Fonts.Light,
+                    color: colors.Black,
+                    textAlignVertical: 'center',
+                }}>
+                    {fieldName}
+                </Text>
+            </TouchableOpacity>
+            <DatePicker
+                modal
+                open={shown}
+                date={date}
+                onConfirm={(date) => {
+                    setDate(date)
+                    isShown(false)
+                }}
+                onCancel={() => {
+                    isShown(false)
+                }}
+            />
+        </>
 
     )
 }
 
-const InputComponentDate = ({ value, setValue, items, fieldName }) => {
+const InputComponentDate = ({ date, setDate, fieldName, shown, isShown, maxDate }) => {
 
     return (
         <View style={{
             flex: 1,
             flexDirection: 'row',
-            marginRight:3
+            marginRight: 3,
+            marginVertical:8
         }}>
             <View style={{ flex: 1 }}>
                 <Title text={fieldName} />
@@ -68,9 +69,42 @@ const InputComponentDate = ({ value, setValue, items, fieldName }) => {
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth:2, marginHorizontal:2, marginLeft:8 }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 2, marginHorizontal: 2, marginLeft: 8 }}>
 
-                <Dropdown value={value} setValue={setValue} items={items} />
+                <TouchableOpacity onPress={() => {
+                    isShown(true)
+                }}>
+
+                    <View style={{ flexDirection: 'row', flex:1 }}>
+                        <Text style={{
+                            fontFamily: Fonts.Light,
+                            color: colors.Black,
+                            textAlignVertical: 'center',
+                            marginRight: 4
+                        }}>
+                            {'' + date.toISOString().split('T')[0]}
+                        </Text>
+
+                    </View>
+
+
+
+                </TouchableOpacity>
+                <DatePicker
+                    title={fieldName}
+                    modal={true}
+                    open={shown}
+                    date={date}
+                    onConfirm={(date) => {
+                        isShown(false)
+                        setDate(date)
+                    }}
+                    onCancel={() => {
+                        isShown(false)
+                    }}
+                    mode='date'
+                    maximumDate={maxDate}
+                />
 
             </View>
 

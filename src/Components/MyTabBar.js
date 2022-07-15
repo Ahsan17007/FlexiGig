@@ -8,7 +8,7 @@ function MyTabBar({ state, navigation }) {
         <View style={{
             flexDirection: "row",
             width: "100%",
-            // elevation: 5,
+            elevation: 2,
             backgroundColor: colors.White
         }}>
             {
@@ -18,13 +18,14 @@ function MyTabBar({ state, navigation }) {
                             style={styles.tabBarTouchable}
                             onPress={() => { navigation.navigate(ele) }}>
                             <Text style={{
-                                fontFamily: Fonts.SemiBold,
+                                fontFamily: (state.index === state.routeNames.indexOf(ele)) ? Fonts.SemiBold : Fonts.Regular,
+                                fontSize:16,
                                 color: (state.index === state.routeNames.indexOf(ele)) ? colors.Secondary : colors.Black
                             }}>{ele}</Text>
 
                             <View style={{
                                 width: '100%',
-                                height: 4,
+                                height: 3,
                                 marginHorizontal: 4,
                                 backgroundColor: (state.index === state.routeNames.indexOf(ele)) ? colors.Secondary : 'transparent',
                                 display: (state.index === state.routeNames.indexOf(ele)) ? 'flex' : 'none'

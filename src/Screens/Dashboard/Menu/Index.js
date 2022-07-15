@@ -7,13 +7,13 @@ import {
     TouchableOpacity,
     Pressable
 } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
 
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import Loader from '../../../Components/Loader'
+import { useSelector, useDispatch } from 'react-redux'
 import { onLogout } from '../../../Redux/Actions/HasSession'
 
 const Menu = ({ navigation }) => {

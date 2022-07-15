@@ -9,12 +9,11 @@ import {
   TouchableOpacityBase,
   TouchableOpacity,
 } from 'react-native';
-// ------------------------------------------
 import colors from '../Assets/Colors/Index';
 import Fonts from '../Assets/Fonts/Index';
 
-const InputField = props => {
-  const {
+const InputField =
+  ({
     leftIcon,
     rightIcon,
     placeholder,
@@ -35,61 +34,61 @@ const InputField = props => {
     rightIconStyle,
     editable,
     maxLength
-  } = props;
+  }) => {
 
-  return (
-    <View style={[styles.mainContainer, customStyle]}>
+    return (
+      <View style={[styles.mainContainer, customStyle]}>
 
-      {
-        leftIcon &&
-        <View style={[styles.icon,{justifyContent: multiline ? 'flex-start' : 'center'}]}>
-          <Image source={leftIcon} style={styles.leftIconStyle} />
+        {
+          leftIcon &&
+          <View style={[styles.icon, { justifyContent: multiline ? 'flex-start' : 'center' }]}>
+            <Image source={leftIcon} style={styles.leftIconStyle} />
+          </View>
+        }
+        {
+          label &&
+          <Text>{label}</Text>
+        }
+        <View style={[styles.input, {
+          width: isRightIcon ? '88%' : '100%',
+          justifyContent: multiline ? 'flex-start' : 'center'
+        }]}>
+          <TextInput
+            style={{ fontSize: 14, fontFamily: Fonts.Light }}
+            placeholder={placeholder}
+            value={value}
+            onChangeText={onChangeText}
+            secureTextEntry={password}
+            placeholderTextColor={'gray'}
+            autoCapitalize={autoCapitalize}
+            keyboardType={keyBoardType}
+            returnKeyType={returnKeyType}
+            onSubmitEditing={onSubmitEditing}
+            multiline={multiline}
+            editable={editable}
+            ref={fieldRef}
+            blurOnSubmit={false}
+            maxLength={maxLength}
+          />
         </View>
-      }
-      {
-        label &&
-        <Text>{label}</Text>
-      }
-      <View style={[styles.input, {
-        width: isRightIcon ? '88%' : '100%',
-        justifyContent: multiline ? 'flex-start' : 'center'
-      }]}>
-        <TextInput
-          style={{ fontSize: 14, fontFamily: Fonts.Light }}
-          placeholder={placeholder}
-          value={value}
-          onChangeText={onChangeText}
-          secureTextEntry={password}
-          placeholderTextColor={'gray'}
-          autoCapitalize={autoCapitalize}
-          keyboardType={keyBoardType}
-          returnKeyType={returnKeyType}
-          onSubmitEditing={onSubmitEditing}
-          multiline={multiline}
-          editable={editable}
-          ref={fieldRef}
-          blurOnSubmit={false}
-          maxLength={maxLength}
-        />
+
+        {
+          isRightIcon &&
+          <View style={styles.passwordIcon}>
+            <TouchableOpacity
+              onPress={rightIconOnPress}
+              activeOpacity={0.4}
+            >
+              <Image source={rightIcon} style={[styles.rightIconStyle]} />
+            </TouchableOpacity>
+          </View>
+        }
+
       </View>
 
-      {
-        isRightIcon &&
-        <View style={styles.passwordIcon}>
-          <TouchableOpacity
-            onPress={rightIconOnPress}
-            activeOpacity={0.4}
-          >
-            <Image source={rightIcon} style={[styles.rightIconStyle]} />
-          </TouchableOpacity>
-        </View>
-      }
 
-    </View>
-
-
-  )
-};
+    )
+  };
 
 export default InputField;
 
@@ -100,13 +99,13 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.textInput,
     height: 52,
     width: '100%',
-    backgroundColor:colors.PrimaryContainer,
-    paddingHorizontal:8
+    backgroundColor: colors.PrimaryContainer,
+    paddingHorizontal: 8
   },
   icon: {
     height: '100%',
     width: '12%',
-    paddingVertical:12,
+    paddingVertical: 12,
     alignItems: 'center',
   },
   passwordIcon: {

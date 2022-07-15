@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         // fontWeight:'bold',
         color: colors.Black,
         opacity: 0.5,
-        fontFamily: Fonts.Bold
+        fontFamily: Fonts.Regular
     },
     bellIcon: {
         width: 23,
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     commonTextStyle: {
         fontSize: 14,
         lineHeight: 21,
-        color: colors.Black
+        color: colors.Black,
+        fontFamily: Fonts.SemiBold
     }
 
 })

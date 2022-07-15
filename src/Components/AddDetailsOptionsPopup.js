@@ -22,14 +22,15 @@ const AddDetailsOptionPopup = ({
                 alignItems: 'center',
             }}
 
-            presentationStyle='fullScreen'
+            // presentationStyle='fullScreen'
             animationType='fade'
-            transparent={true}>
+            transparent={true}
+            >
             <View style={{
                 flex: 1,
-                backgroundColor: 'transparent',
-                justifyContent:'center',
-                alignItems:'center'
+                backgroundColor: 'rgba(0,0,0,0.25)',
+                justifyContent: 'center',
+                alignItems: 'center'
             }}>
                 <View style={styles.mainView}>
                     <Text style={styles.message}>{message}</Text>
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     message: {
         fontFamily: Fonts.Medium,
         color: colors.Black,
-        marginVertical:16
+        marginVertical: 16
 
     },
     buttonsContainer: {

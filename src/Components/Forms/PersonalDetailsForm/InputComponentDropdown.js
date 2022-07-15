@@ -25,7 +25,7 @@ const Title = ({ text }) => {
 }
 
 
-const Dropdown = ({ value, setValue, items }) => {
+const Dropdown = ({ value, setValue, items, fieldName }) => {
 
     return (
 
@@ -38,7 +38,7 @@ const Dropdown = ({ value, setValue, items }) => {
                 {
                     (()=>{
                         if (value==='') {
-                            return <Picker.Item label={'Select Gender'} value={''} />
+                            return <Picker.Item label={'Select '+ fieldName} value={''} />
                         }
                     })()
                     
@@ -70,7 +70,7 @@ const InputComponentDropdown = ({ value, setValue, items, fieldName }) => {
 
             <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth:2, marginHorizontal:2, marginLeft:8 }}>
 
-                <Dropdown value={value} setValue={setValue} items={items} />
+                <Dropdown value={value} setValue={setValue} items={items} fieldName={fieldName} />
 
             </View>
 

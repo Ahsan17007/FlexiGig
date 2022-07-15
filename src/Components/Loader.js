@@ -3,9 +3,8 @@ import { ActivityIndicator, Modal, View } from "react-native";
 import colors from "../Assets/Colors/Index";
 
 
-const Loader = (props) => {
+const Loader = ({ visible }) => {
 
-    const { visible } = props
     return (
         <Modal
             visible={visible}

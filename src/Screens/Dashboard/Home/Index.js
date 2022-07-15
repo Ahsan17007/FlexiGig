@@ -8,12 +8,16 @@ import {
     FlatList,
 
 } from 'react-native'
+
+import Loader from '../../../Components/Loader'
 import { useSelector, useDispatch } from 'react-redux'
+import { onLogout } from '../../../Redux/Actions/HasSession'
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import EarningHistory from '../../../Components/EarningHistory'
 import AddDetailsOptionPopup from '../../../Components/AddDetailsOptionsPopup'
+import SimpleToast from 'react-native-simple-toast'
 
 
 const earningHistory = [
@@ -45,34 +49,60 @@ const earningHistory = [
 
 const Home = ({ navigation }) => {
 
-    const [visibility, setVisibility]  = useState([true, false])
+    const [visibility, setVisibility] = useState([true, false])
+
+    const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
+
+    const logOut = () => {
+        setIsLoading(true)
+        dispatch(onLogout());
+        setTimeout(() => {
+            setIsLoading(false)
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'SignIn' }],
+            });
+        }, 250);
+    }
+
 
     const { token } = useSelector(state => state.Auth)
 
-    useEffect(async ()=>{
+    useEffect(async () => {
+
 
         if (visibility[0]) {
             const config = {
                 method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}`}
+                headers: { 'Authorization': `Bearer ${token}` }
             };
-    
-                try {
-                    const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
-                    const registerResult = await response.json();
 
+            try {
+                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
+                const registerResult = await response.json();
+
+                console.log(registerResult);
+
+                if(registerResult?.error?.message === 'Invalid token'){
+                    SimpleToast.show('Session Expired! Login Again')
+                    logOut()
+                }
+
+                else{
                     if (registerResult?.data == null) {
                         setVisibility([false, true])
                     }
-                    
-                } catch (error) {
                 }
-    
+
+            } catch (error) {
+            }
+
         }
-        
+
     }, [])
 
-    const renderItem = ({ item }) => { 
+    const renderItem = ({ item }) => {
         return (
             <EarningHistory Item={item} />
         )
@@ -85,10 +115,13 @@ const Home = ({ navigation }) => {
                 <View style={styles.topHeaderContainer}>
                     <View style={styles.userInfoContainer}>
 
-                        <TouchableOpacity style={styles.profilePic} onPress={()=>{
-                            navigation.navigate('Profile')
-                        }}>
-                        <Image source={Images.DummyUser} style={styles.profilePic} />
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={styles.profilePic}
+                            onPress={() => {
+                                navigation.navigate('Profile')
+                            }}>
+                            <Image source={Images.DummyUser} style={styles.profilePic} />
                         </TouchableOpacity>
 
                         <View style={{ marginLeft: 12 }}>
@@ -96,8 +129,13 @@ const Home = ({ navigation }) => {
                             <Text style={styles.name}>{'Jack Sparrow'}</Text>
                         </View>
                     </View>
-
-                    <Image source={Images.Notification} style={styles.bellIcon} />
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            navigation.navigate('Notifications')
+                        }}>
+                        <Image source={Images.Notification} style={styles.bellIcon} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={[styles.recordsContainer]}>
@@ -193,13 +231,6 @@ const Home = ({ navigation }) => {
         )
     }
 
-    useEffect(()=>{
-        //API TO CHECK EXISTING DATA
-        //IN CASE DATA IS EMPTY
-        // setTimeout(()=>{
-        //     setVisibility(true)
-        // }, 1000)
-    })
 
     return (
         <View style={styles.mainContainer}>
@@ -221,12 +252,12 @@ const Home = ({ navigation }) => {
                 />
             </View>
 
-            <AddDetailsOptionPopup 
-            visibility={visibility[1]}
-            setVisibility={setVisibility}
-            onContinueBtnClick={()=> {
-                navigation.navigate('AddInformation')
-            }} />
+            <AddDetailsOptionPopup
+                visibility={visibility[1]}
+                setVisibility={setVisibility}
+                onContinueBtnClick={() => {
+                    navigation.navigate('AddInformation')
+                }} />
         </View>
     )
 }
