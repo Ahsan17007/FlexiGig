@@ -240,7 +240,7 @@ const Home = ({ navigation }) => {
                     keyExtractor={item => item.id}
                     renderItem={(item) => renderItem(item)}
                     style={{ width: '100%' }}
-                    contentContainerStyle={{ paddingBottom: 20 }}
+                    contentContainerStyle={{ paddingBottom: 20, paddingTop: 30 }}
                     ItemSeparatorComponent={() =>
                         <View style={{ height: 12 }}>
 
