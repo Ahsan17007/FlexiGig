@@ -4,7 +4,6 @@ import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
 import { Picker } from '@react-native-picker/picker';
 import InputField from '../../InputField'
-import DocumentPicker from 'react-native-document-picker';
 
 
 const Title = ({ text }) => {
@@ -25,19 +24,72 @@ const Title = ({ text }) => {
     )
 }
 
-const ValCom = ({ value  }) => {
+const Mod = ({ visible, setVisible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick }) => {
 
-    var vals = ''
+    const [val, setVal] = useState('')
 
-    // value.forEach(element => {
-    //     vals += (element?.name + ', ')
-    // });
 
-    vals = value?.name
+    return (
+        <Modal
+            visible={visible}
+            style={{
+                alignSelf: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+
+            animationType='fade'
+            transparent={true}
+        >
+            <View style={{
+                flex: 1,
+                backgroundColor: 'rgba(0,0,0,0.25)',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <View style={styles.mainView}>
+                    <Text style={styles.message}>{'Enter Your ' + fieldName}</Text>
+
+                    <TextInput value={val} onChangeText={(t) => setVal(t)} placeholder='Single Value' />
+
+                    <View style={styles.buttonsContainer}>
+
+                        <TouchableOpacity onPress={()=> {
+                            console.log('Cancel Button');
+                            onCancelBtnClick()
+                        }} style={styles.button} >
+                            <Text style={styles.btnText}>
+                                {'Cancel'}
+                            </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.button} onPress={()=> {
+                            onAddBtnClick(val)
+                            setVal('')
+                            }}>
+                            <Text style={styles.btnText}>
+                                {'Add'}
+                            </Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+
+            </View>
+        </Modal>
+    )
+}
+
+const ValCom = ({ visible, setVisible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick  }) => {
+
+    const itemsCSV = value.join(', ')
 
     return (
 
-        <View style={{height:'100%'}}>
+        <View>
+
+            <Mod setVisible={setVisible} {...{ visible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick  }} />
+
             <Text style={{
                 textAlignVertical: 'center',
                 padding: 4,
@@ -45,11 +97,10 @@ const ValCom = ({ value  }) => {
                 fontFamily: Fonts.Light,
                 borderWidth: 1,
                 borderColor: colors.Black,
-                borderRadius: 4,
-                height:'100%'
+                borderRadius: 4
             }}>
 
-                {vals}
+                {itemsCSV}
 
             </Text>
 
@@ -58,7 +109,25 @@ const ValCom = ({ value  }) => {
     )
 }
 
-const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
+const InputComponentBoxAddMultiple = ({ fieldName, totalData, setTotalData, selectedData, setSelectedData, selectedNames, setSelectedNames }) => {
+
+    const [visible, setVisible] = useState(false)
+
+
+    const onAddBtnClick = (val) => {
+
+        if (val != '') {
+            setValue([...value, val])
+        }
+
+        setVisible(false)
+
+    }
+
+    const onCancelBtnClick = () => {
+        setVisible(false)
+    }
+
 
     return (
 
@@ -75,9 +144,9 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
                 </View>
 
 
-                <View style={{ flex: 2, margin: 1, height:'100%' }}>
+                <View style={{ flex: 2, margin: 1 }}>
 
-                    <ValCom {...{ value }} />
+                    <ValCom setVisible={setVisible}  {...{ visible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick }} />
 
                 </View>
 
@@ -85,14 +154,10 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
             </View>
 
             <TouchableOpacity onPress={()=> {
-                DocumentPicker.pickSingle({
-                    //allowMultiSelection: true,
-                }).then(res=>{
-                    setValue(res)
-                })
+                setVisible(true)
             }} style={styles.btn}>
                 <Text style={styles.addSkillButtonText}>
-                    {`Upload`}
+                    {`Add`}
                 </Text>
             </TouchableOpacity>
         </>
@@ -100,7 +165,7 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
     )
 }
 
-export default InputComponentBoxFiles;
+export default InputComponentBoxAddMultiple;
 
 const styles = StyleSheet.create({
     mainView: {
