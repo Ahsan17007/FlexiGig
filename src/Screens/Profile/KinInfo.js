@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     View,
     Text,
@@ -7,49 +7,71 @@ import {
 } from 'react-native'
 import colors from '../../Assets/Colors/Index';
 import Fonts from '../../Assets/Fonts/Index';
+import Loader from '../../Components/Loader';
+import { BASE_URL } from '../../Api/config'
+import SimpleToast from 'react-native-simple-toast';
+import { useSelector } from 'react-redux';
 
-
-const kinData = [
-    {
-        id: '1',
-        name: 'Jack',
-        number: '+254740902558',
-        relationship: 'Father'
-    },
-    {
-        id: '2',
-        name: 'James',
-        number: '+254740902559',
-        relationship: 'Friend'
-    },
-    {
-        id: '3',
-        name: 'Jhon',
-        number: '+254740902560',
-        relationship: 'Cousin'
-    },
-    
-]
+const renderKin = ({ item }) => {
+    item = item?.attributes
+    return (
+        <View style={{ paddingVertical: 10, borderBottomWidth: 0.5, borderBottomColor: '#e6e8e6' }}>
+            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 3 }}>
+                <Text style={styles.title}>{'Name:'}</Text>
+                <Text style={styles.desc}>{item.name}</Text>
+            </View>
+            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 3 }}>
+                <Text style={styles.title}>{'Phone No:'}</Text>
+                <Text style={styles.desc}>{item.phone_number}</Text>
+            </View>
+            <View style={{ width: '100%', flexDirection: 'row', }}>
+                <Text style={styles.title}>{'Relationship:'}</Text>
+                <Text style={styles.desc}>{item.relationship}</Text>
+            </View>
+        </View>
+    )
+}
 const KinInfo = ({ navigation }) => {
 
-    const renderKin = ({ item }) => {
-        return (
-            <View style={{ paddingVertical: 10, borderBottomWidth: 0.5, borderBottomColor: '#e6e8e6' }}>
-                <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 3 }}>
-                    <Text style={styles.title}>{'Name:'}</Text>
-                    <Text style={styles.desc}>{item.name}</Text>
-                </View>
-                <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 3 }}>
-                    <Text style={styles.title}>{'Phone No:'}</Text>
-                    <Text style={styles.desc}>{item.number}</Text>
-                </View>
-                <View style={{ width: '100%', flexDirection: 'row', }}>
-                    <Text style={styles.title}>{'Relationship:'}</Text>
-                    <Text style={styles.desc}>{item.relationship}</Text>
-                </View>
-            </View>
-        )
-    }
+    const [kinData, setKinData] = useState([])
+    const [isLoad, setIsLoad] = useState(true)
+
+    const { token } = useSelector(state => state.Auth)
+
+
+    useEffect(() => {
+        const met = async () => {
+
+            const config = {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            }
+            const r = await fetch(`${BASE_URL}nextofkins`, config)
+            const response = await r.json()
+
+            if (response && response?.error?.message != 'Invalid token') {
+                if (response?.data) {
+                    SimpleToast.show('Got Kins')
+                    setKinData(response?.data)
+                    setIsLoad(false)
+                }
+
+            }
+            else if (response?.data?.attributes.length == 0) {
+                SimpleToast.show('No kin exists')
+                setIsLoad(false)
+            }
+            else {
+                SimpleToast.show('Failed Getting Kin-info')
+                setIsLoad(false)
+            }
+
+
+        }
+
+        met()
+    }, [])
+
     return (
         <View style={styles.mainContainer}>
 
@@ -58,20 +80,20 @@ const KinInfo = ({ navigation }) => {
                 <FlatList
                     data={kinData}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item, index) => '--'+index}
                     renderItem={(item) => renderKin(item)}
                     style={{ width: '100%' }}
                     contentContainerStyle={{ paddingBottom: 20 }}
-                // ItemSeparatorComponent={() =>
-                //     <View style={{ height: 12 }}>
+                    ItemSeparatorComponent={() =>
+                        <View style={{ height: 1 }}>
 
-                //     </View>
-                // }
+                        </View>
+                    }
                 />
 
-
-
             </View>
+
+            <Loader visible={isLoad} />
 
         </View>
     )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // --------------------------------------------------------
 import Splash from '../Screens/Splash/Index'
@@ -17,7 +16,6 @@ import Profile from '../Screens/Profile/Index';
 
 
 const Stack = createStackNavigator()
-const TopTabbar = createStackNavigator()
 
 const MainStack = () => {
 
@@ -40,8 +38,6 @@ const MainStack = () => {
 
                 <Stack.Screen name="AuthStack" component={AuthStack} />
                 <Stack.Screen name="HomeStack" component={HomeStack} />
-
-
 
             </Stack.Navigator>
         </NavigationContainer>

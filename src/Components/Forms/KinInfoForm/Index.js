@@ -1,26 +1,45 @@
 import React, { useRef, useState } from 'react'
-import { Touchable, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import {  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
 import InputComponent from './InputComponent'
+import { useSelector } from 'react-redux'
+import SimpleToast from 'react-native-simple-toast'
 
-const Index = ({ onSubmit }) => {
+
+const Index = ({ onSubmit, navigation }) => {
+
+const { token } = useSelector(state => state.Auth)
 
     const [firstName, setFirstName] = useState('')
     const [relationship, setRelationship] = useState('')
     const [alternateNo, setAlternateNo] = useState('')
+    const [isAdding, setIsAdding] = useState(false)
 
-    const firstNameRef = useRef()
-    const relationshipRef = useState()
-    const alternateNoRef = useState()
+    const nameR = useRef()
+    const relR = useState()
+    const noR = useState()
 
     const onNextPress = () => {
-
+        navigation.navigate('Experience')
     }
 
     const onAddMorePress = () => {
 
+
+        if (firstName === '' || relationship === '' || alternateNo === '' || alternateNo.length < 10) {
+            SimpleToast.show('All fields are mandatory')
+        }
+
+        else {
+            setIsAdding(true)
+            onSubmit({
+                "name": firstName,
+                "phone_number": alternateNo,
+                "relationship": relationship
+            }, setIsAdding, setFirstName, setRelationship, setAlternateNo )
+        }
     }
 
     return (
@@ -33,47 +52,62 @@ const Index = ({ onSubmit }) => {
                     value={firstName}
                     setter={setFirstName}
                     max={16}
-                    ref={firstNameRef}
-                    nextRef={relationshipRef} />
+                    ref={nameR}
+                    nextRef={relR} />
 
                 <InputComponent
                     fieldName={'Relationship'}
                     value={relationship}
                     setter={setRelationship}
                     max={16}
-                    ref={relationshipRef}
-                    nextRef={alternateNoRef}
+                    ref={relR}
+                    nextRef={noR}
                 />
 
 
                 <InputComponent
                     fieldName={'Phone No.'}
-                    value={alternateNo}
+                    value={noR}
                     setter={setAlternateNo}
                     max={13}
-                    ref={alternateNoRef}
+                    ref={nameR}
                     keyboardType='phone-pad' />
 
 
                 <View style={{
                     marginVertical: 48,
                     marginHorizontal: 32,
-                    flexDirection:'row',
-                    justifyContent:'space-between'
+                    flexDirection: 'row',
+                    justifyContent: 'center'
 
                 }}>
 
-                    <TouchableOpacity onPress={onAddMorePress} style={styles.btn}>
-                        <Text style={styles.btnText}>
-                            Add More
-                        </Text>
-                    </TouchableOpacity>
+                    <TouchableOpacity onPress={onAddMorePress} style={[styles.btn, {
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
 
+                    }]}
+                        disabled={isAdding}
+                    >
+                        {
+                            (isAdding) ?
+                                <ActivityIndicator color={colors.Secondary} />
+                                :
+                                <Text style={styles.btnText}>
+                                    Add
+                                </Text>
+
+                        }
+
+
+
+                    </TouchableOpacity>
+{/* 
                     <TouchableOpacity onPress={onNextPress} style={styles.btn}>
                         <Text style={styles.btnText}>
                             Next
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                 </View>
 
@@ -95,11 +129,12 @@ const styles = StyleSheet.create({
         borderColor: colors.Secondary,
         borderWidth: 1,
         width: 96,
-        borderRadius:8,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:colors.White,
-        elevation: 4
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.White,
+        elevation: 4,
+        alignSelf:'center'
 
     }
 })

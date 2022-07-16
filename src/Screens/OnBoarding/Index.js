@@ -4,10 +4,8 @@ import {
     Text,
     View,
     Image,
-    TouchableOpacity,
-    Pressable
+    TouchableOpacity
 } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
@@ -15,8 +13,6 @@ import colors from '../../Assets/Colors/Index'
 import AppButton from '../../Components/AppBtn'
 
 const OnBoarding = ({ navigation, route }) => {
-
-   
 
     return (
         <View style={styles.mainContainer}>

@@ -78,7 +78,7 @@ const Experience = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => '-'+index}
                     renderItem={(item) => renderKin(item)}
-                    style={{ width: '100%', margin:8 }}
+                    style={{ width: '100%'}}
                     contentContainerStyle={{ paddingBottom: 20 }}
                 />
 

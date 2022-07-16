@@ -4,25 +4,18 @@ import {
     Text,
     View,
     SafeAreaView,
-    KeyboardAvoidingView,
     TouchableOpacity,
     Keyboard,
-    ScrollView,
     TextInput
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
-import Preference from 'react-native-preference';
-import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
-import { CountryModalProvider } from 'react-native-country-picker-modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
-import colors from '../../../Assets/Colors/Index';
-import { userToken, loggedInData } from '../../../Redux/Actions/HasSession';
 import Loader from '../../../Components/Loader';
 import CountrySelector from '../../../Components/CountrySelector/Index'
 

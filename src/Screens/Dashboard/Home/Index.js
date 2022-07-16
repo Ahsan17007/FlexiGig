@@ -54,52 +54,46 @@ const Home = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
 
-    const logOut = () => {
-        setIsLoading(true)
-        dispatch(onLogout());
-        setTimeout(() => {
-            setIsLoading(false)
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'SignIn' }],
-            });
-        }, 250);
-    }
-
-
     const { token } = useSelector(state => state.Auth)
 
-    useEffect(async () => {
+    useEffect(() => {
+        (async () => {
 
+            if (visibility[0]) {
+                const config = {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                };
 
-        if (visibility[0]) {
-            const config = {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` }
-            };
+                try {
+                    const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
+                    const registerResult = await response.json();
 
-            try {
-                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
-                const registerResult = await response.json();
-
-                console.log(registerResult);
-
-                if(registerResult?.error?.message === 'Invalid token'){
-                    SimpleToast.show('Session Expired! Login Again')
-                    logOut()
-                }
-
-                else{
-                    if (registerResult?.data == null) {
-                        setVisibility([false, true])
+                    if (registerResult?.error?.message === 'Invalid token') {
+                        SimpleToast.show('Session Expired! Login Again')
+                        setIsLoading(true)
+                        dispatch(onLogout());
+                        setTimeout(() => {
+                            setIsLoading(false)
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'SignIn' }],
+                            });
+                        }, 250);
                     }
+
+                    else {
+                        if (registerResult?.data == null) {
+                            setVisibility([false, true])
+                        }
+                    }
+
+                } catch (error) {
                 }
 
-            } catch (error) {
             }
 
-        }
-
+        })()
     }, [])
 
     const renderItem = ({ item }) => {
