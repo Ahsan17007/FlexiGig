@@ -14,8 +14,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SimpleToast from 'react-native-simple-toast';
 import Preference from 'react-native-preference';
 import { useDispatch, useSelector } from 'react-redux';
-import CountryPicker, { getAllCountries } from 'react-native-country-picker-modal'
-import { CountryModalProvider } from 'react-native-country-picker-modal';
 // --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'

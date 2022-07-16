@@ -54,25 +54,11 @@ const Home = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
 
-    const logOut = () => {
-        setIsLoading(true)
-        dispatch(onLogout());
-        setTimeout(() => {
-            setIsLoading(false)
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'SignIn' }],
-            });
-        }, 250);
-    }
-
-
     const { token } = useSelector(state => state.Auth)
 
     useEffect(() => {
-
-
         (async () => {
+
             if (visibility[0]) {
                 const config = {
                     method: 'GET',
@@ -83,11 +69,17 @@ const Home = ({ navigation }) => {
                     const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
                     const registerResult = await response.json();
 
-                    console.log(registerResult);
-
                     if (registerResult?.error?.message === 'Invalid token') {
                         SimpleToast.show('Session Expired! Login Again')
-                        logOut()
+                        setIsLoading(true)
+                        dispatch(onLogout());
+                        setTimeout(() => {
+                            setIsLoading(false)
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'SignIn' }],
+                            });
+                        }, 250);
                     }
 
                     else {
@@ -100,10 +92,8 @@ const Home = ({ navigation }) => {
                 }
 
             }
-        }
 
-        )
-
+        })()
     }, [])
 
     const renderItem = ({ item }) => {

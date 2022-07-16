@@ -54,7 +54,7 @@ const AddExperience = ({ isNeedToPutDetails, setIsNeedToPutDetails, needToFetch,
                     "description": description
                 })
             }
-            const r = await fetch('https://flexigig-api.herokuapp.com/api/v1/work_experiences', config)
+            const r = await fetch(`${BASE_URL}work_experiences`, config)
             const response = await r.json()
 
             console.log('I am response');

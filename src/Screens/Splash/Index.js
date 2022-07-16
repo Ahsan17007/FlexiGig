@@ -17,8 +17,7 @@ const Splash = ({ navigation }) => {
 
     useEffect(() => {
 
-
-        (async () => {
+        const mod = async () => {
 
 
             const req = await fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
@@ -27,19 +26,17 @@ const Splash = ({ navigation }) => {
             dispatch(countriesData(res?.data))
 
             if (token) {
-                setTimeout(() => {
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'HomeStack' }],
-                    })
-                }, 500);
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'HomeStack' }],
+                })
             } else {
-                setTimeout(() => {
-                    navigation.replace('OnBoarding')
-                }, 500);
+                navigation.replace('OnBoarding')
             }
 
-        })()
+        }
+
+        mod();
 
 
     }, [])
