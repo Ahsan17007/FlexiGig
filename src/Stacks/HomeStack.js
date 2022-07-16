@@ -9,7 +9,8 @@ import Universe from '../Screens/Dashboard/Universe/Index'
 import Inventory from '../Screens/Dashboard/Inventory/Index'
 import Academy from '../Screens/Dashboard/Academy/Index';
 import Menu from '../Screens/Dashboard/Menu/Index'
-
+import OnGoingProjects from '../Screens/Dashboard/OnGoingProjects/Index';
+import ProjectDetails from '../Screens/Dashboard/ProjectDetails.js/Index';
 import Images from '../Assets/Images/Index';
 import colors from '../Assets/Colors/Index';
 
@@ -30,7 +31,14 @@ const HomeStackScreens = () => {
                 options={{
                     headerShown: false
                 }} name={'Notifications'} component={Notifications} />
-
+            <HomeScreenStack.Screen
+                options={{
+                    headerShown: false
+                }} name={'OnGoingProjects'} component={OnGoingProjects} />
+            <HomeScreenStack.Screen
+                options={{
+                    headerShown: false
+                }} name={'ProjectDetails'} component={ProjectDetails} />
         </HomeScreenStack.Navigator>
     )
 }

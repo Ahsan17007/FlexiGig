@@ -69,36 +69,40 @@ const Home = ({ navigation }) => {
 
     const { token } = useSelector(state => state.Auth)
 
-    useEffect(async () => {
+    useEffect(() => {
 
 
-        if (visibility[0]) {
-            const config = {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` }
-            };
+        (async () => {
+            if (visibility[0]) {
+                const config = {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                };
 
-            try {
-                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
-                const registerResult = await response.json();
+                try {
+                    const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
+                    const registerResult = await response.json();
 
-                console.log(registerResult);
+                    console.log(registerResult);
 
-                if(registerResult?.error?.message === 'Invalid token'){
-                    SimpleToast.show('Session Expired! Login Again')
-                    logOut()
-                }
-
-                else{
-                    if (registerResult?.data == null) {
-                        setVisibility([false, true])
+                    if (registerResult?.error?.message === 'Invalid token') {
+                        SimpleToast.show('Session Expired! Login Again')
+                        logOut()
                     }
+
+                    else {
+                        if (registerResult?.data == null) {
+                            setVisibility([false, true])
+                        }
+                    }
+
+                } catch (error) {
                 }
 
-            } catch (error) {
             }
-
         }
+
+        )
 
     }, [])
 
@@ -142,9 +146,12 @@ const Home = ({ navigation }) => {
                     <Text style={styles.recordTitle}>{'Projects'}</Text>
                     <View style={styles.projectsContainer}>
                         <View style={{ alignItems: 'center' }}>
-                            <View style={styles.noOfProjectsContainer}>
+                            <TouchableOpacity
+                                activeOpacity={0.4}
+                                onPress={() => navigation.navigate('OnGoingProjects')}
+                                style={styles.noOfProjectsContainer}>
                                 <Text style={styles.noOfProjects}>{'5'}</Text>
-                            </View>
+                            </TouchableOpacity>
                             <Text style={styles.projectCat}>{'Ongoing'}</Text>
                         </View>
 
