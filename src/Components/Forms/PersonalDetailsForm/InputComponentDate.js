@@ -69,7 +69,7 @@ const InputComponentDate = ({ date, setDate, fieldName, shown, isShown, maxDate 
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 2, marginHorizontal: 2, marginLeft: 8 }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 1, marginHorizontal: 2, marginLeft: 8 }}>
 
                 <TouchableOpacity onPress={() => {
                     isShown(true)

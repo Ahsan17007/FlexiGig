@@ -34,6 +34,9 @@ const Dropdown = ({ value, setValue, items, fieldName }) => {
             onValueChange={(itemValue, itemIndex) => {
                 setValue(itemValue)
             }}
+            style={{
+                marginHorizontal:-10
+            }}
             mode='dropdown'>
                 {
                     (()=>{
@@ -62,13 +65,13 @@ const InputComponentDropdown = ({ value, setValue, items, fieldName }) => {
             flexDirection: 'row',
             marginRight:3
         }}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, margin: 1 }}>
                 <Title text={fieldName} />
 
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth:2, marginHorizontal:2, marginLeft:8 }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth:1, margin:1, flexDirection:'column', justifyContent:'flex-start' }}>
 
                 <Dropdown value={value} setValue={setValue} items={items} fieldName={fieldName} />
 
