@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 import Fonts from '../../../Assets/Fonts/Index';
 import colors from '../../../Assets/Colors/Index';
+
+const { height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -49,78 +51,50 @@ const styles = StyleSheet.create({
         height: 23,
         resizeMode: 'contain'
     },
-    recordsContainer: {
-        // height: 165,
+    projectDetailContainer: {
         width: '100%',
-        backgroundColor: colors.PrimaryContainer,
+        // height: 85,
+        maxHeight: height / 1.35,
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 10,
-        paddingHorizontal: 18,
-        paddingVertical: 21
+        backgroundColor: colors.White,
+        borderWidth: 1,
+        borderColor: colors.Primary,
+        paddingHorizontal: 12,
+        paddingVertical: 12,
     },
-    recordTitle: {
-        fontSize: 15,
-        // fontWeight:'bold',
+    title: {
+        width: '30%',
+        fontSize: 14,
         color: colors.Black,
-        lineHeight: 21,
         fontFamily: Fonts.SemiBold
     },
-    projectsContainer: {
+    desc: {
+        width: '70%',
+        fontSize: 14,
+        color: colors.Black,
+        fontFamily: Fonts.Regular
+    },
+    BtnContainer: {
         width: '100%',
+        marginTop: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 25,
-        paddingHorizontal: 17
+        paddingHorizontal: 35
     },
-    noOfProjectsContainer: {
-        height: 51,
-        width: 51,
-        borderRadius: 51,
-        backgroundColor: '#D9D9D9',
+    actionBtn: {
+        height: 30,
+        width: 100,
+        borderRadius: 100,
+        backgroundColor: colors.Primary,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    noOfProjects: {
-        fontSize: 18,
-        lineHeight: 27,
-        color: colors.Black
-    },
-    projectCat: {
-        fontSize: 13,
-        lineHeight: 18,
-        color: colors.Black,
-        marginTop: 11
-    },
-    ratingContainer: {
-        height: 51,
-        width: 51,
-        borderRadius: 51,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: colors.Black
-    },
-    rating: {
-        fontSize: 16,
-        lineHeight: 24,
-        color: colors.Black
-    },
-    ratingCat: {
-        fontSize: 13,
-        lineHeight: 18,
-        color: colors.Black,
-    },
-    historyTitleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        marginBottom: 20
-    },
-    commonTextStyle: {
+    btnText: {
         fontSize: 14,
-        lineHeight: 21,
-        color: colors.Black,
-        fontFamily: Fonts.SemiBold
+        color: colors.White,
+        fontFamily: Fonts.Medium
     }
 
 })

@@ -136,9 +136,12 @@ const Home = ({ navigation }) => {
                     <Text style={styles.recordTitle}>{'Projects'}</Text>
                     <View style={styles.projectsContainer}>
                         <View style={{ alignItems: 'center' }}>
-                            <View style={styles.noOfProjectsContainer}>
+                            <TouchableOpacity
+                                activeOpacity={0.4}
+                                onPress={() => navigation.navigate('OnGoingProjects')}
+                                style={styles.noOfProjectsContainer}>
                                 <Text style={styles.noOfProjects}>{'5'}</Text>
-                            </View>
+                            </TouchableOpacity>
                             <Text style={styles.projectCat}>{'Ongoing'}</Text>
                         </View>
 
