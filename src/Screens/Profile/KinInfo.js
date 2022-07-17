@@ -3,7 +3,9 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList
+    FlatList,
+    Image,
+    TouchableOpacity
 } from 'react-native'
 import colors from '../../Assets/Colors/Index';
 import Fonts from '../../Assets/Fonts/Index';
@@ -11,6 +13,7 @@ import Loader from '../../Components/Loader';
 import { BASE_URL } from '../../Api/config'
 import SimpleToast from 'react-native-simple-toast';
 import { useSelector } from 'react-redux';
+import Images from '../../Assets/Images/Index';
 
 const renderKin = ({ item }) => {
     item = item?.attributes
@@ -48,17 +51,18 @@ const KinInfo = ({ navigation }) => {
             }
             const r = await fetch(`${BASE_URL}nextofkins`, config)
             const response = await r.json()
+            console.log('****************', response);
+
             setIsLoading(false)
             if (response && response?.error?.message != 'Invalid token') {
                 if (response?.data.length > 0) {
-                    console.log('****************', response);
                     SimpleToast.show('Got Kins')
                     setKinData(response?.data)
                 }
 
             }
             else if (response?.data?.attributes.length == 0) {
-                SimpleToast.show('No kin exists')
+                // SimpleToast.show('No kin exists')
                 setIsLoading(false)
             }
             else {
@@ -86,7 +90,15 @@ const KinInfo = ({ navigation }) => {
                     contentContainerStyle={{ paddingBottom: 20, }}
                     ListEmptyComponent={() => {
                         return (
-                            <Text style={styles.emptyList}>{'No Kins Found'}</Text>
+                            <View style={{ marginTop: '50%', alignItems: 'center' }}>
+                                <Text style={styles.emptyList}>{'No Kins Found'}</Text>
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    onPress={() => navigation.navigate('AddKinInfo')}
+                                >
+                                    <Image source={Images.Add} style={{ height: 25, width: 25, marginTop: 5 }} resizeMode='contain' />
+                                </TouchableOpacity>
+                            </View>
                         )
                     }}
                     ItemSeparatorComponent={() =>
@@ -131,7 +143,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: colors.Black,
         fontFamily: Fonts.Regular,
-        marginTop: '50%',
         alignSelf: 'center'
     }
 })

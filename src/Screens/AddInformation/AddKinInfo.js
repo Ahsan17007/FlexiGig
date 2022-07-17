@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import SimpleToast from 'react-native-simple-toast';
 import { BASE_URL } from '../../Api/config';
 
-const AddPersonalInfo = ({ navigation }) => {
+const AddKinInfo = ({ navigation }) => {
 
 
     const { token } = useSelector(state => state.Auth)
@@ -45,4 +45,4 @@ const AddPersonalInfo = ({ navigation }) => {
     )
 }
 
-export default AddPersonalInfo;
+export default AddKinInfo;

@@ -27,16 +27,18 @@ const PersonalInfo = ({ navigation }) => {
         await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
             .then(res => res.json())
             .then(response => {
-                setIsloading(false)
+                setTimeout(() => {
+                    setIsloading(false)
+                }, 250);
                 console.log("getUserDetails-response", response);
-                setUserData(response?.data)
-                // if (response && response?.error?.message != 'Invalid token') {
-                //     setResp(response?.data)
-                //     console.log(resp);
-                // }
-                // else {
-                //     SimpleToast.show('Failed Getting Experiences')
-                // }
+                // console.log("getUserDetails-response", response?.data?.attributes?.services);
+                // console.log("getUserDetails-response", response?.data?.attributes?.routes);
+                if (response && response?.error?.message != 'Invalid token') {
+                    setUserData(response?.data)
+                }
+                else {
+                    SimpleToast.show('Failed getting personal info')
+                }
             }).catch(err => console.log("getUserDetails-err", err))
 
     }
@@ -46,65 +48,69 @@ const PersonalInfo = ({ navigation }) => {
     }, [])
     return (
         <View style={styles.mainContainer}>
-            <ScrollView>
-                <View style={styles.detailContainer}>
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Name:'}</Text>
-                        <Text style={styles.desc}>{'Jack Sparrow'}</Text>
-                    </View>
+            {
+                isLoading ?
+                    <Loader visible={isLoading} />
+                    :
+                    <ScrollView>
+                        <View style={styles.detailContainer}>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Name:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.firstname} ${userData?.attributes?.surname}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Phone No:'}</Text>
-                        <Text style={styles.desc}>{'+254740902556'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Phone No:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.phoneno ? userData?.attributes?.phoneno : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Alt Phone No:'}</Text>
-                        <Text style={styles.desc}>{'+254740902556'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Alt Phone No:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.altphone ? userData?.attributes?.altphone : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Email:'}</Text>
-                        <Text style={styles.desc}>{'jack123@mail.com'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Email:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.email ? userData?.attributes?.email : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'ID No:'}</Text>
-                        <Text style={styles.desc}>{'123456789'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'ID No:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.identification_number ? userData?.attributes?.identification_number : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Gender:'}</Text>
-                        <Text style={styles.desc}>{'Male'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Gender:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.gender ? userData?.attributes?.gender : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Rev.Ath No:'}</Text>
-                        <Text style={styles.desc}>{'123654789'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Rev.Ath No:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.revenue_authority_number ? userData?.attributes?.revenue_authority_number : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Education Level:'}</Text>
-                        <Text style={styles.desc}>{'University'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Education Level:'}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.education_level ? userData?.attributes?.education_level : '------------'}`}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Services:'}</Text>
-                        <Text style={styles.desc}>{'Designer'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Services:'}</Text>
+                                <Text style={styles.desc}>{'------------'}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Routes:'}</Text>
-                        <Text style={styles.desc}>{'ABX'}</Text>
-                    </View>
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Routes:'}</Text>
+                                <Text style={styles.desc}>{'------------'}</Text>
+                            </View>
 
-                    <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                        <Text style={styles.title}>{'Joined On:'}</Text>
-                        <Text style={styles.desc}>{'April 22, 2021'}</Text>
-                    </View>
-                </View>
-            </ScrollView>
-            <Loader visible={isLoading} />
+                            <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
+                                <Text style={styles.title}>{'Joined On:'}</Text>
+                                <Text style={styles.desc}>{'------------'}</Text>
+                            </View>
+                        </View>
+                    </ScrollView>
+            }
         </View>
     )
 }

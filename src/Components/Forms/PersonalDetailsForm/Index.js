@@ -250,17 +250,40 @@ const Index = ({ onSubmit }) => {
                 "email": email,
                 "identification_doc_type": idTypeName,
                 "identification_number": id,
-                "identification_doc": idDocuments.uri,
+                "identification_doc": '',
                 "level_of_education": eduLevelName,
-                "education_certificate": eduDocuments.uri,
+                "education_certificate": '',
                 "revenue_authority_number": revAuthNo,
-                "revenue_authority_certificate": revAuthCert.uri,
+                "revenue_authority_certificate": '',
                 "current_residence": currentResidence,
-                "avatar": "",
-                "routes": selectedRoutes,
-                "services": selectedServices,
-                
+                "avatar": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                "routes": [],
+                "services": [],
+
+                // "firstname": "Mrx",
+                // "middlename": "",
+                // "surname": "jonie",
+                // "email": "mrx@gmail.com",
+                // "identification_doc_type": "passport",
+                // "identification_number": "HKS122129",
+                // "identification_doc": "",
+                // "level_of_education": "",
+                // "education_certificate": "",
+                // "revenue_authority_number": "",
+                // "revenue_authority_certificate": "",
+                // "current_residence": "Nairobi Kenya",
+                // "avatar": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                // "routes": ["08bf7e8c-89d6-49f3-ac59-2db8e0d2032c"],
+                // "services": [
+                //     "42fade7b-5650-44b9-9e33-d403e93a51be",
+                //     "bcde708a-86b3-4ad4-86a3-ad083d02d25c",
+                //     "fd9a3f01-de6c-4b21-b702-81c7a83c75b0"
+                // ]
+
             }
+
+            // console.log(data_body);
+            // return false;
 
             onSubmit(data_body)
 

@@ -10,6 +10,7 @@ export const Images = {
     Show: require('./show.png'),
     Hide: require('./hide.png'),
     Checked: require('./checked.png'),
+    Add: require('./add.png'),
     
 
 
