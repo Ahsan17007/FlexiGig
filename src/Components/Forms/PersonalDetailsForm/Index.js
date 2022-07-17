@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux'
 
 import { BASE_URL } from '../../../Api/config'
 import Loader from '../../Loader'
+import SimpleToast from 'react-native-simple-toast'
 
 // {...{
 //     eduLevelName,
@@ -79,7 +80,7 @@ const Index = ({ onSubmit }) => {
 
                 if (response?.data?.length > 0 && totalRoutes.length === 0) {
                     for (ele of response?.data) {
-                        totalServices.push(ele?.attributes)
+                        totalRoutes.push(ele?.attributes)
                     }
                 }
 
@@ -204,39 +205,80 @@ const Index = ({ onSubmit }) => {
         multipleRequestsHandler(isLoader, setIsLoader)
     }, [])
 
+    const wrap = (string) => {
+        return string.length > 0
+    }
+
     const onNextPress = () => {
 
-        const config_sample = {
-            "firstname": "test werrrrr",
-            "middlename": "rrrrrrr",
-            "surname": "tttiriti",
-            "email": "ericmmmm@gmail.com",
-            "identification_doc_type": "passport",
-            "identification_number": "HKS122123",
-            "identification_doc": "",
-            "level_of_education": "",
-            "education_certificate": "",
-            "revenue_authority_number": "",
-            "revenue_authority_certificate": "",
-            "current_residence": "Nairobi Kenya",
-            "avatar": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            "routes": ["08bf7e8c-89d6-49f3-ac59-2db8e0d2032c"],
-            "services": [
-                "42fade7b-5650-44b9-9e33-d403e93a51be",
-                "bcde708a-86b3-4ad4-86a3-ad083d02d25c",
-                "fd9a3f01-de6c-4b21-b702-81c7a83c75b0"
-            ]
+        const areRequiredFieldsAvailable =
+            (
+                wrap(firstName) &&
+                wrap(surname) &&
+                wrap(gender) &&
+                wrap(email) &&
+                wrap(id) &&
+                wrap(idTypeName) &&
+                (idDocuments.uri) &&
+                date &&
+                wrap(eduLevelName) &&
+                (eduDocuments.uri) &&
+                wrap(revAuthNo) &&
+                (revAuthCert.uri) &&
+                wrap(currentResidence) &&
+                wrap(selectedServices) &&
+                wrap(selectedRoutes)
+            )
+
+        console.log('Fields Data Input Valid ' + areRequiredFieldsAvailable);
+
+        const areFieldsAccordingToLength = true
+
+        if (!areRequiredFieldsAvailable || !areFieldsAccordingToLength) {
+            if (!areRequiredFieldsAvailable) {
+                SimpleToast.show('Please put all the required fields carefully')
+            }
+            else {
+                SimpleToast.show('Please fill all the required fields in right format')
+            }
         }
+        else {
+            const data_body = {
+                "firstname": firstName,
+                "middlename": middleName,
+                "surname": surname,
+                "email": email,
+                "identification_doc_type": idTypeName,
+                "identification_number": id,
+                "identification_doc": idDocuments.uri,
+                "level_of_education": eduLevelName,
+                "education_certificate": eduDocuments.uri,
+                "revenue_authority_number": revAuthNo,
+                "revenue_authority_certificate": revAuthCert.uri,
+                "current_residence": currentResidence,
+                "avatar": "",
+                "routes": selectedRoutes,
+                "services": selectedServices,
+                
+            }
 
-        const edu_levels_sample = [
-            { label: 'High School', value: 'High School' },
-            { label: 'Undergraduate', value: 'Undergraduate' },
-            { label: 'Graduate', value: 'Graduate' },
-            { label: 'Masters', value: 'Masters' }, ,
-            { label: 'Doctorate', value: 'Doctorate' }, ,
-            { label: 'Post Doctorate', value: 'Post Doctorate' },
-        ]
+            onSubmit(data_body)
 
+        }
+    }
+
+    const onGetSelectedServices = (selectedIDsArray, selectedNamesString) => {
+        if (selectedIDsArray.length > 0) {
+            setSelectedServices(selectedIDsArray)
+        }
+        setSelectedServicesNames(selectedNamesString)
+    }
+
+    const onGetSelectedRoutes = (selectedIDsArray, selectedNamesString) => {
+        if (selectedIDsArray.length > 0) {
+            setSelectedRoutes(selectedIDsArray)
+        }
+        setSelectedRoutesNames(selectedNamesString)
     }
 
     return (
@@ -295,6 +337,7 @@ const Index = ({ onSubmit }) => {
                     fieldName={'Alternate Phone No.'}
                     value={alternateNo}
                     setter={setAlternateNo}
+                    requiredStatus={false}
                     max={13}
                     ref={alternateNoRef}
                     nextRef={idRef}
@@ -361,12 +404,24 @@ const Index = ({ onSubmit }) => {
                     ref={residRef}
                     nextRef={firstNameRef}
                     multiline />
-                {/* 
-                <InputComponentBoxAdd
+
+                <InputComponentBoxAddMultiple
                     fieldName={'Services'}
-                    totalData={total}
+                    totalData={totalServices}
+                    onGetSelectedValues={onGetSelectedServices}
+                    selectedDataNames={selectedServicesNames}
+
                 />
 
+                <InputComponentBoxAddMultiple
+                    fieldName={'Routes'}
+                    totalData={totalRoutes}
+                    onGetSelectedValues={onGetSelectedRoutes}
+                    selectedDataNames={selectedRoutesNames}
+
+                />
+
+                {/*
                 <InputComponentBoxAdd
                     fieldName={'Routes'}
                     value={routes}

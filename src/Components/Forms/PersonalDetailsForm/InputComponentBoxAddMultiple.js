@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, StyleSheet, Text, TextInput, Modal, TouchableOpacity } from 'react-native'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
-import { Picker } from '@react-native-picker/picker';
-import InputField from '../../InputField'
+import SelectBox from 'react-native-multi-selectbox'
+import { xorBy } from 'lodash'
+import Loader from '../../Loader'
+import SimpleToast from 'react-native-simple-toast'
 
 
 const Title = ({ text }) => {
@@ -24,108 +26,63 @@ const Title = ({ text }) => {
     )
 }
 
-const Mod = ({ visible, setVisible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick }) => {
-
-    const [val, setVal] = useState('')
-
-
-    return (
-        <Modal
-            visible={visible}
-            style={{
-                alignSelf: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-
-            animationType='fade'
-            transparent={true}
-        >
-            <View style={{
-                flex: 1,
-                backgroundColor: 'rgba(0,0,0,0.25)',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <View style={styles.mainView}>
-                    <Text style={styles.message}>{'Enter Your ' + fieldName}</Text>
-
-                    <TextInput value={val} onChangeText={(t) => setVal(t)} placeholder='Single Value' />
-
-                    <View style={styles.buttonsContainer}>
-
-                        <TouchableOpacity onPress={()=> {
-                            console.log('Cancel Button');
-                            onCancelBtnClick()
-                        }} style={styles.button} >
-                            <Text style={styles.btnText}>
-                                {'Cancel'}
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.button} onPress={()=> {
-                            onAddBtnClick(val)
-                            setVal('')
-                            }}>
-                            <Text style={styles.btnText}>
-                                {'Add'}
-                            </Text>
-                        </TouchableOpacity>
-
-                    </View>
-                </View>
-
-            </View>
-        </Modal>
-    )
-}
-
-const ValCom = ({ visible, setVisible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick  }) => {
-
-    const itemsCSV = value.join(', ')
-
-    return (
-
-        <View>
-
-            <Mod setVisible={setVisible} {...{ visible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick  }} />
-
-            <Text style={{
-                textAlignVertical: 'center',
-                padding: 4,
-                color: colors.Black,
-                fontFamily: Fonts.Light,
-                borderWidth: 1,
-                borderColor: colors.Black,
-                borderRadius: 4
-            }}>
-
-                {itemsCSV}
-
-            </Text>
-
-        </View>
-
-    )
-}
-
-const InputComponentBoxAddMultiple = ({ fieldName, totalData, setTotalData, selectedData, setSelectedData, selectedNames, setSelectedNames }) => {
+const InputComponentBoxAddMultiple = ({
+    fieldName,
+    totalData,
+    onGetSelectedValues,
+    selectedDataNames
+}) => {
 
     const [visible, setVisible] = useState(false)
+    const [selectedNewData, setSelectedNewData] = useState([])
+    const [isLoader, setIsLoader] = useState(false)
 
+    const newData = []
 
-    const onAddBtnClick = (val) => {
+    const onAddValues = () => {
 
-        if (val != '') {
-            setValue([...value, val])
-        }
+        setIsLoader(true)
 
+        const selectedNamesArrayTemp = []
+        const selectedIDsData = []
+
+        
+        selectedNewData.forEach(i => {
+            let ele = totalData.find((product) => {
+                return product?.id == i?.id
+            });
+
+            selectedIDsData.push(i?.id)
+            selectedNamesArrayTemp.push(ele ? ele.name : '')
+        })
+
+        setIsLoader(false)
+        console.log('Selected IDs');
+        console.log(selectedIDsData);
+        console.log('Selected Names');
+        console.log(selectedNamesArrayTemp);
+        onGetSelectedValues(selectedIDsData, (selectedNamesArrayTemp.length===selectedNewData.length)? selectedNamesArrayTemp.join(', '): '')
         setVisible(false)
-
     }
 
-    const onCancelBtnClick = () => {
-        setVisible(false)
+    if (newData.length === 0) {
+        for (let index = 0; index < totalData.length; index++) {
+            const element = totalData[index];
+            newData.push({
+                "id": element?.id,
+                "item": element?.name
+            })
+        }
+    }
+
+    function onMultiChange() {
+        return (item) => setSelectedNewData(xorBy(selectedNewData, [item], 'id'))
+    }
+
+    const mainColor = colors.Primary
+
+    if (selectedNewData.length > 4) {
+        SimpleToast.show('You can select a maximum of 5 '+fieldName)
     }
 
 
@@ -146,17 +103,107 @@ const InputComponentBoxAddMultiple = ({ fieldName, totalData, setTotalData, sele
 
                 <View style={{ flex: 2, margin: 1 }}>
 
-                    <ValCom setVisible={setVisible}  {...{ visible, value, setValue, fieldName, onAddBtnClick, onCancelBtnClick }} />
+                    <Text style={{
+                        textAlignVertical: 'center',
+                        padding: 8,
+                        color: colors.Black,
+                        fontFamily: Fonts.Regular,
+                        borderWidth: 1,
+                        borderColor: colors.Black,
+                        borderRadius: 4
+                    }}>
+
+                        {selectedDataNames}
+
+                    </Text>
 
                 </View>
+
+                <Modal visible={visible}>
+                    <View style={{ padding: 8, flex: 1 }}>
+
+                        <SelectBox
+                            label={"Select up to 5 " + fieldName}
+                            options={newData}
+                            selectedValues={selectedNewData}
+                            onMultiSelect={onMultiChange()}
+                            onTapClose={onMultiChange()}
+                            isMulti
+                            labelStyle={{
+                                fontFamily: Fonts.SemiBold,
+                                color: colors.Primary,
+                                marginVertical: 8,
+                                fontSize: 18
+                            }}
+                            multiOptionContainerStyle={{
+                                backgroundColor: mainColor
+                            }}
+                            multiOptionsLabelStyle={{
+                                fontFamily: Fonts.Regular,
+                                fontSize: 12
+                            }}
+                            optionsLabelStyle={{
+                                fontFamily: Fonts.Light
+                            }}
+                            toggleIconColor={mainColor}
+                            searchIconColor={mainColor}
+                            arrowIconColor={mainColor}
+                            containerStyle={{
+                            }}
+                        />
+
+                        <Loader visible={isLoader} />
+
+                        <View style={{
+                            marginVertical:16
+                        }}>
+
+                        {
+                            (selectedNewData.length < 5 && selectedNewData.length > 0)
+                                ?
+                                <TouchableOpacity onPress={onAddValues} style={[styles.button, {
+                                    alignSelf: 'center',
+                                    margin: 32
+                                }]}>
+                                    <Text style={styles.addSkillButtonText}>
+                                        {`Add ${fieldName}`}
+                                    </Text>
+                                </TouchableOpacity>
+                                : <></>
+                        }
+
+                        <TouchableOpacity onPress={()=> {
+                            setVisible(false)
+                        }} style={[styles.button, {
+                                    alignSelf: 'center',
+                                    elevation:2,
+                                    backgroundColor: colors.White
+                                }]}>
+                                    <Text style={[styles.addSkillButtonText,{
+                                        color:colors.Black
+                                    }]}>
+                                        {`Go back to Personal Details`}
+                                    </Text>
+                                </TouchableOpacity>
+
+                        </View>
+
+                        
+
+
+                    </View>
+                </Modal>
 
 
             </View>
 
-            <TouchableOpacity onPress={()=> {
+            <TouchableOpacity onPress={() => {
                 setVisible(true)
             }} style={styles.btn}>
-                <Text style={styles.addSkillButtonText}>
+                <Text style={[styles.addSkillButtonText,{
+                    color: colors.Black,
+                    fontFamily:Fonts.Regular
+                }]}>
                     {`Add`}
                 </Text>
             </TouchableOpacity>
@@ -200,15 +247,23 @@ const styles = StyleSheet.create({
         color: colors.White,
     },
     button: {
+        
+        padding: 8,
+        borderColor: colors.Primary,
         backgroundColor: colors.Primary,
-        borderRadius: 16,
-        paddingHorizontal: 32,
-        paddingVertical: 4,
-        marginHorizontal: 8
+        borderWidth: 1,
+        borderRadius: 8,
+        width:'80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 8,
+        alignSelf: 'flex-end',
+        marginHorizontal: 4,
+        marginVertical:16
     },
     addSkillButtonText: {
-        color: colors.Black,
-        fontFamily: Fonts.Regular
+        color: colors.White,
+        fontFamily: Fonts.SemiBold
     },
     btn: {
         padding: 4,
@@ -220,8 +275,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.White,
         elevation: 1,
-        alignSelf:'flex-end',
-        marginHorizontal:4
+        alignSelf: 'flex-end',
+        marginHorizontal: 4
 
     }
 })

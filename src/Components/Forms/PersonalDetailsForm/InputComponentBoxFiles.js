@@ -89,6 +89,8 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
                     //allowMultiSelection: true,
                 }).then(res=>{
                     setValue(res)
+                    console.log('-------- File URI --------');
+                    console.log(res.uri);
                 })
             }} style={styles.btn}>
                 <Text style={styles.addSkillButtonText}>
