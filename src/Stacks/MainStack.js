@@ -12,6 +12,8 @@ import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import OTP from '../Screens/Auth/OTP/Index';
 import AddInformation from '../Screens/AddInformation/Index';
+import AddKinInfo from '../Screens/AddInformation/AddKinInfo';
+import AddExperience from '../Screens/AddInformation/AddExperience';
 import Profile from '../Screens/Profile/Index';
 
 
@@ -34,6 +36,8 @@ const MainStack = () => {
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
                 <Stack.Screen name="AddInformation" component={AddInformation} />
+                <Stack.Screen name="AddKinInfo" component={AddKinInfo} />
+                <Stack.Screen name="AddExperience" component={AddExperience} />
                 <Stack.Screen name="Profile" component={Profile} />
 
                 <Stack.Screen name="AuthStack" component={AuthStack} />

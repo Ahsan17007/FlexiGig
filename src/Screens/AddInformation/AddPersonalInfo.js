@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import colors from '../../Assets/Colors/Index';
 import PersonalDetailsForm from '../../Components/Forms/PersonalDetailsForm/Index';
@@ -19,25 +19,29 @@ const AddPersonalInfo = ({ navigation }) => {
 
                 const config = {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(data)
                 }
+                console.log(data);
+                // return false
                 const r = await fetch(`${BASE_URL}personal_details`, config)
                 const response = await r.json()
 
-                console.log('PersonalInfo Add Response');
-                console.log(response);
+                console.log('PersonalInfo Add Response....', response);
 
                 if (response && response?.error?.message != 'Invalid token') {
-                    
+
                     setLoader(false)
                     SimpleToast.show('Added Successfully')
 
-                    navigation.navigate('Next of Kin')
+                    // navigation.navigate('Next of Kin')
                 }
                 else {
                     SimpleToast.show('Failed Adding Personal Info')
-                    setLoader(false)                
+                    setLoader(false)
                 }
             }} />
         </View>

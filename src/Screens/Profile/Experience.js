@@ -3,12 +3,15 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList
+    FlatList,
+    TouchableOpacity,
+    Image
 } from 'react-native'
 import colors from '../../Assets/Colors/Index';
 import Fonts from '../../Assets/Fonts/Index';
 import { useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
+import Images from '../../Assets/Images/Index';
 
 
 const renderKin = ({ item }) => {
@@ -28,7 +31,7 @@ const renderKin = ({ item }) => {
             </View>
             <View style={{ width: '100%', flexDirection: 'row', }}>
                 <Text style={styles.title}>{'Duration:'}</Text>
-                <Text style={styles.desc}>{(item?.attributes?.start_date.split('T'))[0] +' ~ '+(item?.attributes?.end_date.split('T'))[0]}</Text>
+                <Text style={styles.desc}>{(item?.attributes?.start_date.split('T'))[0] + ' ~ ' + (item?.attributes?.end_date.split('T'))[0]}</Text>
             </View>
         </View>
     )
@@ -36,14 +39,14 @@ const renderKin = ({ item }) => {
 
 const Experience = ({ navigation }) => {
 
-    const [resp, setResp] = useState([])
+    const [experiences, setExperiences] = useState([])
     const [needToFetch, setNeedToFetch] = useState(true)
 
     const { token } = useSelector(state => state.Auth)
 
-    useEffect(()=> {
+    useEffect(() => {
         (async () => {
-            if (resp.length == 0 && needToFetch) {
+
 
             const config = {
                 method: 'GET',
@@ -54,19 +57,16 @@ const Experience = ({ navigation }) => {
                 .then(response => {
 
                     if (response && response?.error?.message != 'Invalid token') {
-                        setResp(response?.data)
+                        setExperiences(response?.data)
                     }
                     else {
                         SimpleToast.show('Failed Getting Experiences')
                     }
-                    setNeedToFetch(false)
                 })
                 .catch(err => console.log(err))
-        }
-    
         })()
-    
-    },[])
+
+    }, [])
 
     return (
         <View style={styles.mainContainer}>
@@ -74,15 +74,27 @@ const Experience = ({ navigation }) => {
             <View style={styles.detailContainer}>
 
                 <FlatList
-                    data={resp}
+                    data={experiences}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => '-'+index}
+                    keyExtractor={(item, index) => '-' + index}
                     renderItem={(item) => renderKin(item)}
-                    style={{ width: '100%'}}
+                    style={{ width: '100%' }}
                     contentContainerStyle={{ paddingBottom: 20 }}
+                    ListEmptyComponent={() => {
+                        return (
+                            <View style={{ marginTop: '50%', alignItems: 'center' }}>
+                                <Text style={styles.emptyList}>{'No Experience Found'}</Text>
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    onPress={() => navigation.navigate('AddExperience')}>
+                                    <Image source={Images.Add} style={{ height: 25, width: 25, marginTop: 5 }} resizeMode='contain' />
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }}
                 />
 
-                <Loader visible={needToFetch}/>
+                {/* <Loader visible={needToFetch}/> */}
 
 
 
@@ -114,5 +126,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: colors.Black,
         fontFamily: Fonts.Regular
+    },
+    emptyList: {
+        fontSize: 14,
+        color: colors.Black,
+        fontFamily: Fonts.Regular,
+        alignSelf: 'center'
     }
 })

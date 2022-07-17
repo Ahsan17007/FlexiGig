@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
-        paddingTop: 30,
         backgroundColor: colors.White
         // alignItems: 'center',
         // justifyContent: 'center',

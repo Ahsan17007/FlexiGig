@@ -86,7 +86,7 @@ const SignIn = ({ navigation, route }) => {
                 const loginResult = await response.json();
                 console.log("loginUser-response", response);
                 if (response.status === 200) {
-                    console.log('Logges tokes: '+loginResult?.token);
+                    console.log('LoggedIn token: '+loginResult?.token);
                     dispatch(userToken(loginResult?.token))
                     dispatch(loggedInData(loginResult?.data))
                     dispatch(loggedInNumber(phone ? newNumber : storagePhone))

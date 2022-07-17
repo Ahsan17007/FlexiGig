@@ -120,7 +120,7 @@ const InputComponentBoxAddMultiple = ({
                 </View>
 
                 <Modal visible={visible}>
-                    <View style={{ padding: 8, flex: 1 }}>
+                    <View style={{ padding: 8, flex: 1, }}>
 
                         <SelectBox
                             label={"Select up to 5 " + fieldName}
@@ -149,6 +149,7 @@ const InputComponentBoxAddMultiple = ({
                             searchIconColor={mainColor}
                             arrowIconColor={mainColor}
                             containerStyle={{
+                                
                             }}
                         />
 
