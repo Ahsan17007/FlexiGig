@@ -36,7 +36,7 @@ const AddPersonalInfo = ({ navigation }) => {
                     SimpleToast.show('Kin Added Successfully')
                 }
                 else {
-                    SimpleToast.show('Failed Adding Experience')
+                    SimpleToast.show('Failed Adding Kin Info')
                     setIsLoad(false)
                 }
 
