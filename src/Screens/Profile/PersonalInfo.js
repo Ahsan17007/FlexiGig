@@ -1,16 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     View,
     Text,
     StyleSheet,
     ScrollView
 } from 'react-native'
+import { useSelector } from 'react-redux';
+
 import colors from '../../Assets/Colors/Index';
 import Fonts from '../../Assets/Fonts/Index';
-
+import Loader from '../../Components/Loader';
 
 
 const PersonalInfo = ({ navigation }) => {
+
+    const { token } = useSelector(state => state.Auth)
+    const [isLoading, setIsloading] = useState(true)
+    const [userData, setUserData] = useState('')
+
+
+    const getUserDetails = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
+            .then(res => res.json())
+            .then(response => {
+                setIsloading(false)
+                console.log("getUserDetails-response", response);
+                setUserData(response?.data)
+                // if (response && response?.error?.message != 'Invalid token') {
+                //     setResp(response?.data)
+                //     console.log(resp);
+                // }
+                // else {
+                //     SimpleToast.show('Failed Getting Experiences')
+                // }
+            }).catch(err => console.log("getUserDetails-err", err))
+
+    }
+
+    useEffect(() => {
+        getUserDetails()
+    }, [])
     return (
         <View style={styles.mainContainer}>
             <ScrollView>
@@ -71,6 +104,7 @@ const PersonalInfo = ({ navigation }) => {
                     </View>
                 </View>
             </ScrollView>
+            <Loader visible={isLoading} />
         </View>
     )
 }

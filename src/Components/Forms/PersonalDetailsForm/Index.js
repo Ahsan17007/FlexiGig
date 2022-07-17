@@ -99,7 +99,7 @@ const Index = ({ onSubmit }) => {
                 const r = await fetch(`${BASE_URL}services`, config)
                 const response = await r.json()
 
-                if (response?.data?.length > 0  && totalServices.length === 0) {
+                if (response?.data?.length > 0 && totalServices.length === 0) {
                     for (ele of response?.data) {
                         totalServices.push(ele?.attributes)
                     }
@@ -109,7 +109,7 @@ const Index = ({ onSubmit }) => {
         }
         const reqFetch2 = async () => {
 
-            
+
             console.log('Fetch 2 in chain');
 
             api(async () => {
@@ -132,7 +132,7 @@ const Index = ({ onSubmit }) => {
                     }
                 }
 
-                
+
 
             }, reqFetch3)
         }
