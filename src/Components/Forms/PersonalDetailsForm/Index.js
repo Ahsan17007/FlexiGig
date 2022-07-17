@@ -267,17 +267,18 @@ const Index = ({ onSubmit }) => {
         }
     }
 
-    const onGetSelectedServices = (selectedIDsArray, selectedNamesString) => {
-        if (selectedIDsArray.length > 0) {
-            setSelectedServices(selectedIDsArray)
-        }
+    const onGetSelectedServices = async (selectedIDsArray, selectedNamesString) => {
+        
+        setSelectedServices(selectedIDsArray)
         setSelectedServicesNames(selectedNamesString)
+
+        console.log('Selected Services are');
+        console.log(selectedServices);
     }
 
     const onGetSelectedRoutes = (selectedIDsArray, selectedNamesString) => {
-        if (selectedIDsArray.length > 0) {
-            setSelectedRoutes(selectedIDsArray)
-        }
+        
+        setSelectedRoutes(selectedIDsArray)
         setSelectedRoutesNames(selectedNamesString)
     }
 
