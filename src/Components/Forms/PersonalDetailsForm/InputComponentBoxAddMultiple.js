@@ -30,7 +30,8 @@ const InputComponentBoxAddMultiple = ({
     fieldName,
     totalData,
     onGetSelectedValues,
-    selectedDataNames
+    selectedDataNames,
+    ss
 }) => {
 
     const [visible, setVisible] = useState(false)
@@ -56,13 +57,22 @@ const InputComponentBoxAddMultiple = ({
             selectedNamesArrayTemp.push(ele ? ele.name : '')
         })
 
-        setIsLoader(false)
+        if (selectedIDsData.length === selectedNewData.length) {
+            //ss({'d':selectedIDsData})
+        }
+        
         console.log('Selected IDs');
         console.log(selectedIDsData);
         console.log('Selected Names');
         console.log(selectedNamesArrayTemp);
-        onGetSelectedValues(selectedIDsData, (selectedNamesArrayTemp.length===selectedNewData.length)? selectedNamesArrayTemp.join(', '): '')
-        setVisible(false)
+        
+
+        setTimeout(()=>{
+            onGetSelectedValues(selectedIDsData, (selectedNamesArrayTemp.length===selectedNewData.length)? selectedNamesArrayTemp.join(', '): '')    
+            setIsLoader(false)
+            setVisible(false)
+        }, 2000)
+        
     }
 
     if (newData.length === 0) {
@@ -89,6 +99,8 @@ const InputComponentBoxAddMultiple = ({
     return (
 
         <>
+
+            <Loader visible={isLoader} />
             <View style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -153,7 +165,6 @@ const InputComponentBoxAddMultiple = ({
                             }}
                         />
 
-                        <Loader visible={isLoader} />
 
                         <View style={{
                             marginVertical:16
