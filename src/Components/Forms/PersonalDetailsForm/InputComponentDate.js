@@ -104,6 +104,7 @@ const InputComponentDate = ({ date, setDate, fieldName, shown, isShown, maxDate 
                     }}
                     mode='date'
                     maximumDate={maxDate}
+                    
                 />
 
             </View>

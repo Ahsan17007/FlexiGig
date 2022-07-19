@@ -11,9 +11,9 @@ export const Images = {
     Hide: require('./hide.png'),
     Checked: require('./checked.png'),
     Add: require('./add.png'),
-    
-
-
+    FlashLight: require('./flashLight.png'),
+    ChangeCamera: require('./changeCamera.png'),
+    CameraButton: require('./camerabutton.png')
 }
 
 export default Images;

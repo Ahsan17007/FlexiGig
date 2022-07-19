@@ -8,6 +8,7 @@ import { store, persistor } from './src/Redux/Store/Index'
 
 import MainStack from './src/Stacks/MainStack';
 
+LogBox.ignoreAllLogs()
 const App = () => {
 
   return (

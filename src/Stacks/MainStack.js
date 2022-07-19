@@ -15,6 +15,7 @@ import AddInformation from '../Screens/AddInformation/Index';
 import AddKinInfo from '../Screens/AddInformation/AddKinInfo';
 import AddExperience from '../Screens/AddInformation/AddExperience';
 import Profile from '../Screens/Profile/Index';
+import ICamera from '../Screens/ICamera';
 
 
 const Stack = createStackNavigator()
@@ -28,6 +29,7 @@ const MainStack = () => {
                 screenOptions={{
                     headerShown: false
                 }} initialRouteName='Splash'>
+
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="OnBoarding" component={OnBoarding} />
                 <Stack.Screen name="SignIn" component={SignIn} />
@@ -35,14 +37,12 @@ const MainStack = () => {
                 <Stack.Screen name="OTP" component={OTP} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
-                <Stack.Screen name="AddInformation" component={AddInformation} />
-                <Stack.Screen name="AddKinInfo" component={AddKinInfo} />
-                <Stack.Screen name="AddExperience" component={AddExperience} />
                 <Stack.Screen name="Profile" component={Profile} />
 
                 <Stack.Screen name="AuthStack" component={AuthStack} />
                 <Stack.Screen name="HomeStack" component={HomeStack} />
 
+                <Stack.Screen name="ICamera" component={ICamera} />
             </Stack.Navigator>
         </NavigationContainer>
     )

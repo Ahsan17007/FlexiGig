@@ -8,6 +8,7 @@ import { countriesData } from '../../Redux/Actions/CountriesList'
 
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
+import SimpleToast from 'react-native-simple-toast'
 
 const Splash = ({ navigation }) => {
 
@@ -19,12 +20,18 @@ const Splash = ({ navigation }) => {
 
         const mod = async () => {
 
+            console.log('In Use Effect Splash');
 
             const req = await fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             const res = await req.json()
 
-            dispatch(countriesData(res?.data))
+            console.log(res?.data);
+            return res?.data
+        }
 
+        mod().then((data)=>{
+            console.log('In Use Effect Then of Splash');
+            dispatch(countriesData(data))
             if (token) {
                 navigation.reset({
                     index: 0,
@@ -33,10 +40,11 @@ const Splash = ({ navigation }) => {
             } else {
                 navigation.replace('OnBoarding')
             }
-
-        }
-
-        mod();
+        }).catch((err)=> {
+            console.log('In Use Effect Catch of Splash');
+            console.log(err);
+            SimpleToast.show('There\'s a problem getting app data')
+        })
 
 
     }, [])
