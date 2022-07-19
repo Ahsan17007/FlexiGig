@@ -6,44 +6,60 @@ import {
     Image,
     TouchableOpacity,
     FlatList,
+    ScrollView,
 
 } from 'react-native'
 
-import Loader from '../../../Components/Loader'
 import { useSelector, useDispatch } from 'react-redux'
-import { onLogout } from '../../../Redux/Actions/HasSession'
 import SimpleToast from 'react-native-simple-toast'
+import moment from 'moment'
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
+import Loader from '../../../Components/Loader'
 import Project from '../../../Components/Project'
+import { onLogout } from '../../../Redux/Actions/HasSession'
 
 
 
 
 
+const ProjectDetails = ({ navigation, route }) => {
 
-const ProjectDetails = ({ navigation }) => {
+    const Id = route?.params?.projectId
+    const username = route?.params?.username
 
-    const [industry, setIndustry] = useState('ABC')
-    const [type, setType] = useState('Inventory')
-    const [startDate, setStartDate] = useState('July 16,2022')
-    const [endDate, setEndDate] = useState('July 26,2022')
-    const [days, setDays] = useState('10')
-    const [startTime, setStartTime] = useState('05:00 pm')
-    const [endTime, setEndTime] = useState('12:00 pm')
-    const [callage, setCallAge] = useState('1 Outlet')
-    const [target, setTarget] = useState('2 Cases')
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [projectDetails, setProjectDetails] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
 
 
     const { token } = useSelector(state => state.Auth)
 
-    // useEffect(() => {
+    const getProjectDetails = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch(`https://flexigig-api.herokuapp.com/api/v1//projects/${Id}`, config)
+            .then(res => res.json())
+            .then(response => {
+                setIsLoading(false)
+                console.log("getProjectDetails-response", response);
+                setProjectDetails(response?.data)
+                // if (response && response?.error?.message != 'Invalid token') {
+                // }
+                // else {
+                //     SimpleToast.show('Failed getting personal info')
+                // }
+            }).catch(err => console.log("getProjectDetails-err", err))
 
-    // }, [])
+    }
+
+    useEffect(() => {
+        getProjectDetails()
+    }, [])
 
     const renderItem = ({ item }) => {
         return (
@@ -73,7 +89,7 @@ const ProjectDetails = ({ navigation }) => {
 
                         <View style={{ marginLeft: 12 }}>
                             <Text style={styles.welcomeText}>{'Welcome'}</Text>
-                            <Text style={styles.name}>{'Jack Sparrow'}</Text>
+                            <Text style={styles.name}>{username}</Text>
                         </View>
                     </View>
                     <TouchableOpacity
@@ -85,112 +101,120 @@ const ProjectDetails = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.projectDetailContainer}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Industry: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {industry}
-                        </Text>
-                    </View>
+                {
+                    isLoading ?
+                        <Loader visible={isLoading} />
+                        :
+                        <View style={styles.projectDetailContainer}>
+                            <ScrollView showsVerticalScrollIndicator={false} >
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={styles.title}>
+                                        {'Industry: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.description}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Project Type: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {type}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Project Type: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.type}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Start Date: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {startDate}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Start Date: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.start_date}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'End Date: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {endDate}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'End Date: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.end_date}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Days: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {days}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Days: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.days ? projectDetails?.attributes?.days : '----------'}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Start Time: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {startTime}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Start Time: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {moment(projectDetails?.attributes?.start_time).format('hh:mm:ss')}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'End Time: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {endTime}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'End Time: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {moment(projectDetails?.attributes?.end_time).format('hh:mm:ss')}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Callage: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {callage}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Callage: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.callage ? projectDetails?.attributes?.callage : '----------'}
+                                    </Text>
+                                </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.title}>
-                            {'Target: '}
-                        </Text>
-                        <Text
-                            style={styles.desc}>
-                            {target}
-                        </Text>
-                    </View>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.title}>
+                                        {'Target: '}
+                                    </Text>
+                                    <Text
+                                        style={styles.desc}>
+                                        {projectDetails?.attributes?.target ? projectDetails?.attributes?.target : '----------'}
+                                    </Text>
+                                </View>
 
-                    <View style={styles.BtnContainer}>
-                        <TouchableOpacity style={styles.actionBtn}>
-                            <Text style={styles.btnText}>
-                                {'Dismiss'}
-                            </Text>
-                        </TouchableOpacity>
+                                <View style={styles.BtnContainer}>
+                                    <TouchableOpacity style={styles.actionBtn}>
+                                        <Text style={styles.btnText}>
+                                            {'Dismiss'}
+                                        </Text>
+                                    </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.actionBtn}>
-                            <Text style={styles.btnText}>
-                                {'Join'}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                                    <TouchableOpacity style={styles.actionBtn}>
+                                        <Text style={styles.btnText}>
+                                            {'Join'}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </ScrollView>
+                        </View>
+                }
 
-                </View>
+
 
             </View>
 

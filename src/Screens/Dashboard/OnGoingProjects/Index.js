@@ -19,7 +19,7 @@ import Project from '../../../Components/Project'
 import SimpleToast from 'react-native-simple-toast'
 
 
-const projectsList = [
+const projects = [
     {
         id: '1',
         jobTitle: 'Inventory Management for a store and its maintainance',
@@ -41,25 +41,48 @@ const projectsList = [
 
 
 
-const OnGoingProjects = ({ navigation }) => {
+const OnGoingProjects = ({ navigation, route }) => {
 
-    const [visibility, setVisibility] = useState([true, false])
+    const username = route?.params?.username
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [projectsList, setProjectsList] = useState([])
     const dispatch = useDispatch()
 
 
     const { token } = useSelector(state => state.Auth)
 
-    // useEffect(() => {
+    const getOnGoingProjects = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch('https://flexigig-api.herokuapp.com/api/v1/projects', config)
+            .then(res => res.json())
+            .then(response => {
+                setIsLoading(false)
+                console.log("getOnGoingProjects-response", response?.data);
+                setProjectsList(response?.data)
+                // if (response && response?.error?.message != 'Invalid token') {
+                // }
+                // else {
+                //     SimpleToast.show('Failed getting personal info')
+                // }
+            }).catch(err => console.log("getOnGoingProjects-err", err))
 
-    // }, [])
+    }
+
+    useEffect(() => {
+        getOnGoingProjects()
+    }, [])
 
     const renderItem = ({ item }) => {
         return (
             <Project
                 navigation={navigation}
-                Item={item} />
+                Item={item}
+                username={username}
+            />
         )
     }
 
@@ -85,7 +108,7 @@ const OnGoingProjects = ({ navigation }) => {
 
                         <View style={{ marginLeft: 12 }}>
                             <Text style={styles.welcomeText}>{'Welcome'}</Text>
-                            <Text style={styles.name}>{'Jack Sparrow'}</Text>
+                            <Text style={styles.name}>{username}</Text>
                         </View>
                     </View>
                     <TouchableOpacity
@@ -109,6 +132,16 @@ const OnGoingProjects = ({ navigation }) => {
 
                         </View>
                     }
+                    ListEmptyComponent={() => {
+                        if (isLoading) {
+                            return (
+                                <Loader visible={isLoading} />
+                            )
+                        }
+                        return (
+                            <Text style={styles.emptyList}>{'No Projects Found'}</Text>
+                        )
+                    }}
                 />
             </View>
 

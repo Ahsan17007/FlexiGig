@@ -49,7 +49,14 @@ const styles = StyleSheet.create({
         height: 23,
         resizeMode: 'contain'
     },
-   
+    emptyList: {
+        fontSize: 14,
+        color: colors.Black,
+        fontFamily: Fonts.Regular,
+        alignSelf: 'center',
+        marginTop: '50%',
+    }
+
 })
 
 

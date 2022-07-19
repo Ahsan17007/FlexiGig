@@ -18,16 +18,18 @@ import MyTabBar from '../../Components/MyTabBar'
 
 const TopTabbar = createMaterialTopTabNavigator()
 
-const Profile = () => {
+const Profile = ({ route }) => {
+    const username = route?.params?.username
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topHeaderContainer}>
                 <Text style={styles.Title}>{'My Profile'}</Text>
                 <Image source={Images.Notification} style={styles.bellIcon} />
             </View>
-            <View style={{ marginTop: 25, alignItems:'center', alignSelf: 'center' }}>
+            <View style={{ marginTop: 25, alignItems: 'center', alignSelf: 'center' }}>
                 <Image source={Images.DummyUser} style={styles.profilePic} />
-                <Text style={styles.name}>{'Jack Sparrow'}</Text>
+                <Text style={styles.name}>{username}</Text>
             </View>
 
 
@@ -92,6 +94,6 @@ const styles = StyleSheet.create({
         color: colors.Black,
         opacity: 0.5,
         fontFamily: Fonts.Regular,
-        marginTop:5
+        marginTop: 5
     },
 })
