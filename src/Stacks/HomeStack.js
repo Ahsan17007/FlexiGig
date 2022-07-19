@@ -13,6 +13,11 @@ import OnGoingProjects from '../Screens/Dashboard/OnGoingProjects/Index';
 import ProjectDetails from '../Screens/Dashboard/ProjectDetails.js/Index';
 import Images from '../Assets/Images/Index';
 import colors from '../Assets/Colors/Index';
+import CameraComponent from '../Components/CameraComponent';
+import AddInfo from '../Screens/AddInformation/Index';
+import AddKinInfo from '../Screens/AddInformation/AddKinInfo';
+import AddExperienceScreen from '../Screens/AddInformation/AddExperience';
+import ICamera from '../Screens/ICamera';
 
 const HomeScreenStack = createStackNavigator()
 const Tab = createBottomTabNavigator();
@@ -39,6 +44,15 @@ const HomeStackScreens = () => {
                 options={{
                     headerShown: false
                 }} name={'ProjectDetails'} component={ProjectDetails} />
+
+
+
+            <HomeScreenStack.Screen name="AddInformation" component={AddInfo} />
+            <HomeScreenStack.Screen name="AddKinInfo" component={AddKinInfo} />
+            <HomeScreenStack.Screen name="AddExperience" component={AddExperienceScreen} />
+
+            
+                
         </HomeScreenStack.Navigator>
     )
 }

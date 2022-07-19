@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, Modal, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TextInput, Modal, TouchableOpacity, Dimensions } from 'react-native'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
-import { Picker } from '@react-native-picker/picker';
-import InputField from '../../InputField'
 import DocumentPicker from 'react-native-document-picker';
-
+import FileOptionPopup from '../../FileOptionPopup';
+import CameraComponent from '../../CameraComponent';
 
 const Title = ({ text }) => {
     return (
@@ -25,19 +24,15 @@ const Title = ({ text }) => {
     )
 }
 
-const ValCom = ({ value  }) => {
+const ValCom = ({ value }) => {
 
-    var vals = ''
+    // var n = [];
+    // n = (value?.uri?.split('/')) ? value?.uri?.split('/') : n;
 
-    // value.forEach(element => {
-    //     vals += (element?.name + ', ')
-    // });
-
-    vals = value?.name
-
+    var vals = value?.name
     return (
 
-        <View style={{height:'100%'}}>
+        <View style={{ height: '100%' }}>
             <Text style={{
                 textAlignVertical: 'center',
                 padding: 4,
@@ -46,7 +41,7 @@ const ValCom = ({ value  }) => {
                 borderWidth: 1,
                 borderColor: colors.Black,
                 borderRadius: 4,
-                height:'100%'
+                height: '100%'
             }}>
 
                 {vals}
@@ -58,11 +53,28 @@ const ValCom = ({ value  }) => {
     )
 }
 
-const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
+const InputComponentBoxFiles = ({ value, setValue, fieldName, isCam, setIsCam, onCamOn }) => {
+
+    const [visibility, setVisibility] = useState(false)
 
     return (
-
         <>
+            <FileOptionPopup
+                visibility={visibility}
+                setVisibility={setVisibility}
+                onCameraButtonClick={()=>{onCamOn()}}
+                onFilesMenuClick={() => {
+                    DocumentPicker.pickSingle({
+                        //allowMultiSelection: true,
+                    }).then(res => {
+                        setValue(res)
+                        console.log('-------- File URI --------');
+                        console.log(res.uri);
+                    })
+                }}
+            />
+
+
             <View style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -75,7 +87,7 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
                 </View>
 
 
-                <View style={{ flex: 2, margin: 1, height:'100%' }}>
+                <View style={{ flex: 2, margin: 1, height: '100%' }}>
 
                     <ValCom {...{ value }} />
 
@@ -84,14 +96,10 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName }) => {
 
             </View>
 
-            <TouchableOpacity onPress={()=> {
-                DocumentPicker.pickSingle({
-                    //allowMultiSelection: true,
-                }).then(res=>{
-                    setValue(res)
-                    console.log('-------- File URI --------');
-                    console.log(res.uri);
-                })
+            <TouchableOpacity onPress={() => {
+
+                setVisibility(true)
+
             }} style={styles.btn}>
                 <Text style={styles.addSkillButtonText}>
                     {`Upload`}
@@ -157,8 +165,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.White,
         elevation: 1,
-        alignSelf:'flex-end',
-        marginHorizontal:4
+        alignSelf: 'flex-end',
+        marginHorizontal: 4
 
+    },
+    CameraComponent:{
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width,
     }
 })

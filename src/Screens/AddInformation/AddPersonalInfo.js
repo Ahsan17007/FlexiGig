@@ -14,7 +14,7 @@ const AddPersonalInfo = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.White }}>
-            <PersonalDetailsForm onSubmit={async (data) => {
+            <PersonalDetailsForm navigation={navigation} onSubmit={async (data) => {
                 setLoader(true)
 
                 const config = {

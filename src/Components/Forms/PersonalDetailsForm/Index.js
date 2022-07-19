@@ -6,7 +6,6 @@ import Fonts from '../../../Assets/Fonts/Index'
 import InputComponent from './InputComponent'
 import InputComponentDropdown from './InputComponentDropdown'
 import InputComponentDate from './InputComponentDate'
-import InputComponentBoxAdd from './InputComponentBoxAdd'
 import InputComponentBoxFiles from './InputComponentBoxFiles'
 import InputComponentBoxAddMultiple from './InputComponentBoxAddMultiple'
 import { useSelector } from 'react-redux'
@@ -15,16 +14,10 @@ import { BASE_URL } from '../../../Api/config'
 import Loader from '../../Loader'
 import SimpleToast from 'react-native-simple-toast'
 
-// {...{
-//     eduLevelName,
-//     setEduLevelName,
-//     eduDoocTypes,
-//     setEduDocTypes,
-//     selectedEduDocTypes,
-//     setSelectedEduDocTypes
-// }}
+const d = new Date()
+d.setFullYear(d.getFullYear()-18)
 
-const Index = ({ onSubmit }) => {
+const Index = ({ navigation, onSubmit }) => {
 
     const [isLoader, setIsLoader] = useState(true)
     const [firstName, setFirstName] = useState('')
@@ -36,13 +29,13 @@ const Index = ({ onSubmit }) => {
     const [id, setId] = useState('')
     const [idTypeName, setIdTypeName] = useState('')
     const [idTypes, setIdTypes] = useState([])
-    const [idDocuments, setIdDocuments] = useState({})
-    const [date, setDate] = useState(new Date())
+    const [idDocuments, setIdDocuments] = useState(null)
+    const [date, setDate] = useState(d)
     const [eduLevelName, setEduLevelName] = useState('')
     const [eduLevels, setEduLevels] = useState([])
-    const [eduDocuments, setEduDocuments] = useState({})
+    const [eduDocuments, setEduDocuments] = useState(null)
     const [revAuthNo, setRevAuthNo] = useState('')
-    const [revAuthCert, setRevAuthCert] = useState({})
+    const [revAuthCert, setRevAuthCert] = useState(null)
     const [currentResidence, setCurrentResidence] = useState('')
     const [isShownDate, setIsShownDate] = useState(false)
     const [totalServices, setTotalServices] = useState([])
@@ -52,18 +45,21 @@ const Index = ({ onSubmit }) => {
     const [selectedRoutes, setSelectedRoutes] = useState(null)
     const [selectedRoutesNames, setSelectedRoutesNames] = useState('')
 
+
+    const [isCam, setIsCam] = useState(false)
+
     const firstNameRef = useRef()
     const middleNameRef = useRef()
     const surnameRef = useRef()
     const emailRef = useRef()
     const alternateNoRef = useRef()
     const idRef = useRef()
-    const idTypeRef = useRef()
     const revAuthRef = useRef()
     const residRef = useRef()
 
 
     const { token } = useSelector(state => state.Auth)
+    const { idDoc, eduDoc, revDoc } = useSelector(state => state.DocFileReducer)
 
     const multipleRequestsHandler = (toLoad, setToLoad) => {
 
@@ -250,11 +246,11 @@ const Index = ({ onSubmit }) => {
                 "email": email,
                 "identification_doc_type": idTypeName,
                 "identification_number": id,
-                "identification_doc": idDocuments.uri,
+                "identification_doc": (idDocuments) ? idDocuments?.uri : idDoc,
                 "level_of_education": eduLevelName,
-                "education_certificate": eduDocuments.uri,
+                "education_certificate": (eduDocuments) ? eduDocuments?.uri : eduDoc,
                 "revenue_authority_number": revAuthNo,
-                "revenue_authority_certificate": revAuthCert.uri,
+                "revenue_authority_certificate": (revAuthCert) ? revAuthCert?.uri : revDoc,
                 "current_residence": currentResidence,
                 "avatar": "",
                 "routes": [],
@@ -359,16 +355,22 @@ const Index = ({ onSubmit }) => {
 
                 <InputComponentBoxFiles
                     fieldName={'ID Document'}
-                    value={idDocuments}
-                    setValue={setIdDocuments} />
+                    value={(idDocuments) ? idDocuments : idDoc}
+                    setValue={setIdDocuments} 
+                    onCamOn={()=>{
+                        navigation.navigate("ICamera", {
+                            type: 'I' 
+                         })
+                    }}
+                    />
 
                 <InputComponentDate
-                    date={date}
+                    date={d}
                     setDate={setDate}
                     fieldName={'Date of Birth'}
                     shown={isShownDate}
                     isShown={setIsShownDate}
-                    maxDate={new Date()} />
+                    maxDate={d} />
 
                 <InputComponentDropdown
                     value={eduLevelName}
@@ -379,8 +381,18 @@ const Index = ({ onSubmit }) => {
 
                 <InputComponentBoxFiles
                     fieldName={'Educational Cert.'}
-                    value={eduDocuments}
-                    setValue={setEduDocuments} />
+                    value={(eduDocuments) ? eduDocuments : eduDoc}
+                    setValue={setEduDocuments} 
+                    onCamOn={()=>{
+                        navigation.navigate('ICamera', {
+                           type: 'E' 
+                        })
+                    }}
+                    // {...{
+                    //     isCam,
+                    //     setIsCam
+                    // }}
+                    />
 
                 <InputComponent
                     fieldName={'Revenue Authority No.'}
@@ -392,8 +404,18 @@ const Index = ({ onSubmit }) => {
 
                 <InputComponentBoxFiles
                     fieldName={'Rev. Auth. Cert.'}
-                    value={revAuthCert}
-                    setValue={setRevAuthCert} />
+                    value={(revAuthCert) ? revAuthCert : revDoc}
+                    setValue={setRevAuthCert} 
+                    onCamOn={()=>{
+                        navigation.navigate('ICamera', {
+                            type: 'R' 
+                         })
+                    }}
+                    // {...{
+                    //     isCam,
+                    //     setIsCam
+                    // }}
+                    />
 
                 <InputComponent
                     fieldName={'Current Residence'}
@@ -421,13 +443,6 @@ const Index = ({ onSubmit }) => {
                     ss={setSelectedRoutes}
 
                 />
-
-                {/*
-                <InputComponentBoxAdd
-                    fieldName={'Routes'}
-                    value={routes}
-                    setValue={setRoutes}
-                /> */}
 
 
                 <View style={{
