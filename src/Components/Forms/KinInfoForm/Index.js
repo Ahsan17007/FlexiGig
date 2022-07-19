@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import SimpleToast from 'react-native-simple-toast'
 
 
-const Index = ({ onSubmit, navigation }) => {
+const Index = ({ onSubmit, navigation, need, setNeed }) => {
 
 const { token } = useSelector(state => state.Auth)
 
@@ -34,11 +34,13 @@ const { token } = useSelector(state => state.Auth)
 
         else {
             setIsAdding(true)
+            setNeed(true)
             onSubmit({
                 "name": firstName,
                 "phone_number": alternateNo,
                 "relationship": relationship
             }, setIsAdding, setFirstName, setRelationship, setAlternateNo )
+            
         }
     }
 
@@ -75,7 +77,7 @@ const { token } = useSelector(state => state.Auth)
 
 
                 <View style={{
-                    marginVertical: 48,
+                    marginVertical: 28,
                     marginHorizontal: 32,
                     flexDirection: 'row',
                     justifyContent: 'center'

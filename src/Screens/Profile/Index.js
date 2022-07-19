@@ -29,7 +29,13 @@ const Profile = ({ route }) => {
             </View>
             <View style={{ marginTop: 25, alignItems: 'center', alignSelf: 'center' }}>
                 <Image source={Images.DummyUser} style={styles.profilePic} />
-                <Text style={styles.name}>{username}</Text>
+
+                {
+                    (route?.params?.username) ?
+                        <Text style={styles.name}>{username}</Text> :
+                        <></>
+                }
+
             </View>
 
 

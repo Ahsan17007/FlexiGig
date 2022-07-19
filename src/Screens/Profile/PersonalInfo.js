@@ -14,7 +14,7 @@ import Loader from '../../Components/Loader';
 
 const PersonalInfo = ({ navigation }) => {
 
-    const { token } = useSelector(state => state.Auth)
+    const { token, loginUserData } = useSelector(state => state.Auth)
     const [isLoading, setIsloading] = useState(true)
     const [userData, setUserData] = useState('')
 
@@ -61,37 +61,37 @@ const PersonalInfo = ({ navigation }) => {
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Phone No:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.phoneno ? userData?.attributes?.phoneno : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${loginUserData.phone ? loginUserData.phone : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Alt Phone No:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.altphone ? userData?.attributes?.altphone : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.altphone ? userData?.attributes?.altphone : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Email:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.email ? userData?.attributes?.email : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.email ? userData?.attributes?.email : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'ID No:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.identification_number ? userData?.attributes?.identification_number : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.identification_number ? userData?.attributes?.identification_number : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Gender:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.gender ? userData?.attributes?.gender : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.gender ? userData?.attributes?.gender : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Rev.Ath No:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.revenue_authority_number ? userData?.attributes?.revenue_authority_number : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.revenue_authority_number ? userData?.attributes?.revenue_authority_number : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Education Level:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.education_level ? userData?.attributes?.education_level : '------------'}`}</Text>
+                                <Text style={styles.desc}>{`${userData?.attributes?.education_level ? userData?.attributes?.education_level : '-'}`}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
@@ -105,7 +105,7 @@ const PersonalInfo = ({ navigation }) => {
                                                 )
                                             })
                                             :
-                                            <Text style={styles.desc}>{'------------'}</Text>
+                                            <Text style={styles.desc}>{'-'}</Text>
                                     }
                                 </View>
                             </View>
@@ -121,7 +121,7 @@ const PersonalInfo = ({ navigation }) => {
                                                 )
                                             })
                                             :
-                                            <Text style={styles.desc}>{'------------'}</Text>
+                                            <Text style={styles.desc}>{'-'}</Text>
                                     }
                                 </View>
 
@@ -129,7 +129,7 @@ const PersonalInfo = ({ navigation }) => {
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Joined On:'}</Text>
-                                <Text style={styles.desc}>{'------------'}</Text>
+                                <Text style={styles.desc}>{'-'}</Text>
                             </View>
                         </View>
                     </ScrollView>

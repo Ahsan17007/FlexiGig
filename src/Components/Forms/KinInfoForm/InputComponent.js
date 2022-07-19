@@ -41,7 +41,7 @@ const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardTyp
                 maxLength={max}
                 keyboardType={keyboardType}
                 underlineColorAndroid={colors.Black}
-                ref={ref}
+                //ref={ref}
 
             />
         </View>

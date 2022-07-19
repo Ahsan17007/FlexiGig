@@ -70,7 +70,8 @@ const Home = ({ navigation }) => {
                     const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
                     const details = await response.json();
                     console.log(details);
-                    setUserDetails(details?.data)
+
+                    
                     if (details?.error?.message === 'Invalid token') {
                         SimpleToast.show('Session Expired! Login Again')
                         setIsLoading(true)
@@ -85,6 +86,7 @@ const Home = ({ navigation }) => {
                     }
 
                     else {
+                        setUserDetails(details?.data)
                         if (details?.data == null) {
                             setVisibility([false, true])
                         }
@@ -106,6 +108,8 @@ const Home = ({ navigation }) => {
 
 
     const listHeaderComponent = () => {
+
+        const username = (userDetails?.attributes) ? `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` : null
         return (
             <>
                 <View style={styles.topHeaderContainer}>
@@ -115,14 +119,21 @@ const Home = ({ navigation }) => {
                             activeOpacity={0.8}
                             style={styles.profilePic}
                             onPress={() => {
-                                navigation.navigate('Profile', { username: `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` })
+                                navigation.navigate('Profile', { username: username })
                             }}>
                             <Image source={Images.DummyUser} style={styles.profilePic} />
                         </TouchableOpacity>
 
                         <View style={{ marginLeft: 12 }}>
                             <Text style={styles.welcomeText}>{'Welcome'}</Text>
-                            <Text style={styles.name}>{`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`}</Text>
+
+                            {
+                                (userDetails?.attributes) ?
+                                <Text style={styles.name}>{`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`}</Text>
+                                : 
+                                <></>
+                            }
+
                         </View>
                     </View>
                     <TouchableOpacity
@@ -137,13 +148,20 @@ const Home = ({ navigation }) => {
                 <View style={[styles.recordsContainer]}>
                     <Text style={styles.recordTitle}>{'Projects'}</Text>
                     <View style={styles.projectsContainer}>
-                        <View style={{ alignItems: 'center' }}>
+                        {/* <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity
                                 activeOpacity={0.4}
                                 onPress={() => navigation.navigate('OnGoingProjects', { username: `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` })}
                                 style={styles.noOfProjectsContainer}>
                                 <Text style={styles.noOfProjects}>{'5'}</Text>
                             </TouchableOpacity>
+                            <Text style={styles.projectCat}>{'Ongoing'}</Text>
+                        </View> */}
+
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.noOfProjectsContainer}>
+                                <Text style={styles.noOfProjects}>{'5'}</Text>
+                            </View>
                             <Text style={styles.projectCat}>{'Ongoing'}</Text>
                         </View>
 
