@@ -19,7 +19,7 @@ import Fonts from '../Assets/Fonts/Index';
 
 const Project = (props) => {
 
-    const { Item, navigation } = props
+    const { Item, navigation, username } = props
 
     const [textShown, setTextShown] = useState(false);
     const [lengthMore, setLengthMore] = useState(false);
@@ -39,17 +39,17 @@ const Project = (props) => {
                 <Text
                     numberOfLines={1}
                     style={styles.desc}>
-                    {Item?.jobTitle}
+                    {Item?.type}
                 </Text>
             </View>
 
             <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.title} >{'Start Date: '}</Text>
-                <Text style={styles.desc} >{Item?.date}</Text>
+                <Text style={styles.desc} >{Item?.attributes?.start_date}</Text>
             </View>
             <TouchableOpacity
                 activeOpacity={0.4}
-                onPress={() => navigation.navigate('ProjectDetails')}
+                onPress={() => navigation.navigate('ProjectDetails', { projectId: Item?.id, username: username })}
                 style={{ alignSelf: 'flex-end' }}
             >
                 <Text style={{ fontSize: 12, color: colors.Secondary, marginTop: 5 }} >{'View Details'}</Text>

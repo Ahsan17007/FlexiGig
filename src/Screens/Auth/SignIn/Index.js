@@ -84,7 +84,7 @@ const SignIn = ({ navigation, route }) => {
                 };
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signin', config)
                 const loginResult = await response.json();
-                console.log("loginUser-response", response);
+                console.log("loginUser-response", loginResult);
                 if (response.status === 200) {
                     console.log('LoggedIn token: '+loginResult?.token);
                     dispatch(userToken(loginResult?.token))

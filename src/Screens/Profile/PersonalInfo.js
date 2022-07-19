@@ -96,12 +96,35 @@ const PersonalInfo = ({ navigation }) => {
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Services:'}</Text>
-                                <Text style={styles.desc}>{'------------'}</Text>
+                                <View style={{ width: '60%', }}>
+                                    {
+                                        userData?.attributes?.services.length > 0 ?
+                                            userData?.attributes?.services.map((item) => {
+                                                return (
+                                                    <Text style={styles.desc}>{item}</Text>
+                                                )
+                                            })
+                                            :
+                                            <Text style={styles.desc}>{'------------'}</Text>
+                                    }
+                                </View>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Routes:'}</Text>
-                                <Text style={styles.desc}>{'------------'}</Text>
+                                <View style={{ width: '60%', }}>
+                                    {
+                                        userData?.attributes?.routes.length > 0 ?
+                                            userData?.attributes?.routes.map((item) => {
+                                                return (
+                                                    <Text style={[styles.desc,]}>{item}</Text>
+                                                )
+                                            })
+                                            :
+                                            <Text style={styles.desc}>{'------------'}</Text>
+                                    }
+                                </View>
+
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
@@ -136,6 +159,6 @@ const styles = StyleSheet.create({
         width: '60%',
         fontSize: 14,
         color: colors.Black,
-        fontFamily: Fonts.Regular
+        fontFamily: Fonts.Regular,
     }
 })

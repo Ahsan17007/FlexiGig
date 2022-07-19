@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
         // height: 85,
         maxHeight: height / 1.35,
         justifyContent: 'center',
-        alignItems: 'center',
         borderRadius: 10,
         backgroundColor: colors.White,
         borderWidth: 1,
