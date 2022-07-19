@@ -7,6 +7,8 @@ import { xorBy } from 'lodash'
 import Loader from '../../Loader'
 import SimpleToast from 'react-native-simple-toast'
 
+import { useDispatch } from 'react-redux'
+import { setSelectedServices, setSelectedRoutes } from '../../../Redux/Actions/ServicesRoutesSelection'
 
 const Title = ({ text }) => {
     return (
@@ -31,23 +33,23 @@ const InputComponentBoxAddMultiple = ({
     totalData,
     onGetSelectedValues,
     selectedDataNames,
-    ss
+    type,
+    setIsLoader
 }) => {
 
     const [visible, setVisible] = useState(false)
     const [selectedNewData, setSelectedNewData] = useState([])
-    const [isLoader, setIsLoader] = useState(false)
+
+    const dispatch = useDispatch()
 
     const newData = []
 
     const onAddValues = () => {
 
-        setIsLoader(true)
-
         const selectedNamesArrayTemp = []
         const selectedIDsData = []
 
-        
+
         selectedNewData.forEach(i => {
             let ele = totalData.find((product) => {
                 return product?.id == i?.id
@@ -58,24 +60,23 @@ const InputComponentBoxAddMultiple = ({
         })
 
         if (selectedIDsData.length === selectedNewData.length) {
-            //ss({'d':selectedIDsData})
+            if (type === 'S') {
+                dispatch(setSelectedServices(selectedIDsData))
+            }
+            else if (type === 'R') {
+                dispatch(setSelectedRoutes(selectedIDsData))
+            }
         }
-        
-        console.log('Selected IDs');
-        console.log(selectedIDsData);
-        console.log('Selected Names');
-        console.log(selectedNamesArrayTemp);
-        
-
-        setTimeout(()=>{
-            onGetSelectedValues(selectedIDsData, (selectedNamesArrayTemp.length===selectedNewData.length)? selectedNamesArrayTemp.join(', '): '')    
-            setIsLoader(false)
+            
+        setTimeout(() => {
+            setIsLoader(true)
+            onGetSelectedValues((selectedNamesArrayTemp.length === selectedNewData.length) ? selectedNamesArrayTemp.join(', ') : '')
             setVisible(false)
-        }, 2000)
-        
+        }, 500)
+
     }
 
-    if (newData.length === 0) {
+    if (newData.length === 0  && visible) {
         for (let index = 0; index < totalData.length; index++) {
             const element = totalData[index];
             newData.push({
@@ -92,7 +93,7 @@ const InputComponentBoxAddMultiple = ({
     const mainColor = colors.Primary
 
     if (selectedNewData.length > 4) {
-        SimpleToast.show('You can select a maximum of 5 '+fieldName)
+        SimpleToast.show('You can select a maximum of 5 ' + fieldName)
     }
 
 
@@ -100,7 +101,6 @@ const InputComponentBoxAddMultiple = ({
 
         <>
 
-            <Loader visible={isLoader} />
             <View style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -161,46 +161,46 @@ const InputComponentBoxAddMultiple = ({
                             searchIconColor={mainColor}
                             arrowIconColor={mainColor}
                             containerStyle={{
-                                
+
                             }}
                         />
 
 
                         <View style={{
-                            marginVertical:16
+                            marginVertical: 16
                         }}>
 
-                        {
-                            (selectedNewData.length < 5 && selectedNewData.length > 0)
-                                ?
-                                <TouchableOpacity onPress={onAddValues} style={[styles.button, {
-                                    alignSelf: 'center',
-                                    margin: 32
-                                }]}>
-                                    <Text style={styles.addSkillButtonText}>
-                                        {`Add ${fieldName}`}
-                                    </Text>
-                                </TouchableOpacity>
-                                : <></>
-                        }
-
-                        <TouchableOpacity onPress={()=> {
-                            setVisible(false)
-                        }} style={[styles.button, {
-                                    alignSelf: 'center',
-                                    elevation:2,
-                                    backgroundColor: colors.White
-                                }]}>
-                                    <Text style={[styles.addSkillButtonText,{
-                                        color:colors.Black
+                            {
+                                (selectedNewData.length < 5 && selectedNewData.length > 0)
+                                    ?
+                                    <TouchableOpacity onPress={onAddValues} style={[styles.button, {
+                                        alignSelf: 'center',
+                                        margin: 32
                                     }]}>
-                                        {`Go back to Personal Details`}
-                                    </Text>
-                                </TouchableOpacity>
+                                        <Text style={styles.addSkillButtonText}>
+                                            {`Add ${fieldName}`}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    : <></>
+                            }
+
+                            <TouchableOpacity onPress={() => {
+                                setVisible(false)
+                            }} style={[styles.button, {
+                                alignSelf: 'center',
+                                elevation: 2,
+                                backgroundColor: colors.White
+                            }]}>
+                                <Text style={[styles.addSkillButtonText, {
+                                    color: colors.Black
+                                }]}>
+                                    {`Go back to Personal Details`}
+                                </Text>
+                            </TouchableOpacity>
 
                         </View>
 
-                        
+
 
 
                     </View>
@@ -212,9 +212,9 @@ const InputComponentBoxAddMultiple = ({
             <TouchableOpacity onPress={() => {
                 setVisible(true)
             }} style={styles.btn}>
-                <Text style={[styles.addSkillButtonText,{
+                <Text style={[styles.addSkillButtonText, {
                     color: colors.Black,
-                    fontFamily:Fonts.Regular
+                    fontFamily: Fonts.Regular
                 }]}>
                     {`Add`}
                 </Text>
@@ -259,19 +259,19 @@ const styles = StyleSheet.create({
         color: colors.White,
     },
     button: {
-        
+
         padding: 8,
         borderColor: colors.Primary,
         backgroundColor: colors.Primary,
         borderWidth: 1,
         borderRadius: 8,
-        width:'80%',
+        width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 8,
         alignSelf: 'flex-end',
         marginHorizontal: 4,
-        marginVertical:16
+        marginVertical: 16
     },
     addSkillButtonText: {
         color: colors.White,

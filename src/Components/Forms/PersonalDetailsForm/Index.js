@@ -39,14 +39,12 @@ const Index = ({ navigation, onSubmit }) => {
     const [currentResidence, setCurrentResidence] = useState('')
     const [isShownDate, setIsShownDate] = useState(false)
     const [totalServices, setTotalServices] = useState([])
-    const [selectedServices, setSelectedServices] = useState(null)
+    //const [selectedServices, setSelectedServices] = useState(null)
     const [selectedServicesNames, setSelectedServicesNames] = useState('')
     const [totalRoutes, setTotalRoutes] = useState([])
-    const [selectedRoutes, setSelectedRoutes] = useState(null)
+    //const [selectedRoutes, setSelectedRoutes] = useState(null)
     const [selectedRoutesNames, setSelectedRoutesNames] = useState('')
 
-
-    const [isCam, setIsCam] = useState(false)
 
     const firstNameRef = useRef()
     const middleNameRef = useRef()
@@ -59,6 +57,7 @@ const Index = ({ navigation, onSubmit }) => {
 
 
     const { token } = useSelector(state => state.Auth)
+    const { selectedServices, selectedRoutes } = useSelector(state => state.SerRouSel)
     const { idDoc, eduDoc, revDoc } = useSelector(state => state.DocFileReducer)
 
     const multipleRequestsHandler = (toLoad, setToLoad) => {
@@ -215,12 +214,12 @@ const Index = ({ navigation, onSubmit }) => {
                 wrap(email) &&
                 wrap(id) &&
                 wrap(idTypeName) &&
-                (idDocuments.uri) &&
+                (idDoc || idDocuments) &&
                 date &&
                 wrap(eduLevelName) &&
-                (eduDocuments.uri) &&
+                (eduDoc || eduDocuments) &&
                 wrap(revAuthNo) &&
-                (revAuthCert.uri) &&
+                (revDoc || revAuthCert) &&
                 wrap(currentResidence) &&
                 wrap(selectedServices) &&
                 wrap(selectedRoutes)
@@ -246,34 +245,40 @@ const Index = ({ navigation, onSubmit }) => {
                 "email": email,
                 "identification_doc_type": idTypeName,
                 "identification_number": id,
-                "identification_doc": (idDocuments) ? idDocuments?.uri : idDoc,
+                "identification_doc": (idDocuments) ? idDocuments?.uri : idDoc?.uri,
                 "level_of_education": eduLevelName,
-                "education_certificate": (eduDocuments) ? eduDocuments?.uri : eduDoc,
+                "education_certificate": (eduDocuments) ? eduDocuments?.uri : eduDoc?.uri,
                 "revenue_authority_number": revAuthNo,
-                "revenue_authority_certificate": (revAuthCert) ? revAuthCert?.uri : revDoc,
+                "revenue_authority_certificate": (revAuthCert) ? revAuthCert?.uri : revDoc?.uri,
                 "current_residence": currentResidence,
                 "avatar": "",
-                "routes": [],
-                "services": [],
+                "routes": selectedRoutes,
+                "services": selectedServices,
                 
             }
+
+            console.log(data_body);
 
             onSubmit(data_body)
 
         }
     }
 
-    const onGetSelectedServices = (data, selectedNamesString) => {
-        
+    const onGetSelectedServices = (selectedNamesString) => {
         setSelectedServicesNames(selectedNamesString)
-
-        console.log('Selected Services are in f');
-        console.log(selectedServices);
+        
+        setTimeout(()=> {
+            setIsLoader(false)
+        }, 1000)
     }
 
-    const onGetSelectedRoutes = (data, selectedNamesString) => {
-        
+    const onGetSelectedRoutes = (selectedNamesString) => {
         setSelectedRoutesNames(selectedNamesString)
+        console.log("SS ROUTES");
+        console.log(selectedRoutes);
+        setTimeout(()=> {
+            setIsLoader(false)
+        }, 1000)
     }
 
     return (
@@ -387,12 +392,7 @@ const Index = ({ navigation, onSubmit }) => {
                         navigation.navigate('ICamera', {
                            type: 'E' 
                         })
-                    }}
-                    // {...{
-                    //     isCam,
-                    //     setIsCam
-                    // }}
-                    />
+                    }}/>
 
                 <InputComponent
                     fieldName={'Revenue Authority No.'}
@@ -410,12 +410,7 @@ const Index = ({ navigation, onSubmit }) => {
                         navigation.navigate('ICamera', {
                             type: 'R' 
                          })
-                    }}
-                    // {...{
-                    //     isCam,
-                    //     setIsCam
-                    // }}
-                    />
+                    }}/>
 
                 <InputComponent
                     fieldName={'Current Residence'}
@@ -431,7 +426,8 @@ const Index = ({ navigation, onSubmit }) => {
                     totalData={totalServices}
                     onGetSelectedValues={onGetSelectedServices}
                     selectedDataNames={selectedServicesNames}
-                    ss={setSelectedServices}
+                    type='S'
+                    setIsLoader={setIsLoader}
 
                 />
 
@@ -440,7 +436,8 @@ const Index = ({ navigation, onSubmit }) => {
                     totalData={totalRoutes}
                     onGetSelectedValues={onGetSelectedRoutes}
                     selectedDataNames={selectedRoutesNames}
-                    ss={setSelectedRoutes}
+                    type='R'
+                    setIsLoader={setIsLoader}
 
                 />
 

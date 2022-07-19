@@ -25,19 +25,18 @@ const AddPersonalInfo = ({ navigation }) => {
                     },
                     body: JSON.stringify(data)
                 }
-                console.log(data);
-                // return false
+
                 const r = await fetch(`${BASE_URL}personal_details`, config)
                 const response = await r.json()
 
                 console.log('PersonalInfo Add Response....', response);
 
-                if (response && response?.error?.message != 'Invalid token') {
+                if (response && response?.error?.message != 'Invalid token' && r.ok) {
 
                     setLoader(false)
                     SimpleToast.show('Added Successfully')
 
-                    // navigation.navigate('Next of Kin')
+                    navigation.navigate('Next of Kin')
                 }
                 else {
                     SimpleToast.show('Failed Adding Personal Info')

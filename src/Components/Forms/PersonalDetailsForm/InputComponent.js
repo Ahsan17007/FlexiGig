@@ -39,7 +39,7 @@ const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardTyp
                 placeholder={fieldName + ((requiredStatus) ? '' : ' (Optional)')}
                 maxLength={max}
                 keyboardType={keyboardType}
-                ref={ref}
+                //ref={ref}
                 multiline={multiline}
 
             />
