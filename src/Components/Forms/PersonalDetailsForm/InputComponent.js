@@ -20,7 +20,7 @@ const Title = ({ text }) => {
     )
 }
 
-const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardType, ref, nextRef, multiline }) => {
+const InputField = ({ val, fieldName, requiredStatus, setter, max, keyboardType, currentRef, nextRef, multiline }) => {
     return (
         <View style={{
             flex: 2,
@@ -34,13 +34,14 @@ const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardTyp
                 borderBottomColor: colors.Black,
                 borderBottomWidth:1
             }}
-                value={value}
+                value={val}
                 onChangeText={setter}
                 placeholder={fieldName + ((requiredStatus) ? '' : ' (Optional)')}
                 maxLength={max}
                 keyboardType={keyboardType}
-                //ref={ref}
+                
                 multiline={multiline}
+                
 
             />
         </View>
@@ -48,7 +49,7 @@ const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardTyp
     )
 }
 
-const InputComponent = ({ fieldName, value, requiredStatus = true, setter, max = 64, keyboardType = 'default', ref, nextRef, multiline = false }) => {
+const InputComponent = ({ fieldName, val, requiredStatus = true, setter, max = 64, keyboardType = 'default', ref, nextRef, multiline = false }) => {
     return (
         <View style={{
             flexDirection: 'row',
@@ -56,7 +57,7 @@ const InputComponent = ({ fieldName, value, requiredStatus = true, setter, max =
         }}>
 
             <Title text={fieldName} />
-            <InputField {...{ fieldName, value, requiredStatus, setter, max, keyboardType, ref, nextRef, multiline }} />
+            <InputField {...{ fieldName, val, requiredStatus, setter, max, keyboardType, ref, nextRef, multiline }} />
 
         </View>
     )

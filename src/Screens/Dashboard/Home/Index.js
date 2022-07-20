@@ -52,7 +52,7 @@ const Home = ({ navigation }) => {
     const [visibility, setVisibility] = useState([true, false])
 
     const [isLoading, setIsLoading] = useState(false)
-    const [userDetails, setUserDetails] = useState('')
+    const [userDetails, setUserDetails] = useState(null)
     const dispatch = useDispatch()
 
     const { token } = useSelector(state => state.Auth)
@@ -109,7 +109,7 @@ const Home = ({ navigation }) => {
 
     const listHeaderComponent = () => {
 
-        const username = (userDetails?.attributes) ? `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` : null
+        const username = (userDetails?.attributes?.firstname) ? `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` : null
         return (
             <>
                 <View style={styles.topHeaderContainer}>

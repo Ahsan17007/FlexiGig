@@ -14,6 +14,7 @@ const AddPersonalInfo = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.White }}>
+            <Loader visible={loader}/>
             <PersonalDetailsForm navigation={navigation} onSubmit={async (data) => {
                 setLoader(true)
 
@@ -41,6 +42,7 @@ const AddPersonalInfo = ({ navigation }) => {
                 else {
                     SimpleToast.show('Failed Adding Personal Info')
                     setLoader(false)
+                    SimpleToast.show(JSON.stringify(response))
                 }
             }} />
         </View>

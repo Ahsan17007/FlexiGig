@@ -25,45 +25,48 @@ const Title = ({ text }) => {
 }
 
 
-const Dropdown = ({ value, setValue, items, fieldName }) => {
+const Dropdown = ({ val, setValue, items, fieldName }) => {
 
     return (
 
         <Picker
-            selectedValue={value}
+
+            selectedValue={val}
             onValueChange={(itemValue, itemIndex) => {
                 setValue(itemValue)
             }}
             style={{
-                marginHorizontal:-10
+                marginHorizontal: -10
             }}
             mode='dropdown'>
-                {
-                    (()=>{
-                        if (value==='') {
-                            return <Picker.Item label={'Select '+ fieldName} value={''} />
-                        }
-                    })()
-                    
-                }
-                {
-                    items.map(e=>{
-                        return <Picker.Item label={e?.label} value={e?.value} />
-                    })
-                }
+            {
+                (() => {
+                    if (val === '') {
+                        return <Picker.Item label={'Select ' + fieldName} value='' />
+                    }
+                })()
+
+            }
+            {
+                items.map(e => {
+                    return <Picker.Item label={e?.label} value={e?.value} />
+                })
+            }
+
+
 
         </Picker>
 
     )
 }
 
-const InputComponentDropdown = ({ value, setValue, items, fieldName }) => {
+const InputComponentDropdown = ({ val, setValue, items, fieldName }) => {
 
     return (
         <View style={{
             flex: 1,
             flexDirection: 'row',
-            marginRight:3
+            marginRight: 3
         }}>
             <View style={{ flex: 1, margin: 1 }}>
                 <Title text={fieldName} />
@@ -71,9 +74,9 @@ const InputComponentDropdown = ({ value, setValue, items, fieldName }) => {
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth:1, margin:1, flexDirection:'column', justifyContent:'flex-start' }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 1, margin: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
 
-                <Dropdown value={value} setValue={setValue} items={items} fieldName={fieldName} />
+                <Dropdown {...{ val, setValue, items, fieldName }} />
 
             </View>
 

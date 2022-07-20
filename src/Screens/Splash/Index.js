@@ -8,7 +8,7 @@ import { countriesData } from '../../Redux/Actions/CountriesList'
 
 import { idDocument, eduDocument, revDocument } from '../../Redux/Actions/CapturedDocument'
 import { setSelectedServices, setSelectedRoutes } from '../../Redux/Actions/ServicesRoutesSelection'
-
+import { onLogout } from '../../Redux/Actions/HasSession'
 import styles from './Styles'
 import Images from '../../Assets/Images/Index'
 import SimpleToast from 'react-native-simple-toast'
@@ -21,11 +21,18 @@ const Splash = ({ navigation }) => {
 
     useEffect(() => {
 
-        dispatch(idDocument(null))
-        dispatch(eduDocument(null))
-        dispatch(revDocument(null))
-        dispatch(setSelectedServices([]))
-        dispatch(setSelectedRoutes([]))
+        try {
+            dispatch(idDocument(null))
+            dispatch(eduDocument(null))
+            dispatch(revDocument(null))
+            dispatch(setSelectedServices([]))
+            dispatch(setSelectedRoutes([]))
+        }
+        catch(e){
+            dispatch(onLogout())
+        }
+
+        
         
 
         const mod = async () => {
@@ -39,7 +46,7 @@ const Splash = ({ navigation }) => {
             return res?.data
         }
 
-        mod().then((data)=>{
+        mod().then((data) => {
             console.log('In Use Effect Then of Splash');
             dispatch(countriesData(data))
             if (token) {
@@ -50,10 +57,14 @@ const Splash = ({ navigation }) => {
             } else {
                 navigation.replace('OnBoarding')
             }
-        }).catch((err)=> {
+        }).catch((err) => {
             console.log('In Use Effect Catch of Splash');
             console.log(err);
             SimpleToast.show('There\'s a problem getting app data')
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Splash' }],
+            })
         })
 
 

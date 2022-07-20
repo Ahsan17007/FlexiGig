@@ -24,12 +24,9 @@ const Title = ({ text }) => {
     )
 }
 
-const ValCom = ({ value }) => {
+const ValCom = ({ val }) => {
 
-    // var n = [];
-    // n = (value?.uri?.split('/')) ? value?.uri?.split('/') : n;
-
-    var vals = value?.name
+    var vals = val?.name
     return (
 
         <View style={{ height: '100%' }}>
@@ -53,7 +50,7 @@ const ValCom = ({ value }) => {
     )
 }
 
-const InputComponentBoxFiles = ({ value, setValue, fieldName, isCam, setIsCam, onCamOn }) => {
+const InputComponentBoxFiles = ({ val, setValue, fieldName, isCam, setIsCam, onCamOn }) => {
 
     const [visibility, setVisibility] = useState(false)
 
@@ -89,7 +86,7 @@ const InputComponentBoxFiles = ({ value, setValue, fieldName, isCam, setIsCam, o
 
                 <View style={{ flex: 2, margin: 1, height: '100%' }}>
 
-                    <ValCom {...{ value }} />
+                    <ValCom {...{ val }} />
 
                 </View>
 

@@ -46,14 +46,14 @@ const Index = ({ navigation, onSubmit }) => {
     const [selectedRoutesNames, setSelectedRoutesNames] = useState('')
 
 
-    const firstNameRef = useRef()
-    const middleNameRef = useRef()
-    const surnameRef = useRef()
-    const emailRef = useRef()
-    const alternateNoRef = useRef()
-    const idRef = useRef()
-    const revAuthRef = useRef()
-    const residRef = useRef()
+    // const firstNameRef = useRef()
+    // const middleNameRef = useRef()
+    // const surnameRef = useRef()
+    // const emailRef = useRef()
+    // const alternateNoRef = useRef()
+    // const idRef = useRef()
+    // const revAuthRef = useRef()
+    // const residRef = useRef()
 
 
     const { token } = useSelector(state => state.Auth)
@@ -212,6 +212,8 @@ const Index = ({ navigation, onSubmit }) => {
                 wrap(surname) &&
                 wrap(gender) &&
                 wrap(email) &&
+                email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) &&
+                wrap(alternateNo) &&
                 wrap(id) &&
                 wrap(idTypeName) &&
                 (idDoc || idDocuments) &&
@@ -242,10 +244,13 @@ const Index = ({ navigation, onSubmit }) => {
                 "firstname": firstName,
                 "middlename": middleName,
                 "surname": surname,
+                "gender": gender,
                 "email": email,
+                "alt_phone": alternateNo,
                 "identification_doc_type": idTypeName,
                 "identification_number": id,
                 "identification_doc": (idDocuments) ? idDocuments?.uri : idDoc?.uri,
+                "dob": date,
                 "level_of_education": eduLevelName,
                 "education_certificate": (eduDocuments) ? eduDocuments?.uri : eduDoc?.uri,
                 "revenue_authority_number": revAuthNo,
@@ -290,33 +295,26 @@ const Index = ({ navigation, onSubmit }) => {
 
                 <InputComponent
                     fieldName={'First Name'}
-                    value={firstName}
+                    val={firstName}
                     setter={setFirstName}
-                    max={16}
-                    ref={firstNameRef}
-                    nextRef={middleNameRef} />
+                    max={16}/>
 
                 <InputComponent
                     fieldName={'Middle Name'}
-                    value={middleName}
+                    val={middleName}
                     setter={setMiddleName}
                     max={16}
-                    requiredStatus={false}
-
-                    ref={middleNameRef}
-                    nextRef={surnameRef} />
+                    requiredStatus={false}/>
 
                 <InputComponent
                     fieldName={'Surname'}
-                    value={surname}
+                    val={surname}
                     setter={setSurname}
                     max={16}
-                    ref={surnameRef}
-                    nextRef={emailRef}
                 />
 
                 <InputComponentDropdown
-                    value={gender}
+                    val={gender}
                     setValue={setGender}
                     items={[
                         { label: 'Male', value: 'male' },
@@ -327,40 +325,35 @@ const Index = ({ navigation, onSubmit }) => {
 
                 <InputComponent
                     fieldName={'Email'}
-                    value={email}
+                    val={email}
                     setter={setEmail}
                     keyboardType='email-address'
-                    ref={emailRef}
-                    nextRef={alternateNoRef} />
+                    
+                    />
 
                 <InputComponent
                     fieldName={'Alternate Phone No.'}
-                    value={alternateNo}
+                    val={alternateNo}
                     setter={setAlternateNo}
-                    requiredStatus={false}
                     max={13}
-                    ref={alternateNoRef}
-                    nextRef={idRef}
                     keyboardType='phone-pad' />
 
 
                 <InputComponent
                     fieldName={'Id Number'}
-                    value={id}
+                    val={id}
                     setter={setId}
-                    max={32}
-                    ref={idRef}
-                    nextRef={revAuthRef} />
+                    max={32} />
 
                 <InputComponentDropdown
                     fieldName={'ID Type'}
-                    value={idTypeName}
+                    val={idTypeName}
                     setValue={setIdTypeName}
                     items={idTypes} />
 
                 <InputComponentBoxFiles
                     fieldName={'ID Document'}
-                    value={(idDocuments) ? idDocuments : idDoc}
+                    val={(idDocuments) ? idDocuments : idDoc}
                     setValue={setIdDocuments} 
                     onCamOn={()=>{
                         navigation.navigate("ICamera", {
@@ -370,7 +363,7 @@ const Index = ({ navigation, onSubmit }) => {
                     />
 
                 <InputComponentDate
-                    date={d}
+                    date={date}
                     setDate={setDate}
                     fieldName={'Date of Birth'}
                     shown={isShownDate}
@@ -378,7 +371,7 @@ const Index = ({ navigation, onSubmit }) => {
                     maxDate={d} />
 
                 <InputComponentDropdown
-                    value={eduLevelName}
+                    val={eduLevelName}
                     setValue={setEduLevelName}
                     items={eduLevels}
                     fieldName='Education Level'
@@ -386,7 +379,7 @@ const Index = ({ navigation, onSubmit }) => {
 
                 <InputComponentBoxFiles
                     fieldName={'Educational Cert.'}
-                    value={(eduDocuments) ? eduDocuments : eduDoc}
+                    val={(eduDocuments) ? eduDocuments : eduDoc}
                     setValue={setEduDocuments} 
                     onCamOn={()=>{
                         navigation.navigate('ICamera', {
@@ -396,15 +389,13 @@ const Index = ({ navigation, onSubmit }) => {
 
                 <InputComponent
                     fieldName={'Revenue Authority No.'}
-                    value={revAuthNo}
+                    val={revAuthNo}
                     setter={setRevAuthNo}
-                    max={32}
-                    ref={revAuthRef}
-                    nextRef={residRef} />
+                    max={32}/>
 
                 <InputComponentBoxFiles
                     fieldName={'Rev. Auth. Cert.'}
-                    value={(revAuthCert) ? revAuthCert : revDoc}
+                    val={(revAuthCert) ? revAuthCert : revDoc}
                     setValue={setRevAuthCert} 
                     onCamOn={()=>{
                         navigation.navigate('ICamera', {
@@ -414,11 +405,9 @@ const Index = ({ navigation, onSubmit }) => {
 
                 <InputComponent
                     fieldName={'Current Residence'}
-                    value={currentResidence}
+                    val={currentResidence}
                     setter={setCurrentResidence}
                     max={128}
-                    ref={residRef}
-                    nextRef={firstNameRef}
                     multiline />
 
                 <InputComponentBoxAddMultiple

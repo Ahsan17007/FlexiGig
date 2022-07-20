@@ -12,7 +12,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import Loader from '../../Components/Loader';
 
 
-const PersonalInfo = ({ navigation }) => {
+const PersonalInfo = ({ navigation, route }) => {
 
     const { token, loginUserData } = useSelector(state => state.Auth)
     const [isLoading, setIsloading] = useState(true)
@@ -56,7 +56,7 @@ const PersonalInfo = ({ navigation }) => {
                         <View style={styles.detailContainer}>
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
                                 <Text style={styles.title}>{'Name:'}</Text>
-                                <Text style={styles.desc}>{`${userData?.attributes?.firstname} ${userData?.attributes?.surname}`}</Text>
+                                <Text style={styles.desc}>{(userData?.attributes?.firstname && userData?.attributes?.surname) ? `${userData?.attributes?.firstname} ${userData?.attributes?.surname}` : '-'}</Text>
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>

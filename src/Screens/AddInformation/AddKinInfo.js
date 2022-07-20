@@ -92,7 +92,6 @@ const AddKinInfo = ({ navigation }) => {
             <View style={{marginHorizontal:16}}>
             <FlatList
                 data={data}
-                showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => '-kin-' + index}
                 renderItem={(item) => renderKin(item)}
                 style={{ width: '100%' }}
