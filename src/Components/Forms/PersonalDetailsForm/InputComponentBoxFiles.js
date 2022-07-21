@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TextInput, Modal, TouchableOpacity, Dimensions } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Dimensions, Image } from 'react-native'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
+import Images from '../../../Assets/Images/Index'
 import DocumentPicker from 'react-native-document-picker';
 import FileOptionPopup from '../../FileOptionPopup';
-import CameraComponent from '../../CameraComponent';
 
 const Title = ({ text }) => {
     return (
@@ -24,48 +24,23 @@ const Title = ({ text }) => {
     )
 }
 
-const ValCom = ({ val }) => {
-
-    var vals = val?.name
-    return (
-
-        <View style={{ height: '100%' }}>
-            <Text style={{
-                textAlignVertical: 'center',
-                padding: 4,
-                color: colors.Dark,
-                fontFamily: Fonts.Light,
-                borderWidth: 1,
-                borderColor: colors.Dark,
-                borderRadius: 4,
-                height: '100%'
-            }}>
-
-                {vals}
-
-            </Text>
-
-        </View>
-
-    )
-}
-
-const InputComponentBoxFiles = ({ val, setValue, fieldName, isCam, setIsCam, onCamOn }) => {
+const InputComponentBoxFiles = ({ val, setValue, fieldName, onCamOn, onCancelItem }) => {
 
     const [visibility, setVisibility] = useState(false)
+
+    var vals = val?.name
 
     return (
         <>
             <FileOptionPopup
                 visibility={visibility}
                 setVisibility={setVisibility}
-                onCameraButtonClick={()=>{onCamOn()}}
+                onCameraButtonClick={() => { onCamOn() }}
                 onFilesMenuClick={() => {
                     DocumentPicker.pickSingle({
                         //allowMultiSelection: true,
                     }).then(res => {
                         setValue(res)
-                        console.log('-------- File URI --------');
                         console.log(res.uri);
                     })
                 }}
@@ -78,19 +53,54 @@ const InputComponentBoxFiles = ({ val, setValue, fieldName, isCam, setIsCam, onC
                 marginRight: 3,
                 marginVertical: 4
             }}>
+
                 <View style={{ flex: 1, margin: 1 }}>
                     <Title text={fieldName} />
-
                 </View>
 
+                <View style={{ flex: 2, margin: 1, height: '100%', flexDirection: 'row', alignItems: 'center' }}>
 
-                <View style={{ flex: 2, margin: 1, height: '100%' }}>
+                    <View style={{
+                        borderWidth: 1,
+                        borderColor: colors.Dark,
+                        borderRadius: 4,
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{
+                            textAlignVertical: 'center',
+                            padding: 4,
+                            color: colors.Dark,
+                            fontFamily: Fonts.Light,
+                            height: '100%',
+                            flex: 8
+                        }}>
+                            {vals}
+                        </Text>
 
-                    <ValCom {...{ val }} />
+                        {
+                            (val) ? 
+
+
+                            <TouchableOpacity onPress={onCancelItem} style={{
+                                flex: 1,
+                                backgroundColor: colors.Light,
+                                justifyContent:'center',
+                                alignItems:'center',
+                                margin: 4,
+                            }}>
+                                <Image source={Images.Cross} style={{ height: 12, width: 12, alignSelf:'center' }} />
+                            </TouchableOpacity>
+
+
+                            : <></>
+                        }
+
+                        
+                    </View>
+
 
                 </View>
-
-
             </View>
 
             <TouchableOpacity onPress={() => {
@@ -166,7 +176,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4
 
     },
-    CameraComponent:{
+    CameraComponent: {
         height: Dimensions.get("window").height,
         width: Dimensions.get("window").width,
     }

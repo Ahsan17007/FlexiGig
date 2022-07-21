@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, Keyboard } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import colors from '../../../Assets/Colors/Index'
 import Fonts from '../../../Assets/Fonts/Index'
@@ -8,14 +8,16 @@ import InputComponentDropdown from './InputComponentDropdown'
 import InputComponentDate from './InputComponentDate'
 import InputComponentBoxFiles from './InputComponentBoxFiles'
 import InputComponentBoxAddMultiple from './InputComponentBoxAddMultiple'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { idDocument, eduDocument, revDocument } from '../../../Redux/Actions/CapturedDocument'
 
 import { BASE_URL } from '../../../Api/config'
 import Loader from '../../Loader'
 import SimpleToast from 'react-native-simple-toast'
+import { isError } from 'lodash'
 
 const d = new Date()
-d.setFullYear(d.getFullYear()-18)
+d.setFullYear(d.getFullYear() - 18)
 
 const Index = ({ navigation, onSubmit }) => {
 
@@ -39,26 +41,35 @@ const Index = ({ navigation, onSubmit }) => {
     const [currentResidence, setCurrentResidence] = useState('')
     const [isShownDate, setIsShownDate] = useState(false)
     const [totalServices, setTotalServices] = useState([])
-    //const [selectedServices, setSelectedServices] = useState(null)
     const [selectedServicesNames, setSelectedServicesNames] = useState('')
     const [totalRoutes, setTotalRoutes] = useState([])
-    //const [selectedRoutes, setSelectedRoutes] = useState(null)
     const [selectedRoutesNames, setSelectedRoutesNames] = useState('')
 
+    const [isErrorFName, setIsErrorFName] = useState(false)
+    const [isErrorAlternatePh, setIsErrorAlternatePh] = useState(false)
+    const [isErrorSName, setIsErrorSName] = useState(false)
+    const [isErrorEmail, setIsErrorEmail] = useState(false)
+    const [isErrorID, setIsErrorID] = useState(false)
+    const [isErrorResidence, setIsErrorResidence] = useState(false)
 
-    // const firstNameRef = useRef()
-    // const middleNameRef = useRef()
-    // const surnameRef = useRef()
-    // const emailRef = useRef()
-    // const alternateNoRef = useRef()
-    // const idRef = useRef()
-    // const revAuthRef = useRef()
-    // const residRef = useRef()
+
+    const firstNameRef = useRef()
+    const middleNameRef = useRef()
+    const surnameRef = useRef()
+    const emailRef = useRef()
+    const alternateNoRef = useRef()
+    const idRef = useRef()
+    const revAuthRef = useRef()
+    const residRef = useRef()
+
+
 
 
     const { token } = useSelector(state => state.Auth)
     const { selectedServices, selectedRoutes } = useSelector(state => state.SerRouSel)
     const { idDoc, eduDoc, revDoc } = useSelector(state => state.DocFileReducer)
+
+    const dispatch = useDispatch()
 
     const multipleRequestsHandler = (toLoad, setToLoad) => {
 
@@ -219,9 +230,9 @@ const Index = ({ navigation, onSubmit }) => {
                 (idDoc || idDocuments) &&
                 date &&
                 wrap(eduLevelName) &&
-                (eduDoc || eduDocuments) &&
-                wrap(revAuthNo) &&
-                (revDoc || revAuthCert) &&
+                //(eduDoc || eduDocuments) &&
+                //wrap(revAuthNo) &&
+                //(revDoc || revAuthCert) &&
                 wrap(currentResidence) &&
                 wrap(selectedServices) &&
                 wrap(selectedRoutes)
@@ -252,14 +263,14 @@ const Index = ({ navigation, onSubmit }) => {
                 "identification_doc": (idDocuments) ? idDocuments?.uri : idDoc?.uri,
                 "dob": date,
                 "level_of_education": eduLevelName,
-                "education_certificate": (eduDocuments) ? eduDocuments?.uri : eduDoc?.uri,
+                "education_certificate": (eduDocuments) ? eduDocuments?.uri : (eduDoc?.uri ? eduDoc?.uri : ''),
                 "revenue_authority_number": revAuthNo,
-                "revenue_authority_certificate": (revAuthCert) ? revAuthCert?.uri : revDoc?.uri,
+                "revenue_authority_certificate": (revAuthCert) ? revAuthCert?.uri : (revDoc?.uri ? revDoc?.uri : ''),
                 "current_residence": currentResidence,
                 "avatar": "",
                 "routes": selectedRoutes,
                 "services": selectedServices,
-                
+
             }
 
             console.log(data_body);
@@ -271,8 +282,8 @@ const Index = ({ navigation, onSubmit }) => {
 
     const onGetSelectedServices = (selectedNamesString) => {
         setSelectedServicesNames(selectedNamesString)
-        
-        setTimeout(()=> {
+
+        setTimeout(() => {
             setIsLoader(false)
         }, 1000)
     }
@@ -281,7 +292,7 @@ const Index = ({ navigation, onSubmit }) => {
         setSelectedRoutesNames(selectedNamesString)
         console.log("SS ROUTES");
         console.log(selectedRoutes);
-        setTimeout(()=> {
+        setTimeout(() => {
             setIsLoader(false)
         }, 1000)
     }
@@ -297,20 +308,51 @@ const Index = ({ navigation, onSubmit }) => {
                     fieldName={'First Name'}
                     val={firstName}
                     setter={setFirstName}
-                    max={16}/>
+                    max={16}
+                    error={isErrorFName}
+                    currentRef={firstNameRef}
+                    onSubmit={() => {
+                        if (firstName === '') {
+                            setIsErrorFName(true)
+                        }
+                        else {
+                            setIsErrorFName(false)
+
+                        }
+                        middleNameRef.current.focus()
+                    }}
+                    errorTxt='First Name is Mandatory'
+                />
 
                 <InputComponent
                     fieldName={'Middle Name'}
                     val={middleName}
                     setter={setMiddleName}
                     max={16}
-                    requiredStatus={false}/>
+                    requiredStatus={false}
+                    error={false}
+                    currentRef={middleNameRef}
+                    onSubmit={() => {
+                        surnameRef.current.focus()
+                    }} />
 
                 <InputComponent
                     fieldName={'Surname'}
                     val={surname}
                     setter={setSurname}
                     max={16}
+                    error={isErrorSName}
+                    currentRef={surnameRef}
+                    onSubmit={() => {
+                        if (surname === '') {
+                            setIsErrorSName(true)
+                        }
+                        else {
+                            setIsErrorSName(false)
+                        }
+                        emailRef.current.focus()
+                    }}
+                    errorTxt='Surname is Mandatory'
                 />
 
                 <InputComponentDropdown
@@ -328,22 +370,64 @@ const Index = ({ navigation, onSubmit }) => {
                     val={email}
                     setter={setEmail}
                     keyboardType='email-address'
-                    
-                    />
+                    error={isErrorEmail}
+                    currentRef={emailRef}
+                    onSubmit={() => {
+                        if (email === '') {
+                            setIsErrorEmail(true)
+                        }
+                        else {
+                            setIsErrorEmail(false)
+                        }
+                        alternateNoRef.current.focus()
+                    }}
+                    errorTxt={
+                        (email === '') ?
+                            'Email is mandatory'
+                            :
+                            (email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/))
+                                ? '' : 'Email format is not correct'
+
+                    }
+                />
 
                 <InputComponent
                     fieldName={'Alternate Phone No.'}
                     val={alternateNo}
                     setter={setAlternateNo}
                     max={13}
-                    keyboardType='phone-pad' />
+                    keyboardType='phone-pad'
+                    error={isErrorAlternatePh}
+                    currentRef={alternateNoRef}
+                    onSubmit={() => {
+                        if (alternateNo === '') {
+                            setIsErrorAlternatePh(true)
+                        }
+                        else {
+                            setIsErrorAlternatePh(false)
+                        }
+                            idRef.current.focus()
+                    }}
+                    errorTxt='Required Alternate Phone Number' />
 
 
                 <InputComponent
                     fieldName={'Id Number'}
                     val={id}
                     setter={setId}
-                    max={32} />
+                    max={32}
+                    error={isErrorID}
+                    currentRef={idRef}
+                    onSubmit={() => {
+                        if (id === '') {
+                            setIsErrorID(true)
+                        }
+                        else {
+                            setIsErrorID(false)
+                        }
+                            revAuthRef.current.focus()
+                    }}
+                    errorTxt='Required Identity' />
 
                 <InputComponentDropdown
                     fieldName={'ID Type'}
@@ -354,13 +438,17 @@ const Index = ({ navigation, onSubmit }) => {
                 <InputComponentBoxFiles
                     fieldName={'ID Document'}
                     val={(idDocuments) ? idDocuments : idDoc}
-                    setValue={setIdDocuments} 
-                    onCamOn={()=>{
+                    setValue={setIdDocuments}
+                    onCamOn={() => {
                         navigation.navigate("ICamera", {
-                            type: 'I' 
-                         })
+                            type: 'I'
+                        })
                     }}
-                    />
+                    onCancelItem={() => {
+                        setIdDocuments(null)
+                        dispatch(idDocument(null))
+                    }}
+                />
 
                 <InputComponentDate
                     date={date}
@@ -380,35 +468,63 @@ const Index = ({ navigation, onSubmit }) => {
                 <InputComponentBoxFiles
                     fieldName={'Educational Cert.'}
                     val={(eduDocuments) ? eduDocuments : eduDoc}
-                    setValue={setEduDocuments} 
-                    onCamOn={()=>{
+                    setValue={setEduDocuments}
+                    onCamOn={() => {
                         navigation.navigate('ICamera', {
-                           type: 'E' 
+                            type: 'E'
                         })
-                    }}/>
+                    }}
+
+                    onCancelItem={() => {
+                        setEduDocuments(null)
+                        dispatch(eduDocument(null))
+                    }} />
 
                 <InputComponent
-                    fieldName={'Revenue Authority No.'}
+                    fieldName={'Rev. Auth. No.'}
                     val={revAuthNo}
                     setter={setRevAuthNo}
-                    max={32}/>
+                    max={32}
+                    requiredStatus={false}
+                    error={false}
+                    currentRef={revAuthRef}
+                    onSubmit={() => {
+                        residRef.current.focus()
+                    }} />
 
                 <InputComponentBoxFiles
                     fieldName={'Rev. Auth. Cert.'}
                     val={(revAuthCert) ? revAuthCert : revDoc}
-                    setValue={setRevAuthCert} 
-                    onCamOn={()=>{
+                    setValue={setRevAuthCert}
+                    onCamOn={() => {
                         navigation.navigate('ICamera', {
-                            type: 'R' 
-                         })
-                    }}/>
+                            type: 'R'
+                        })
+                    }}
+
+                    onCancelItem={() => {
+                        setRevAuthCert(null)
+                        dispatch(revDocument(null))
+                    }} />
 
                 <InputComponent
                     fieldName={'Current Residence'}
                     val={currentResidence}
                     setter={setCurrentResidence}
                     max={128}
-                    multiline />
+                    multiline
+                    error={isErrorResidence}
+                    currentRef={residRef}
+                    onSubmit={() => {
+                        if (currentResidence === '') {
+                            setIsErrorResidence(true)
+                        }
+                        else {
+                            setIsErrorResidence(false)
+                            Keyboard.dismiss()
+                        }
+                    }}
+                    errorTxt='Residence is mandatory' />
 
                 <InputComponentBoxAddMultiple
                     fieldName={'Services'}
