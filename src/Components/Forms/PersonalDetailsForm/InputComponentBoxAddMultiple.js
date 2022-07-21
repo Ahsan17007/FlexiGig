@@ -19,7 +19,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>
                 {text}
@@ -118,10 +118,10 @@ const InputComponentBoxAddMultiple = ({
                     <Text style={{
                         textAlignVertical: 'center',
                         padding: 8,
-                        color: colors.Black,
+                        color: colors.Dark,
                         fontFamily: Fonts.Regular,
                         borderWidth: 1,
-                        borderColor: colors.Black,
+                        borderColor: colors.Dark,
                         borderRadius: 4
                     }}>
 
@@ -189,10 +189,10 @@ const InputComponentBoxAddMultiple = ({
                             }} style={[styles.button, {
                                 alignSelf: 'center',
                                 elevation: 2,
-                                backgroundColor: colors.White
+                                backgroundColor: colors.Light
                             }]}>
                                 <Text style={[styles.addSkillButtonText, {
-                                    color: colors.Black
+                                    color: colors.Dark
                                 }]}>
                                     {`Go back to Personal Details`}
                                 </Text>
@@ -213,7 +213,7 @@ const InputComponentBoxAddMultiple = ({
                 setVisible(true)
             }} style={styles.btn}>
                 <Text style={[styles.addSkillButtonText, {
-                    color: colors.Black,
+                    color: colors.Dark,
                     fontFamily: Fonts.Regular
                 }]}>
                     {`Add`}
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '80%',
         borderRadius: 16,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 2,
         borderWidth: 1,
         borderColor: colors.Primary,
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     },
     message: {
         fontFamily: Fonts.SemiBold,
-        color: colors.Black,
+        color: colors.Dark,
         marginVertical: 16
 
     },
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontFamily: Fonts.SemiBold,
-        color: colors.White,
+        color: colors.Light,
     },
     button: {
 
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
         marginVertical: 16
     },
     addSkillButtonText: {
-        color: colors.White,
+        color: colors.Light,
         fontFamily: Fonts.SemiBold
     },
     btn: {
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 1,
         alignSelf: 'flex-end',
         marginHorizontal: 4

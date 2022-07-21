@@ -61,7 +61,7 @@ const AddKinInfo = ({ navigation }) => {
     }
 
     return (
-        <View style={{ flex: 1, flexDirection:'column', backgroundColor: colors.White }}>
+        <View style={{ flex: 1, flexDirection:'column', backgroundColor: colors.Light }}>
             <KinInfoForm onSubmit={async (data, setIsAdding, setFirstName, setRelationship, setAlternateNo) => {
 
                 const config = {
@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
     title: {
         width: '35%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '65%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
 })

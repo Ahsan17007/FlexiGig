@@ -143,7 +143,7 @@ export default PersonalInfo;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 0.71,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         paddingTop: 25
     },
     detailContainer: {
@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
     title: {
         width: '40%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '60%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
     }
 })

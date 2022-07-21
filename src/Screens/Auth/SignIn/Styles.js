@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
 
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
     },
     btnStyle: {
         backgroundColor: colors.Primary,
-        color: colors.Black
+        color: colors.Dark
     },
     loginIcon: {
         width: 150,
@@ -23,15 +23,15 @@ const styles = StyleSheet.create({
     Login: {
         fontFamily: Fonts.SemiBold,
         fontSize: 24,
-        color: colors.Black
+        color: colors.Dark
     },
     credentails: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
 
     },
     inputtitle: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
         marginVertical: 4,
         marginTop:16
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
     },
     forgotText: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
 
     },
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     haveAccount: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Medium,
         fontSize: 14
     },
     non_editable: {
-        color: colors.Black,
+        color: colors.Dark,
         height: 52,
         width: '100%',
         backgroundColor: colors.PrimaryContainer,

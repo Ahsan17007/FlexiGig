@@ -15,7 +15,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>
                 {text}
@@ -31,7 +31,7 @@ const Dropdown = ({ date, setDate, fieldName, shown, isShown }) => {
             <TouchableOpacity onPress={isShown(true)}>
                 <Text style={{
                     fontFamily: Fonts.Light,
-                    color: colors.Black,
+                    color: colors.Dark,
                     textAlignVertical: 'center',
                 }}>
                     {fieldName}
@@ -69,7 +69,7 @@ const InputComponentDate = ({ date, setDate, fieldName, shown, isShown, maxDate 
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 1, marginHorizontal: 2, marginLeft: 8 }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Dark, borderBottomWidth: 1, marginHorizontal: 2, marginLeft: 8 }}>
 
                 <TouchableOpacity onPress={() => {
                     isShown(true)
@@ -78,7 +78,7 @@ const InputComponentDate = ({ date, setDate, fieldName, shown, isShown, maxDate 
                     <View style={{ flexDirection: 'row', flex:1 }}>
                         <Text style={{
                             fontFamily: Fonts.Light,
-                            color: colors.Black,
+                            color: colors.Dark,
                             textAlignVertical: 'center',
                             marginRight: 4
                         }}>

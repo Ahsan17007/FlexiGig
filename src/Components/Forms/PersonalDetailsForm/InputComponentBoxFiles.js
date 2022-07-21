@@ -15,7 +15,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>
                 {text}
@@ -33,10 +33,10 @@ const ValCom = ({ val }) => {
             <Text style={{
                 textAlignVertical: 'center',
                 padding: 4,
-                color: colors.Black,
+                color: colors.Dark,
                 fontFamily: Fonts.Light,
                 borderWidth: 1,
-                borderColor: colors.Black,
+                borderColor: colors.Dark,
                 borderRadius: 4,
                 height: '100%'
             }}>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '80%',
         borderRadius: 16,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 2,
         borderWidth: 1,
         borderColor: colors.Primary,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     message: {
         fontFamily: Fonts.SemiBold,
-        color: colors.Black,
+        color: colors.Dark,
         marginVertical: 16
 
     },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontFamily: Fonts.SemiBold,
-        color: colors.White,
+        color: colors.Light,
     },
     button: {
         backgroundColor: colors.Primary,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 8
     },
     addSkillButtonText: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     btn: {
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 1,
         alignSelf: 'flex-end',
         marginHorizontal: 4

@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     btnStyle: {
         backgroundColor: colors.Primary,
-        color: colors.Black,
+        color: colors.Dark,
         position: 'absolute',
         bottom: 20
     },

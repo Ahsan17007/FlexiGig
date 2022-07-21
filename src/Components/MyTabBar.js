@@ -9,7 +9,7 @@ function MyTabBar({ state, navigation }) {
             flexDirection: "row",
             width: "100%",
             elevation: 2,
-            backgroundColor: colors.White
+            backgroundColor: colors.Light
         }}>
             {
                 state.routeNames.map(ele => {
@@ -20,7 +20,7 @@ function MyTabBar({ state, navigation }) {
                             <Text style={{
                                 fontFamily: (state.index === state.routeNames.indexOf(ele)) ? Fonts.SemiBold : Fonts.Regular,
                                 fontSize:16,
-                                color: (state.index === state.routeNames.indexOf(ele)) ? colors.Secondary : colors.Black
+                                color: (state.index === state.routeNames.indexOf(ele)) ? colors.Secondary : colors.Dark
                             }}>{ele}</Text>
 
                             <View style={{

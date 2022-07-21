@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '80%',
         borderRadius: 16,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 0.8,
         borderWidth: 1,
         borderColor: colors.Primary,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     message: {
         fontFamily: Fonts.Medium,
-        color: colors.Black,
+        color: colors.Dark,
         marginVertical: 16
 
     },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontFamily: Fonts.SemiBold,
-        color: colors.White,
+        color: colors.Light,
     },
     button: {
         backgroundColor: colors.Primary,

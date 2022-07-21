@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: colors.white,
+        backgroundColor: colors.Light,
     },
     
 

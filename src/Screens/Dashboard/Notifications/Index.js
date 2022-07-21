@@ -89,7 +89,7 @@ const Index = ({ navigation }) => {
                 <View style={{ width: '100%', height: '100%', }}>
                     <TopTabbar.Navigator screenOptions={{
                         tabBarActiveTintColor: colors.Secondary,
-                        tabBarInactiveTintColor: colors.Black,
+                        tabBarInactiveTintColor: colors.Dark,
                         tabBarPressColor: colors.Secondary
 
                     }} style={{
@@ -116,13 +116,13 @@ export default Index;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
         paddingTop: 30,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         fontSize: 12,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Bold
     },
     name: {
         fontSize: 15.38,
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Regular,
     },

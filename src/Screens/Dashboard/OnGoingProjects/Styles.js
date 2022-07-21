@@ -5,13 +5,13 @@ import colors from '../../../Assets/Colors/Index';
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
         paddingTop: 30,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontSize: 12,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Bold
     },
     name: {
         fontSize: 15.38,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Regular
     },
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     emptyList: {
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
         alignSelf: 'center',
         marginTop: '50%',

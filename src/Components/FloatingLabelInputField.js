@@ -10,6 +10,7 @@ import {
     Image,
 } from 'react-native';
 import colors from '../Assets/Colors/Index';
+import Fonts from '../Assets/Fonts/Index';
 
 // import { light } from '../common/theme';
 
@@ -51,7 +52,7 @@ export default class FloatingLabelInputField extends Component {
                     if (this.textInputLocalRef) this.textInputLocalRef.focus()
                     if (onParentPress && typeof onParentPress == 'function') onParentPress()
                 }}
-                style={[styles.inputContainer, inputContainer, { borderColor: 'black' }]}>
+                style={[styles.inputContainer, inputContainer, { borderColor: 'Dark', justifyContent:'center' }]}>
                 {leftComponent ?
                     leftComponent
                     :
@@ -75,7 +76,7 @@ export default class FloatingLabelInputField extends Component {
                         this.textInputLocalRef = ref
                         if (fieldRef && typeof fieldRef == 'function') fieldRef(ref)
                     }}
-                    style={[styles.inputStyle, inputStyle, { color: isFocused ? colors.black : colors.black, fontFamily: 'Avenir Heavy' }]}
+                    style={[styles.inputStyle, inputStyle, { color: colors.Dark, fontFamily: Fonts.Light }]}
                     value={value}
                     placeholder={isFocused ? '' : placeholder}
                     placeholderTextColor={placeholderTextColor ? placeholderTextColor : '#00B3EC'}
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 60,
         alignItems: 'center',
-        // backgroundColor: 'white',
+        backgroundColor: colors.Light,
         margin: 4,
         paddingHorizontal: 15,
         // borderBottomWidth:1,

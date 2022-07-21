@@ -14,7 +14,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>
                 {text}
@@ -36,8 +36,10 @@ const Dropdown = ({ val, setValue, items, fieldName }) => {
                 setValue(itemValue)
             }}
             style={{
-                marginHorizontal: -10
+                marginHorizontal: -10,
+                color:colors.Dark
             }}
+            dropdownIconColor={colors.Dark}
             mode='dropdown'>
             {
                 (() => {
@@ -74,7 +76,7 @@ const InputComponentDropdown = ({ val, setValue, items, fieldName }) => {
             </View>
 
 
-            <View style={{ flex: 2, borderBottomColor: colors.Black, borderBottomWidth: 1, margin: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
+            <View style={{ flex: 2, borderBottomColor: colors.Dark, borderBottomWidth: 1, margin: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
 
                 <Dropdown {...{ val, setValue, items, fieldName }} />
 

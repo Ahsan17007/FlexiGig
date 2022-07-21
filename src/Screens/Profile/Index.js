@@ -42,7 +42,7 @@ const Profile = ({ route }) => {
             <View style={{ width: '100%', height: '100%', }}>
                 <TopTabbar.Navigator screenOptions={{
                     tabBarActiveTintColor: colors.Secondary,
-                    tabBarInactiveTintColor: colors.Black,
+                    tabBarInactiveTintColor: colors.Dark,
                     tabBarPressColor: colors.Secondary
 
                 }} style={{
@@ -67,7 +67,7 @@ export default Profile;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     topHeaderContainer: {
         width: '100%',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 35,
         // marginBottom: 28,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     bellIcon: {
         width: 23,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     Title: {
         fontSize: 15,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     profilePic: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 15.38,
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Regular,
         marginTop: 5

@@ -17,10 +17,6 @@ const { token } = useSelector(state => state.Auth)
     const [alternateNo, setAlternateNo] = useState('')
     const [isAdding, setIsAdding] = useState(false)
 
-    const nameR = useRef()
-    const relR = useState()
-    const noR = useState()
-
     const onNextPress = () => {
         navigation.navigate('Experience')
     }
@@ -45,7 +41,7 @@ const { token } = useSelector(state => state.Auth)
     }
 
     return (
-        <View style={{ backgroundColor: colors.White, padding: 8, paddingTop: 24 }}>
+        <View style={{ backgroundColor: colors.Light, padding: 8, paddingTop: 24 }}>
 
             <KeyboardAwareScrollView>
 
@@ -53,26 +49,21 @@ const { token } = useSelector(state => state.Auth)
                     fieldName={'Name'}
                     value={firstName}
                     setter={setFirstName}
-                    max={16}
-                    ref={nameR}
-                    nextRef={relR} />
+                    max={16}/>
 
                 <InputComponent
                     fieldName={'Relationship'}
                     value={relationship}
                     setter={setRelationship}
                     max={16}
-                    ref={relR}
-                    nextRef={noR}
                 />
 
 
                 <InputComponent
                     fieldName={'Phone No.'}
-                    value={noR}
+                    value={alternateNo}
                     setter={setAlternateNo}
                     max={13}
-                    ref={nameR}
                     keyboardType='phone-pad' />
 
 
@@ -123,7 +114,7 @@ export default Index;
 
 const styles = StyleSheet.create({
     btnText: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     btn: {
@@ -134,7 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 4,
         alignSelf:'center'
 

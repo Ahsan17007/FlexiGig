@@ -7,13 +7,13 @@ const { height } = Dimensions.get('window')
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
         paddingTop: 30,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontSize: 12,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Bold
     },
     name: {
         fontSize: 15.38,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Regular
     },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         maxHeight: height / 1.35,
         justifyContent: 'center',
         borderRadius: 10,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         borderWidth: 1,
         borderColor: colors.Primary,
         paddingHorizontal: 12,
@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
     title: {
         width: '30%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '70%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     BtnContainer: {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontSize: 14,
-        color: colors.White,
+        color: colors.Light,
         fontFamily: Fonts.Medium
     }
 

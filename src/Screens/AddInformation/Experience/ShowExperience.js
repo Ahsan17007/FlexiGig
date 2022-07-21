@@ -63,7 +63,7 @@ const ShowExperience = ({ isNeedToPutDetails, setIsNeedToPutDetails, needToFetch
     
     },[])
     return (
-        <View style={{ flex: 1, backgroundColor: colors.White, flexDirection: 'column' }}>
+        <View style={{ flex: 1, backgroundColor: colors.Light, flexDirection: 'column' }}>
 
             <TouchableOpacity onPress={() => {
                 setIsNeedToPutDetails(true)
@@ -93,7 +93,7 @@ export default ShowExperience;
 
 const styles = StyleSheet.create({
     addSkillButtonText: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     btn: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 1,
         alignSelf: 'flex-end',
         marginHorizontal: 4,
@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
     title: {
         width: '35%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '65%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     }
 })

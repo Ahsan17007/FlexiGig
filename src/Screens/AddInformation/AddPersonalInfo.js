@@ -13,7 +13,7 @@ const AddPersonalInfo = ({ navigation }) => {
     const { token } = useSelector(state => state.Auth)
 
     return (
-        <View style={{ flex: 1, backgroundColor: colors.White }}>
+        <View style={{ flex: 1, backgroundColor: colors.Light }}>
             <Loader visible={loader}/>
             <PersonalDetailsForm navigation={navigation} onSubmit={async (data) => {
                 setLoader(true)

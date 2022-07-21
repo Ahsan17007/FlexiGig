@@ -287,7 +287,7 @@ const Index = ({ navigation, onSubmit }) => {
     }
 
     return (
-        <View style={{ backgroundColor: colors.White, padding: 8, paddingTop: 24 }}>
+        <View style={{ backgroundColor: colors.Light, padding: 8, paddingTop: 24 }}>
 
             <Loader visible={isLoader} />
 
@@ -458,7 +458,7 @@ export default Index;
 
 const styles = StyleSheet.create({
     btnText: {
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     btn: {
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 4
 
     }

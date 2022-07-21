@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '80%',
         borderRadius: 1,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         elevation: 1,
         borderWidth: 0.5,
 //        borderColor: colors.Primary,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     message: {
         fontFamily: Fonts.Medium,
-        color: colors.Black,
+        color: colors.Dark,
         marginVertical: 16
 
     },
@@ -94,11 +94,11 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontFamily: Fonts.SemiBold,
-        color: colors.Black,
+        color: colors.Dark,
         textAlign:'center'
     },
     button: {
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         borderRadius: 16,
         paddingHorizontal: 8,
         paddingVertical: 4,

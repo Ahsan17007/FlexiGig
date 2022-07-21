@@ -54,17 +54,17 @@ const styles = StyleSheet.create({
     videoButton: {
         width: 85,
         height: 30,
-        backgroundColor: colors.white,
+        backgroundColor: colors.Light,
         borderRadius: 22,
         borderWidth: 1,
-        borderColor: colors.white,
+        borderColor: colors.Light,
         alignItems: 'center',
         justifyContent: 'center'
     },
     cameraButton: {
         width: 86,
         height: 30,
-        borderColor: colors.white,
+        borderColor: colors.Light,
         borderWidth: 1,
         borderRadius: 22,
         alignItems: 'center',

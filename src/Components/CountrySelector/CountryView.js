@@ -117,33 +117,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         margin: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     countryClickable: {
 
     },
     flagImage: {
         margin: 2,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     countryNameText: {
         marginHorizontal: 4,
         fontFamily: Fonts.SemiBold,
-        color: colors.Black,
+        color: colors.Dark,
         textAlignVertical: 'center',
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     countryCodeText: {
         marginHorizontal: 2,
         fontFamily: Fonts.Regular,
         textAlignVertical: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         fontSize: 10
     },
     noCountryText: {
         marginHorizontal: 4,
         fontFamily: Fonts.Light,
-        color: colors.Black,
+        color: colors.Dark,
         textAlignVertical: 'center'
     }
 })

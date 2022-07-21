@@ -74,18 +74,25 @@ const SignIn = ({ navigation, route }) => {
         } else {
             try {
                 setIsLoading(true)
+                const login_data = {
+                    phone_number: storagePhone.length > 0 ? storagePhone : newNumber,
+                    password: password,
+                };
+
                 const config = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        phone_number: storagePhone.length > 0 ? storagePhone : newNumber,
-                        password: password,
-                    })
+                    body: JSON.stringify(login_data)
                 };
+                console.log('login-data');
+                console.log(login_data);
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signin', config)
                 const loginResult = await response.json();
                 console.log("loginUser-response", loginResult);
+                console.log('In response code');
+                    console.log(response.status);
                 if (response.status === 200) {
+                    
                     console.log('LoggedIn token: '+loginResult?.token);
                     dispatch(userToken(loginResult?.token))
                     dispatch(loggedInData(loginResult?.data))
@@ -100,7 +107,7 @@ const SignIn = ({ navigation, route }) => {
                     }, 300);
                 } else if (response.status === 401) {
                     setIsLoading(false)
-                    SimpleToast.show(loginResult?.error?.message)
+                    SimpleToast.show(loginResult?.errors?.user_authentication)
                 } else {
                     setIsLoading(false)
                     SimpleToast.show("Something went wrong. " + loginResult.message)

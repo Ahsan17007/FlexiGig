@@ -12,7 +12,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>{text}</Text>
         </View>
@@ -29,11 +29,13 @@ const InputField = ({ val, fieldName, requiredStatus, setter, max, keyboardType,
         }}>
             <TextInput style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
-                borderBottomColor: colors.Black,
-                borderBottomWidth:1
+                borderBottomColor: colors.Dark,
+                borderBottomWidth:1,
+                backgroundColor: colors.Light
             }}
+            placeholderTextColor={colors.Grey}
                 value={val}
                 onChangeText={setter}
                 placeholder={fieldName + ((requiredStatus) ? '' : ' (Optional)')}

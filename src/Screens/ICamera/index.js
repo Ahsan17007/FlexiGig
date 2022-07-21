@@ -135,7 +135,7 @@ const ICamera = ({ navigation, route }) => {
                                 marginRight: 30
                             }
                         ]}>
-                        <Text style={{ color: colors.White }}>
+                        <Text style={{ color: colors.Light }}>
                             CAMERA
                         </Text>
                     </TouchableOpacity>
@@ -144,7 +144,7 @@ const ICamera = ({ navigation, route }) => {
                     <TouchableOpacity
                         disabled
                         style={styles.videoButton}>
-                        <Text style={{ color: colors.Black }} >
+                        <Text style={{ color: colors.Dark }} >
                             CAMERA
                         </Text>
                     </TouchableOpacity>

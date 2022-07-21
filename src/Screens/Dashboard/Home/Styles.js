@@ -5,12 +5,12 @@ import colors from '../../../Assets/Colors/Index';
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 16,
-        backgroundColor: colors.White
+        backgroundColor: colors.Light
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontSize: 12,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Bold
     },
     name: {
         fontSize: 15.38,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Regular
     },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     recordTitle: {
         fontSize: 15,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         lineHeight: 21,
         fontFamily: Fonts.SemiBold
     },
@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     noOfProjects: {
         fontSize: 18,
         lineHeight: 27,
-        color: colors.Black
+        color: colors.Dark
     },
     projectCat: {
         fontSize: 13,
         lineHeight: 18,
-        color: colors.Black,
+        color: colors.Dark,
         marginTop: 11
     },
     ratingContainer: {
@@ -97,17 +97,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: colors.Black
+        borderColor: colors.Dark
     },
     rating: {
         fontSize: 16,
         lineHeight: 24,
-        color: colors.Black
+        color: colors.Dark
     },
     ratingCat: {
         fontSize: 13,
         lineHeight: 18,
-        color: colors.Black,
+        color: colors.Dark,
     },
     historyTitleContainer: {
         flexDirection: 'row',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     commonTextStyle: {
         fontSize: 14,
         lineHeight: 21,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     }
 

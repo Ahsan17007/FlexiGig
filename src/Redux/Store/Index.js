@@ -8,7 +8,7 @@ const preloadedState = {};
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['loadingReducer'],
+  Darklist: ['loadingReducer'],
   
 };
 

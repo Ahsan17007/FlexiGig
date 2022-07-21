@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         paddingHorizontal: 20
     },
 
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: Fonts.SemiBold,
         marginTop: 50,
-        color: colors.Black
+        color: colors.Dark
     },
     btnStyle: {
         backgroundColor: colors.Primary,

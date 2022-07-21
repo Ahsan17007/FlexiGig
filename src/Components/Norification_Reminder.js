@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
         width: '100%',
         // height: 65,
         borderRadius: 10,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         borderWidth: 0.8,
-        borderColor: colors.Black,
+        borderColor: colors.Dark,
         paddingHorizontal: 12,
         paddingVertical: 12,
     },
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: Fonts.SemiBold,
         lineHeight: 21,
-        color: colors.Black,
+        color: colors.Dark,
     },
     Desc: {
         fontSize: 14,
         fontFamily: Fonts.Regular,
         lineHeight: 21,
-        color: colors.Black,
+        color: colors.Dark,
     
     },
 

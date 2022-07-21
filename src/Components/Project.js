@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         borderWidth: 1,
         borderColor: colors.Primary,
         paddingHorizontal: 12,
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     title: {
         width: '30%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '70%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     }
 

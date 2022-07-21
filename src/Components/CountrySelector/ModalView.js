@@ -22,7 +22,7 @@ const ModalView = ({ visibility, setVisibility, data, onCountryItemClick, setDis
 
                         <Text style={{
                             fontFamily:Fonts.Bold,
-                            color:colors.Black,
+                            color:colors.Dark,
                             fontSize:18,
 
                         }}>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     countryNameText: {
         marginHorizontal: 4,
         fontFamily: Fonts.SemiBold,
-        color: colors.Black,
+        color: colors.Dark,
         textAlignVertical: 'center'
     },
     countryCodeText: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     noCountryText: {
         marginHorizontal: 4,
         fontFamily: Fonts.Light,
-        color: colors.Black,
+        color: colors.Dark,
         textAlignVertical: 'center'
     }
 })

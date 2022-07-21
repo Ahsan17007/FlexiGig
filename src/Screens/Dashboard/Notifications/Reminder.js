@@ -136,7 +136,7 @@ export default Reminders;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         paddingTop: 25
     },
     detailContainer: {

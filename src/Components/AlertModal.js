@@ -61,7 +61,7 @@ const AlertModal = (props) => {
                                 onPress={onRequestClose}
                                 gradient={true}
                                 label={positiveBtn}
-                                labelStyle={[styles.commomnTextStyle, { fontSize: 17, color: colors.white }]}
+                                labelStyle={[styles.commomnTextStyle, { fontSize: 17, color: colors.Light }]}
                                 style={styles.btnStyle}
                             />
                         </View>
@@ -70,7 +70,7 @@ const AlertModal = (props) => {
                             onPress={onRequestClose}
                             gradient={true}
                             label={positiveBtn}
-                            labelStyle={[styles.commomnTextStyle, { fontSize: 17, color: colors.white }]}
+                            labelStyle={[styles.commomnTextStyle, { fontSize: 17, color: colors.Light }]}
                             style={[styles.btnStyle, { marginTop: 24 }]}
                         />
                 }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         width: '100%',
         justifyContent: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.Light,
         borderRadius: 12,
         paddingVertical: 26
 

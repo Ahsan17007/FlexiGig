@@ -54,7 +54,7 @@ const InputField =
           justifyContent: multiline ? 'flex-start' : 'center'
         }]}>
           <TextInput
-            style={{ fontSize: 14, fontFamily: Fonts.Light }}
+            style={{ fontSize: 14, fontFamily: Fonts.Light, color:colors.Dark, placeholderTextColor:colors.Grey }}
             placeholder={placeholder}
             value={value}
             onChangeText={onChangeText}

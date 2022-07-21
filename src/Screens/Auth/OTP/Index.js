@@ -32,11 +32,7 @@ const OTP = ({ navigation, route }) => {
 
     let randomOTP = '090078'
     const [otp, setOtp] = useState('')
-    const [isMsgModal, setIsMsgModal] = useState(false)
-    const [msg, setMsg] = useState('')
-    const [success, setSuccess] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [isVerified, setIsVerified] = useState(false)
 
 
     const dispatch = useDispatch()
@@ -56,25 +52,27 @@ const OTP = ({ navigation, route }) => {
         if (otp == '' || otp.length < 4) {
             SimpleToast.show('Enter complete verification code')
         } else {
-            
-                setIsLoading(true)
-                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/verify_user_code', config)
-                console.log('Verification Response Code ' + response.status);
-                const verifyResult = await response.json();
-                console.log("verifyOTP-response", verifyResult);
 
-                //verifyResult?.data[0]?.verification_status Because On Verification Still Not Getting Response 200 //Ahsan Iqbal
-                if (response.status === 200 || verifyResult?.data[0]?.verification_status) {
-                    setIsLoading(false)
-                    SimpleToast.show(verifyResult?.message)
-                    setTimeout(() => {
+            setIsLoading(true)
+            const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/verify_user_code', config)
+            console.log('Verification Response Code ' + response.status);
+            const verifyResult = await response.json();
+            console.log("verifyOTP-response", verifyResult);
+
+            //verifyResult?.data[0]?.verification_status Because On Verification Still Not Getting Response 200 //Ahsan Iqbal
+            if (response.status === 200) {
+                setIsLoading(false)
+                SimpleToast.show(verifyResult?.message)
+                setTimeout(() => {
                         dispatch(loggedInNumber(userPhone))
-                        navigation.replace('SignIn', {userPhone: userPhone})
+                        navigation.replace('SignIn', { userPhone: userPhone })
                     }, 200);
-                } else {
-                    setIsLoading(false)
-                    SimpleToast.show(verifyResult?.message)
-                }
+                
+            } else {
+                
+                SimpleToast.show((verifyResult?.message == 'Wrong User_id or verification code') ? 'Wrong Verification Code' : verifyResult?.message)
+                setIsLoading(false)
+            }
 
         }
 
@@ -82,7 +80,9 @@ const OTP = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-
+            <Loader
+                visible={isLoading}
+            />
 
 
             <View style={{
@@ -118,9 +118,7 @@ const OTP = ({ navigation, route }) => {
                 </KeyboardAwareScrollView>
 
             </View>
-            <Loader
-                visible={isLoading}
-            />
+
 
         </SafeAreaView>
 

@@ -33,14 +33,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     btnText: {
-        color: colors.White,
+        color: colors.Light,
         fontSize: 15,
     },
     btnImage: {
         height: 35,
         width: 35,
         resizeMode: 'contain',
-        tintColor: colors.White,
+        tintColor: colors.Light,
         marginRight: 12
     }
 })

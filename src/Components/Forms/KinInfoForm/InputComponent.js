@@ -12,7 +12,7 @@ const Title = ({ text }) => {
         }}>
             <Text style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
             }}>{text}</Text>
         </View>
@@ -20,7 +20,7 @@ const Title = ({ text }) => {
     )
 }
 
-const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardType, ref, nextRef }) => {
+const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardType }) => {
     return (
         <View style={{
             flex: 2,
@@ -31,18 +31,18 @@ const InputField = ({ value, fieldName, requiredStatus, setter, max, keyboardTyp
 
             <TextInput style={{
                 fontFamily: Fonts.SemiBold,
-                color: colors.Black,
+                color: colors.Dark,
                 textAlignVertical: 'center',
-                borderBottomColor: colors.Black,
+                borderBottomColor: colors.Dark,
+                backgroundColor: colors.Light
             }}
+            placeholderTextColor={colors.Grey}
                 value={value}
                 onChangeText={setter}
                 placeholder={fieldName + ((requiredStatus) ? '' : ' (Optional)')}
                 maxLength={max}
                 keyboardType={keyboardType}
-                underlineColorAndroid={colors.Black}
-                //ref={ref}
-
+                underlineColorAndroid={colors.Dark}
             />
         </View>
 

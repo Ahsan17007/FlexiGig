@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: Fonts.SemiBold,
         lineHeight: 21,
-        color: colors.Black
+        color: colors.Dark
     },
     commonTextStyleTwo: {
         fontSize: 12,
         fontFamily: Fonts.Regular,
         lineHeight: 18,
-        color: colors.Black
+        color: colors.Dark
     },
     profilePic: {
         height: 48,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 15.38,
         // fontWeight:'bold',
-        color: colors.Black,
+        color: colors.Dark,
         opacity: 0.5,
         fontFamily: Fonts.Bold
     },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     noOfProjects: {
         fontSize: 18,
         lineHeight: 27,
-        color: colors.Black
+        color: colors.Dark
     },
 
 

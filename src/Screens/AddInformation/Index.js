@@ -17,7 +17,7 @@ const Index = () => {
 
             <TopTabbar.Navigator screenOptions={{
                 tabBarActiveTintColor: colors.Secondary,
-                tabBarInactiveTintColor: colors.Black,
+                tabBarInactiveTintColor: colors.Dark,
                 tabBarPressColor: colors.Secondary
 
             }} style={{

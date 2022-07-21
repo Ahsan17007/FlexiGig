@@ -109,7 +109,7 @@ export default Experience;
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 0.71,
-        backgroundColor: colors.White,
+        backgroundColor: colors.Light,
         paddingTop: 25
     },
     detailContainer: {
@@ -118,18 +118,18 @@ const styles = StyleSheet.create({
     title: {
         width: '35%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.SemiBold
     },
     desc: {
         width: '65%',
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular
     },
     emptyList: {
         fontSize: 14,
-        color: colors.Black,
+        color: colors.Dark,
         fontFamily: Fonts.Regular,
         alignSelf: 'center'
     }
