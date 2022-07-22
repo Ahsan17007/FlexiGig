@@ -376,6 +376,9 @@ const Index = ({ navigation, onSubmit }) => {
                         if (email === '') {
                             setIsErrorEmail(true)
                         }
+                        else if(!email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
+                            setIsErrorEmail(true)
+                        }
                         else {
                             setIsErrorEmail(false)
                         }
@@ -385,8 +388,8 @@ const Index = ({ navigation, onSubmit }) => {
                         (email === '') ?
                             'Email is mandatory'
                             :
-                            (email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/))
-                                ? '' : 'Email format is not correct'
+                            ((email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/))
+                                ? '' : 'Email format is not correct')
 
                     }
                 />
@@ -512,7 +515,7 @@ const Index = ({ navigation, onSubmit }) => {
                     val={currentResidence}
                     setter={setCurrentResidence}
                     max={128}
-                    multiline
+                    // multiline
                     error={isErrorResidence}
                     currentRef={residRef}
                     onSubmit={() => {
