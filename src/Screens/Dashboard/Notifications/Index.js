@@ -79,7 +79,7 @@ const Index = ({ navigation }) => {
 
                             <View style={{ marginLeft: 12 }}>
                                 <Text style={styles.welcomeText}>{'Welcome'}</Text>
-                                <Text style={styles.name}>{'Jack Sparrow'}</Text>
+                                {/* <Text style={styles.name}>{'Jack Sparrow'}</Text> */}
                             </View>
                         </View>
 

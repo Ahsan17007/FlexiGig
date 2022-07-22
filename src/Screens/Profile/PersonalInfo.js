@@ -85,7 +85,7 @@ const PersonalInfo = ({ navigation, route }) => {
                             </View>
 
                             <View style={{ width: '100%', flexDirection: 'row', paddingBottom: 6 }}>
-                                <Text style={styles.title}>{'Rev.Ath No:'}</Text>
+                                <Text style={styles.title}>{'Rev. Auth No:'}</Text>
                                 <Text style={styles.desc}>{`${userData?.attributes?.revenue_authority_number ? userData?.attributes?.revenue_authority_number : '-'}`}</Text>
                             </View>
 
