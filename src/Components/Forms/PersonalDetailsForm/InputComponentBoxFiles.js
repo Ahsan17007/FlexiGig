@@ -79,24 +79,20 @@ const InputComponentBoxFiles = ({ val, setValue, fieldName, onCamOn, onCancelIte
                         </Text>
 
                         {
-                            (val) ? 
-
-
-                            <TouchableOpacity onPress={onCancelItem} style={{
-                                flex: 1,
-                                backgroundColor: colors.Light,
-                                justifyContent:'center',
-                                alignItems:'center',
-                                margin: 4,
-                            }}>
-                                <Image source={Images.Cross} style={{ height: 12, width: 12, alignSelf:'center' }} />
-                            </TouchableOpacity>
-
-
-                            : <></>
+                            (val) ?
+                                <TouchableOpacity onPress={onCancelItem} style={{
+                                    flex: 1,
+                                    backgroundColor: colors.Light,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    margin: 4,
+                                }}>
+                                    <Image source={Images.Cross} style={{ height: 12, width: 12, alignSelf: 'center' }} />
+                                </TouchableOpacity>
+                                : <></>
                         }
 
-                        
+
                     </View>
 
 
