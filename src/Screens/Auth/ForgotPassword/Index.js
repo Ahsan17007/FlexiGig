@@ -4,16 +4,10 @@ import {
     Text,
     View,
     SafeAreaView,
-    KeyboardAvoidingView,
-    TouchableOpacity,
-    Keyboard,
-    ScrollView
+    Keyboard
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SimpleToast from 'react-native-simple-toast';
-import Preference from 'react-native-preference';
-
-// --------------------------------------------
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
@@ -27,14 +21,16 @@ const ForgotPassword = ({ navigation }) => {
     const [phone, setPhone] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-
-    // const dispatch = useDispatch()
-
     const sendCode = async () => {
 
         if (phone == '') {
             SimpleToast.show('Phone No required')
-        } else {
+        } 
+        else if(phone.charAt(0) !== '+'){
+            SimpleToast.show("Enter Country Code with '+' before the phone number")
+            setPhone(`+${phone}`)
+        }
+        else {
             try {
                 setIsLoading(true)
                 const login_data = {
@@ -59,7 +55,7 @@ const ForgotPassword = ({ navigation }) => {
                     SimpleToast.show(sendCodeResult?.errors?.user_authentication)
                 } else {
                     setIsLoading(false)
-                    SimpleToast.show("Something went wrong. " + sendCodeResult.message)
+                    SimpleToast.show("Something went wrong." + ((sendCodeResult.message)?sendCodeResult.message:''))
                 }
             } catch (error) {
                 setIsLoading(false)

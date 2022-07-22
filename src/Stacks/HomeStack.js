@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,11 +15,9 @@ import PastProjects from '../Screens/Dashboard/PastProjects/Index';
 import ProjectDetails from '../Screens/Dashboard/ProjectDetails.js/Index';
 import Images from '../Assets/Images/Index';
 import colors from '../Assets/Colors/Index';
-import CameraComponent from '../Components/CameraComponent';
 import AddInfo from '../Screens/AddInformation/Index';
 import AddKinInfo from '../Screens/AddInformation/AddKinInfo';
 import AddExperienceScreen from '../Screens/AddInformation/AddExperience';
-import ICamera from '../Screens/ICamera';
 
 const HomeScreenStack = createStackNavigator()
 const Tab = createBottomTabNavigator();

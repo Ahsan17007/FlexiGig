@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     projectDetailContainer: {
         width: '100%',
         // height: 85,
-        maxHeight: height / 1.35,
+        //maxHeight: height / 1.35,
         justifyContent: 'center',
         borderRadius: 10,
         backgroundColor: colors.Light,
