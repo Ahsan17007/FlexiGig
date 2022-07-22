@@ -18,59 +18,57 @@ import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import AppButton from '../../../Components/AppBtn'
 import InputField from '../../../Components/InputField'
-import colors from '../../../Assets/Colors/Index';
-
+import Loader from '../../../Components/Loader';
 
 
 const ForgotPassword = ({ navigation }) => {
 
 
     const [phone, setPhone] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
 
     // const dispatch = useDispatch()
 
-    // const SignIn = async () => {
-
-    //     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    //     if (email == '' && password == '') {
-    //         setIsMsgModal(true)
-    //         setMsg('Write your email and password')
-    //     } else if (email == '') {
-    //         setIsMsgModal(true)
-    //         setMsg('Email Required')
-    //     } else if (reg.test(email) === false) {
-    //         setIsMsgModal(true)
-    //         setMsg('Invalid Email Format')
-    //     } else if (password == '') {
-    //         setIsMsgModal(true)
-    //         setMsg('Password Required')
-    //     } else if (email != registrationData.email || password != registrationData.pass) {
-    //         setIsLoading(true)
-    //         setTimeout(() => {
-    //             setIsLoading(false)
-    //             setIsMsgModal(true)
-    //             setMsg('Invalid Credentials')
-    //         }, 1500);
-    //     } else {
-    //         setIsLoading(true)
-    //         dispatch(isLoggedIn({
-    //             email: email,
-    //             pass: password
-    //         }))
-    //         setTimeout(() => {
-    //             setIsLoading(false)
-    //             navigation.navigate('OTP', { routeName: 'SignIn' })
-    //         }, 2000);
-
-    //     }
-
-    // };
-
     const sendCode = async () => {
-        //call-api 
-        //handle
-    }
+
+        if (phone == '') {
+            SimpleToast.show('Phone No required')
+        } else {
+            try {
+                setIsLoading(true)
+                const login_data = {
+                    phone_number: phone
+                };
+
+                const config = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(login_data)
+                };
+                const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/forgot_password', config)
+                const sendCodeResult = await response.json();
+                console.log(response.status);
+                console.log({ sendCodeResult });
+                if (response.status === 200) {
+                    setIsLoading(false)
+                    SimpleToast.show('OTP sent')
+                    navigation.replace('ResetPassword')
+                } else if (response.status === 401) {
+                    setIsLoading(false)
+                    SimpleToast.show(sendCodeResult?.errors?.user_authentication)
+                } else {
+                    setIsLoading(false)
+                    SimpleToast.show("Something went wrong. " + sendCodeResult.message)
+                }
+            } catch (error) {
+                setIsLoading(false)
+                console.log("sendCode-error", error);
+            }
+
+        }
+
+    };
 
 
     return (
@@ -109,7 +107,7 @@ const ForgotPassword = ({ navigation }) => {
                             }}
                             keyBoardType={'phone-pad'}
                             customStyle={{}}
-                            maxLength = {13}
+                            maxLength={13}
                         />
 
 
@@ -130,13 +128,8 @@ const ForgotPassword = ({ navigation }) => {
 
             </View>
 
-            {/* <MsgModal
-                visible={isMsgModal}
-                msg={msg}
-                onPress={() => {
-                    setIsMsgModal(false)
-                }}
-            /> */}
+            <Loader visible={isLoading} />
+
         </SafeAreaView>
 
 

@@ -21,22 +21,39 @@ import OTPInput from '../../../Components/OTPInput'
 import colors from '../../../Assets/Colors/Index'
 // import Strings from '../../../Assets/Strings/Index';
 import Loader from '../../../Components/Loader';
-import { loggedInNumber } from '../../../Redux/Actions/HasSession';
-// import MsgModal from '../../../Components/MsgModal';
+import { userToken, loggedInData, loggedInNumber } from '../../../Redux/Actions/HasSession';
+import AlertModal from '../../../Components/AlertModal';
 
 
 const OTP = ({ navigation, route }) => {
 
     const userId = route?.params?.userId
     const userPhone = route?.params?.userPhone
+    const Route = route?.params?.route
 
-    let randomOTP = '090078'
+    const [timer, setTimer] = useState(0)
     const [otp, setOtp] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
 
     const dispatch = useDispatch()
 
+    const timerFunc = () => {
+        setTimer(60);
+        let interval = setInterval(() => {
+            setTimer((lastTimerCount) => {
+                lastTimerCount <= 1 && (
+                    clearInterval(interval)
+                )
+                return lastTimerCount - 1;
+
+            });
+        }, 1000);
+        return () => {
+            clearInterval(interval)
+        }
+    };
 
     const verifyOTP = async () => {
 
@@ -59,17 +76,22 @@ const OTP = ({ navigation, route }) => {
             const verifyResult = await response.json();
             console.log("verifyOTP-response", verifyResult);
 
-            //verifyResult?.data[0]?.verification_status Because On Verification Still Not Getting Response 200 //Ahsan Iqbal
+
             if (response.status === 200) {
                 setIsLoading(false)
-                SimpleToast.show(verifyResult?.message)
+                if (Route?.name === 'SignIn') {
+                    console.log("If");
+                    dispatch(loggedInNumber(verifyResult?.data?.phone))
+                    dispatch(userToken(verifyResult?.token))
+                    dispatch(loggedInData(verifyResult?.data))
+                } else {
+                    console.log("else");
+                    dispatch(loggedInNumber(userPhone))
+                }
                 setTimeout(() => {
-                        dispatch(loggedInNumber(userPhone))
-                        navigation.replace('SignIn', { userPhone: userPhone })
-                    }, 200);
-                
+                    setIsModalVisible(true)
+                }, 350);
             } else {
-                
                 SimpleToast.show((verifyResult?.message == 'Wrong User_id or verification code') ? 'Wrong Verification Code' : verifyResult?.message)
                 setIsLoading(false)
             }
@@ -77,6 +99,42 @@ const OTP = ({ navigation, route }) => {
         }
 
     };
+
+    const resendCode = async () => {
+        timerFunc()
+        try {
+            const login_data = {
+                user_id: userId,
+            };
+
+            const config = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(login_data)
+            };
+            const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/resend_code', config)
+            const resendCodeResult = await response.json();
+            if (response.status === 200) {
+                SimpleToast.show('OTP Resent')
+            } else if (response.status === 401) {
+                SimpleToast.show(resendCodeResult?.errors?.user_authentication)
+            } else {
+                setIsLoading(false)
+                SimpleToast.show("Something went wrong. " + resendCodeResult.message)
+            }
+
+        } catch (error) {
+            setIsLoading(false)
+            console.log("resendCode-error", error);
+        }
+
+
+
+    };
+
+    useEffect(() => {
+        timerFunc()
+    }, [])
 
     return (
         <SafeAreaView style={styles.mainContainer}>
@@ -97,7 +155,10 @@ const OTP = ({ navigation, route }) => {
                         source={Images.Logo}
                         style={styles.loginIcon}
                     />
-                    <Text style={styles.Verify}>{'Verify OTP'}</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={styles.Verify}>{'Verify OTP'}</Text>
+                        <Text style={styles.credentails}>{timer > 0 ? timer : ''}</Text>
+                    </View>
                     <Text style={styles.credentails}>{`Please enter the code below, we sent on your phone`}</Text>
 
                     <OTPInput
@@ -113,13 +174,48 @@ const OTP = ({ navigation, route }) => {
                         onPress={() => verifyOTP()}
                     />
 
+                    {
+                        timer == 0 &&
+
+                        <AppButton
+                            label={"RESEND OTP"}
+                            style={[styles.btnStyle, { backgroundColor: colors.Dark }]}
+                            onPress={() => {
+                                resendCode()
+                            }}
+                            labelStyle={styles.label}
+                        // loading={loading}
+                        />
+                    }
+
 
 
                 </KeyboardAwareScrollView>
 
             </View>
 
-
+            <AlertModal
+                visible={isModalVisible}
+                onRequestClose={() => {
+                    setIsModalVisible(false)
+                    Route?.name === 'SignIn' ?
+                        (
+                            setTimeout(() => {
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{ name: 'HomeStack' }],
+                                })
+                            }, 300)
+                        )
+                        :
+                        (
+                            setTimeout(() => {
+                                navigation.replace('SignIn')
+                            }, 200)
+                        )
+                }}
+                msg={Route?.name === 'SignIn' ? 'Your number is verified' : 'Your account has been created'}
+            />
         </SafeAreaView>
 
 

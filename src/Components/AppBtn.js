@@ -8,15 +8,15 @@ import Loader from './Loader'
 
 const AppButton = (props) => {
 
-    const { style, gradient, onPress, labelStyle, label } = props
+    const { style, onPress, labelStyle, label } = props
     return (
-        
-            <TouchableOpacity
-                onPress={onPress}
-                activeOpacity={0.4}
-                style={[styles.mainContainer, style]} >
-                <Text style={[styles.btnText,labelStyle]}>{label}</Text>
-            </TouchableOpacity>
+
+        <TouchableOpacity
+            onPress={onPress}
+            activeOpacity={0.8}
+            style={[styles.mainContainer, style]} >
+            <Text style={[styles.btnText, labelStyle]}>{label}</Text>
+        </TouchableOpacity>
 
     )
 }

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
     },
     label: {
-        fontWeight: '500',
+        fontFamily:Fonts.Regular,
         fontSize: 16
     },
     haveAccount: {

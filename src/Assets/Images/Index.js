@@ -13,7 +13,9 @@ export const Images = {
     Add: require('./add.png'),
     FlashLight: require('./flashLight.png'),
     ChangeCamera: require('./changeCamera.png'),
-    CameraButton: require('./camerabutton.png')
+    CameraButton: require('./camerabutton.png'),
+    Verified: require('./verified.png'),
+    Cross: require('./cross.png'),
 }
 
 export default Images;

@@ -28,12 +28,12 @@ const Splash = ({ navigation }) => {
             dispatch(setSelectedServices([]))
             dispatch(setSelectedRoutes([]))
         }
-        catch(e){
+        catch (e) {
             dispatch(onLogout())
         }
 
-        
-        
+
+
 
         const mod = async () => {
 
@@ -42,7 +42,7 @@ const Splash = ({ navigation }) => {
             const req = await fetch('https://flexigig-api.herokuapp.com/api/v1/countries')
             const res = await req.json()
 
-            console.log(res?.data);
+            console.log("countries", res?.data);
             return res?.data
         }
 
@@ -58,13 +58,8 @@ const Splash = ({ navigation }) => {
                 navigation.replace('OnBoarding')
             }
         }).catch((err) => {
-            console.log('In Use Effect Catch of Splash');
-            console.log(err);
+            console.log('In Use Effect Catch of Splash', err);
             SimpleToast.show('There\'s a problem getting app data')
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Splash' }],
-            })
         })
 
 

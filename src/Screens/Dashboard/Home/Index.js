@@ -69,9 +69,8 @@ const Home = ({ navigation }) => {
                 try {
                     const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/personal_details', config)
                     const details = await response.json();
-                    console.log(details);
+                    console.log("personal details", details);
 
-                    
                     if (details?.error?.message === 'Invalid token') {
                         SimpleToast.show('Session Expired! Login Again')
                         setIsLoading(true)
@@ -129,9 +128,9 @@ const Home = ({ navigation }) => {
 
                             {
                                 (userDetails?.attributes) ?
-                                <Text style={styles.name}>{`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`}</Text>
-                                : 
-                                <></>
+                                    <Text style={styles.name}>{`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`}</Text>
+                                    :
+                                    <></>
                             }
 
                         </View>

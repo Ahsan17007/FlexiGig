@@ -11,9 +11,7 @@ import ForgotPassword from '../Screens/Auth/ForgotPassword/Index';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import OTP from '../Screens/Auth/OTP/Index';
-import AddInformation from '../Screens/AddInformation/Index';
-import AddKinInfo from '../Screens/AddInformation/AddKinInfo';
-import AddExperience from '../Screens/AddInformation/AddExperience';
+import ResetPassword from '../Screens/Auth/ResetPassword/Index';
 import Profile from '../Screens/Profile/Index';
 import ICamera from '../Screens/ICamera';
 
@@ -36,6 +34,7 @@ const MainStack = () => {
                 <Stack.Screen name="SignUp" component={SignUp} />
                 <Stack.Screen name="OTP" component={OTP} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
                 <Stack.Screen name="Profile" component={Profile} />
 

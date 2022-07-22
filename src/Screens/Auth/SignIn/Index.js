@@ -54,11 +54,46 @@ const SignIn = ({ navigation, route }) => {
 
     useEffect(() => {
         //console.log("countries list...", countries);
-        //console.log("Login Number from store...", loginNumber);
+        console.log("Login Number from store...", loginNumber);
         if (countryCode === '' || countryID === '') {
             setSelect(true)
         }
     }, [])
+
+    const resendCode = async () => {
+        const newNumber = countryCode.concat(phone)
+        try {
+            const login_data = {
+                phone_number: storagePhone.length > 0 ? storagePhone : newNumber,
+            };
+
+            const config = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(login_data)
+            };
+            const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/resend_code', config)
+            const resendCodeResult = await response.json();
+            console.log(response.status);
+            console.log({ resendCodeResult });
+            if (response.status === 200) {
+
+            } else if (response.status === 401) {
+                setIsLoading(false)
+                SimpleToast.show(resendCodeResult?.errors?.user_authentication)
+            } else {
+                setIsLoading(false)
+                SimpleToast.show("Something went wrong. " + resendCodeResult.message)
+            }
+
+        } catch (error) {
+            setIsLoading(false)
+            console.log("resendCode-error", error);
+        }
+
+
+
+    };
 
     const loginUser = async () => {
 
@@ -84,27 +119,35 @@ const SignIn = ({ navigation, route }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(login_data)
                 };
-                console.log('login-data');
-                console.log(login_data);
                 const response = await fetch('https://flexigig-api.herokuapp.com/api/v1/signin', config)
                 const loginResult = await response.json();
-                console.log("loginUser-response", loginResult);
-                console.log('In response code');
-                    console.log(response.status);
+                console.log(response.status);
+                console.log({ loginResult });
                 if (response.status === 200) {
-                    
-                    console.log('LoggedIn token: '+loginResult?.token);
-                    dispatch(userToken(loginResult?.token))
-                    dispatch(loggedInData(loginResult?.data))
-                    dispatch(loggedInNumber(phone ? newNumber : storagePhone))
-                    setIsLoading(false)
-                    SimpleToast.show("Login Successfull")
-                    setTimeout(() => {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'HomeStack' }],
-                        })
-                    }, 300);
+                    if (loginResult?.data?.verification_status === false) {
+                        setIsLoading(false)
+                        await resendCode(loginResult?.data?.id)
+                        setTimeout(() => {
+                            navigation.navigate('OTP',
+                                {
+                                    userId: loginResult?.data?.id,
+                                    userPhone: storagePhone.length > 0 ? storagePhone : newNumber,
+                                    route: route,
+                                })
+                        }, 300);
+                    } else {
+                        dispatch(userToken(loginResult?.token))
+                        dispatch(loggedInData(loginResult?.data))
+                        dispatch(loggedInNumber(phone ? newNumber : storagePhone))
+                        setIsLoading(false)
+                        SimpleToast.show("Login Successfull")
+                        setTimeout(() => {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'HomeStack' }],
+                            })
+                        }, 300);
+                    }
                 } else if (response.status === 401) {
                     setIsLoading(false)
                     SimpleToast.show(loginResult?.errors?.user_authentication)

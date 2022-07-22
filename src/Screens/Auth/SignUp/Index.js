@@ -20,7 +20,6 @@ import Loader from '../../../Components/Loader';
 import CountrySelector from '../../../Components/CountrySelector/Index'
 
 
-
 const SignUp = ({ navigation, route }) => {
 
     const { countries } = useSelector(state => state.CountriesList)
@@ -39,7 +38,7 @@ const SignUp = ({ navigation, route }) => {
     const passwordRef = useRef();
     const referalCodeRef = useRef();
 
-    const maxLengthPhone = (countryCode.length==4) ? 9 : ((countryCode.length==3) ? 10 : ((countryCode.length==2) ? 10 : 12))
+    const maxLengthPhone = (countryCode.length == 4) ? 9 : ((countryCode.length == 3) ? 10 : ((countryCode.length == 2) ? 10 : 12))
 
     useEffect(() => {
         if (countryCode === '' || countryID === '') {
@@ -53,7 +52,7 @@ const SignUp = ({ navigation, route }) => {
         setCountryCode(country?.attributes?.country_code)
         setCountryID(country?.id)
         console.log(countryID);
-        
+
     }
 
     const registerUser = async () => {
@@ -86,10 +85,16 @@ const SignUp = ({ navigation, route }) => {
                 console.log("registerUser-response", registerResult);
                 if (response.status === 200) {
                     setIsLoading(false)
-                    SimpleToast.show("Account created successfully")
                     setTimeout(() => {
-                        navigation.navigate('OTP', { userId: registerResult?.data?.id, userPhone: phoneNumber })
+                        navigation.navigate('OTP',
+                            {
+                                userId: registerResult?.data?.id,
+                                userPhone: phoneNumber
+                            })
                     }, 300);
+                    setPhone('')
+                    setPassword('')
+                    setReferalCode('')
                 } else if (response.status === 401) {
                     setIsLoading(false)
                     SimpleToast.show(registerResult?.error?.message)
@@ -153,15 +158,15 @@ const SignUp = ({ navigation, route }) => {
                             <View style={{ justifyContent: 'center' }}>
 
                                 <CountrySelector data={countries}
-                                onCountryItemClick={(data) => {
-                                    onCountrySelect(data) 
-                                    
-                                }} 
-                                firstCountry = {(data) => {
-                                    onCountrySelect(data)
-                                }}
-                                select = {select}
-                                setSelect = {setSelect}/>
+                                    onCountryItemClick={(data) => {
+                                        onCountrySelect(data)
+
+                                    }}
+                                    firstCountry={(data) => {
+                                        onCountrySelect(data)
+                                    }}
+                                    select={select}
+                                    setSelect={setSelect} />
 
                             </View>
 
@@ -190,7 +195,7 @@ const SignUp = ({ navigation, route }) => {
                                         passwordRef.current.focus()
                                     }}
                                     keyboardType={'phone-pad'}
-                                    maxLength = {maxLengthPhone}
+                                    maxLength={maxLengthPhone}
                                     style={{ ...styles.credentails, textAlignVertical: 'center', height: '100%', borderBottomColor: 'transparent', borderBottomWidth: 0 }}
                                 />
                             </View>
