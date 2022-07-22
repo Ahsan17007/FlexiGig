@@ -54,12 +54,12 @@ const InputField =
           justifyContent: multiline ? 'flex-start' : 'center'
         }]}>
           <TextInput
-            style={{ fontSize: 14, fontFamily: Fonts.Light, color:colors.Dark, placeholderTextColor:colors.Grey }}
+            style={{ fontSize: 14, fontFamily: Fonts.Light, color:colors.Dark }}
             placeholder={placeholder}
             value={value}
             onChangeText={onChangeText}
             secureTextEntry={password}
-            placeholderTextColor={'gray'}
+            placeholderTextColor={colors.Grey}
             autoCapitalize={autoCapitalize}
             keyboardType={keyBoardType}
             returnKeyType={returnKeyType}
@@ -69,6 +69,7 @@ const InputField =
             ref={fieldRef}
             blurOnSubmit={false}
             maxLength={maxLength}
+          
           />
         </View>
 

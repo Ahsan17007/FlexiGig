@@ -16,6 +16,7 @@ export const Images = {
     CameraButton: require('./camerabutton.png'),
     Verified: require('./verified.png'),
     Cross: require('./cross.png'),
+    CrossRound: require('./crossRound.png')
 }
 
 export default Images;
