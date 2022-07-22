@@ -19,7 +19,7 @@ import Fonts from '../Assets/Fonts/Index';
 
 const Project = (props) => {
 
-    const { Item, navigation, username } = props
+    const { Item, navigation, username, showBtns } = props
 
     const [textShown, setTextShown] = useState(false);
     const [lengthMore, setLengthMore] = useState(false);
@@ -49,7 +49,12 @@ const Project = (props) => {
             </View>
             <TouchableOpacity
                 activeOpacity={0.4}
-                onPress={() => navigation.navigate('ProjectDetails', { projectId: Item?.id, username: username })}
+                onPress={() => navigation.navigate('ProjectDetails',
+                    {
+                        projectId: Item?.id,
+                        username: username,
+                        showBtns: showBtns
+                    })}
                 style={{ alignSelf: 'flex-end' }}
             >
                 <Text style={{ fontSize: 12, color: colors.Secondary, marginTop: 5 }} >{'View Details'}</Text>

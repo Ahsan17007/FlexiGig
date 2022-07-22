@@ -28,6 +28,7 @@ const ProjectDetails = ({ navigation, route }) => {
 
     const Id = route?.params?.projectId
     const username = route?.params?.username
+    const showBtns = route?.params?.showBtns
 
 
     const [projectDetails, setProjectDetails] = useState('')
@@ -201,19 +202,22 @@ const ProjectDetails = ({ navigation, route }) => {
                                     </Text>
                                 </View>
 
-                                <View style={styles.BtnContainer}>
-                                    <TouchableOpacity style={styles.actionBtn}>
-                                        <Text style={styles.btnText}>
-                                            {'Dismiss'}
-                                        </Text>
-                                    </TouchableOpacity>
+                                {
+                                    showBtns &&
+                                    <View style={styles.BtnContainer}>
+                                        <TouchableOpacity style={styles.actionBtn}>
+                                            <Text style={styles.btnText}>
+                                                {'Dismiss'}
+                                            </Text>
+                                        </TouchableOpacity>
 
-                                    <TouchableOpacity style={styles.actionBtn}>
-                                        <Text style={styles.btnText}>
-                                            {'Join'}
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
+                                        <TouchableOpacity style={styles.actionBtn}>
+                                            <Text style={styles.btnText}>
+                                                {'Join'}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
                             </ScrollView>
                         </View>
                 }

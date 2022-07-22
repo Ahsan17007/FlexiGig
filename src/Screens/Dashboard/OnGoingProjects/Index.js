@@ -64,6 +64,7 @@ const OnGoingProjects = ({ navigation, route }) => {
                 navigation={navigation}
                 Item={item}
                 username={username}
+                showBtns={true}
             />
         )
     }
