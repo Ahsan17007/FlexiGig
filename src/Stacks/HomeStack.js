@@ -10,6 +10,8 @@ import Inventory from '../Screens/Dashboard/Inventory/Index'
 import Academy from '../Screens/Dashboard/Academy/Index';
 import Menu from '../Screens/Dashboard/Menu/Index'
 import OnGoingProjects from '../Screens/Dashboard/OnGoingProjects/Index';
+import ActiveProjects from '../Screens/Dashboard/ActiveProjects/Index';
+import PastProjects from '../Screens/Dashboard/PastProjects/Index';
 import ProjectDetails from '../Screens/Dashboard/ProjectDetails.js/Index';
 import Images from '../Assets/Images/Index';
 import colors from '../Assets/Colors/Index';
@@ -43,6 +45,14 @@ const HomeStackScreens = () => {
             <HomeScreenStack.Screen
                 options={{
                     headerShown: false
+                }} name={'ActiveProjects'} component={ActiveProjects} />
+            <HomeScreenStack.Screen
+                options={{
+                    headerShown: false
+                }} name={'PastProjects'} component={PastProjects} />
+            <HomeScreenStack.Screen
+                options={{
+                    headerShown: false
                 }} name={'ProjectDetails'} component={ProjectDetails} />
 
 
@@ -51,8 +61,8 @@ const HomeStackScreens = () => {
             <HomeScreenStack.Screen name="AddKinInfo" component={AddKinInfo} />
             <HomeScreenStack.Screen name="AddExperience" component={AddExperienceScreen} />
 
-            
-                
+
+
         </HomeScreenStack.Navigator>
     )
 }

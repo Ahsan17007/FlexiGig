@@ -5,6 +5,7 @@ import { CountriesListReducer } from './CountriesListReducer'
 import { LoginNumberReducer } from './LoginNumberReducer';
 import { DocFileReducer } from './DocFileReducer'
 import { ServicesRoutesSelectionReducer } from './ServicesRoutesSelectionReducer'
+import { ProjectsReducer } from './ProjectListReducer';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   CountriesList: CountriesListReducer,
   LoginNumber: LoginNumberReducer,
   DocFileReducer: DocFileReducer,
-  SerRouSel: ServicesRoutesSelectionReducer
+  SerRouSel: ServicesRoutesSelectionReducer,
+  Projects: ProjectsReducer,
 });
 
 export default rootReducer;

@@ -89,7 +89,11 @@ const ProjectDetails = ({ navigation, route }) => {
 
                         <View style={{ marginLeft: 12 }}>
                             <Text style={styles.welcomeText}>{'Welcome'}</Text>
-                            <Text style={styles.name}>{username}</Text>
+                            {username ?
+                                <Text style={styles.name}>{username}</Text>
+                                :
+                                <></>
+                            }
                         </View>
                     </View>
                     <TouchableOpacity

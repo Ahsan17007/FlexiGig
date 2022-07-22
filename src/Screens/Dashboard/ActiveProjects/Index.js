@@ -19,33 +19,15 @@ import Project from '../../../Components/Project'
 import SimpleToast from 'react-native-simple-toast'
 
 
-const projects = [
-    {
-        id: '1',
-        jobTitle: 'Inventory Management for a store and its maintainance',
-        date: '07 July, 2022'
-    },
-    {
-        id: '2',
-        jobTitle: 'Develop App',
-        date: '07 July, 2022'
-    },
-    {
-        id: '3',
-        jobTitle: 'Bug Fixes',
-        date: '07 July, 2022'
-    },
-
-]
 
 
 
 
-const OnGoingProjects = ({ navigation, route }) => {
+
+const ActiveProjects = ({ navigation, route }) => {
 
     const username = route?.params?.username
-
-    const { onGoing } = useSelector(state => state.Projects)
+    const { active } = useSelector(state => state.Projects)
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -55,8 +37,6 @@ const OnGoingProjects = ({ navigation, route }) => {
         }, 2000);
     }, [])
 
-
-    const { token } = useSelector(state => state.Auth)
 
     const renderItem = ({ item }) => {
         return (
@@ -107,7 +87,7 @@ const OnGoingProjects = ({ navigation, route }) => {
                 </View>
 
                 <FlatList
-                    data={onGoing}
+                    data={active}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={item => item.id}
                     renderItem={(item) => renderItem(item)}
@@ -136,4 +116,4 @@ const OnGoingProjects = ({ navigation, route }) => {
     )
 }
 
-export default OnGoingProjects;
+export default ActiveProjects;

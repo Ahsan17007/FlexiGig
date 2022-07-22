@@ -11,13 +11,14 @@ import {
 
 import Loader from '../../../Components/Loader'
 import { useSelector, useDispatch } from 'react-redux'
-import { onLogout } from '../../../Redux/Actions/HasSession'
+import SimpleToast from 'react-native-simple-toast'
 
 import styles from './Styles'
 import Images from '../../../Assets/Images/Index'
 import EarningHistory from '../../../Components/EarningHistory'
 import AddDetailsOptionPopup from '../../../Components/AddDetailsOptionsPopup'
-import SimpleToast from 'react-native-simple-toast'
+import { onLogout } from '../../../Redux/Actions/HasSession'
+import { onGoing, Past, Active } from '../../../Redux/Actions/ProjectsList'
 
 
 const earningHistory = [
@@ -51,11 +52,62 @@ const Home = ({ navigation }) => {
 
     const [visibility, setVisibility] = useState([true, false])
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [userDetails, setUserDetails] = useState(null)
+    const [totalOnGoing, setTotalOnGoing] = useState('')
+    const [totalActive, setTotalActive] = useState('')
+    const [totalPast, setTotalPast] = useState('')
     const dispatch = useDispatch()
 
     const { token } = useSelector(state => state.Auth)
+
+    const getOnGoingProjects = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch('https://flexigig-api.herokuapp.com/api/v1/projects?status=ongoing', config)
+            .then(res => res.json())
+            .then(async (response) => {
+                // console.log("getOnGoingProjects-response", response);
+                setTotalOnGoing(response?.data?.length)
+                dispatch(onGoing(response?.data))
+                await getActiveProjects()
+                await getPastProjects()
+                setIsLoading(false)
+            }).catch(err => console.log("getOnGoingProjects-err", err))
+
+    }
+
+    const getActiveProjects = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch('https://flexigig-api.herokuapp.com/api/v1/projects?status=active', config)
+            .then(res => res.json())
+            .then(response => {
+                // console.log("getActiveProjects-response", response?.data);
+                setTotalActive(response?.data?.length)
+                dispatch(Active(response?.data))
+            }).catch(err => console.log("getActiveProjects-err", err))
+
+    }
+
+    const getPastProjects = async () => {
+        const config = {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }
+        await fetch('https://flexigig-api.herokuapp.com/api/v1/projects?status=past', config)
+            .then(res => res.json())
+            .then(response => {
+                // console.log("getPastProjects-response", response?.data);
+                setTotalPast(response?.data?.length)
+                dispatch(Past(response?.data))
+            }).catch(err => console.log("getOnGoingProjects-err", err))
+
+    }
 
     useEffect(() => {
         (async () => {
@@ -73,10 +125,9 @@ const Home = ({ navigation }) => {
 
                     if (details?.error?.message === 'Invalid token') {
                         SimpleToast.show('Session Expired! Login Again')
-                        setIsLoading(true)
                         dispatch(onLogout());
                         setTimeout(() => {
-                            setIsLoading(false)
+
                             navigation.reset({
                                 index: 0,
                                 routes: [{ name: 'SignIn' }],
@@ -87,7 +138,10 @@ const Home = ({ navigation }) => {
                     else {
                         setUserDetails(details?.data)
                         if (details?.data == null) {
-                            setVisibility([false, true])
+                            if (!isLoading) {
+                                setVisibility([false, true])
+
+                            }
                         }
                     }
 
@@ -97,6 +151,11 @@ const Home = ({ navigation }) => {
             }
 
         })()
+    }, [isLoading])
+
+    useEffect(() => {
+        getOnGoingProjects()
+
     }, [])
 
     const renderItem = ({ item }) => {
@@ -147,36 +206,39 @@ const Home = ({ navigation }) => {
                 <View style={[styles.recordsContainer]}>
                     <Text style={styles.recordTitle}>{'Projects'}</Text>
                     <View style={styles.projectsContainer}>
-                        {/* <View style={{ alignItems: 'center' }}>
+                        <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity
                                 activeOpacity={0.4}
-                                onPress={() => navigation.navigate('OnGoingProjects', { username: `${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}` })}
+                                onPress={() => navigation.navigate('OnGoingProjects', { username: userDetails?.attributes ? (`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`) : '' })}
                                 style={styles.noOfProjectsContainer}>
-                                <Text style={styles.noOfProjects}>{'5'}</Text>
+                                <Text style={styles.noOfProjects}>{totalOnGoing}</Text>
                             </TouchableOpacity>
-                            <Text style={styles.projectCat}>{'Ongoing'}</Text>
-                        </View> */}
-
-                        <View style={{ alignItems: 'center' }}>
-                            <View style={styles.noOfProjectsContainer}>
-                                <Text style={styles.noOfProjects}>{'5'}</Text>
-                            </View>
                             <Text style={styles.projectCat}>{'Ongoing'}</Text>
                         </View>
 
+
                         <View style={{ alignItems: 'center' }}>
-                            <View style={styles.noOfProjectsContainer}>
-                                <Text style={styles.noOfProjects}>{'2'}</Text>
-                            </View>
+                            <TouchableOpacity
+                                activeOpacity={0.4}
+                                style={styles.noOfProjectsContainer}
+                                onPress={() => navigation.navigate('ActiveProjects', { username: userDetails?.attributes ? (`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`) : '' })}
+                            >
+                                <Text style={styles.noOfProjects}>{totalActive}</Text>
+                            </TouchableOpacity>
                             <Text style={styles.projectCat}>{'Active'}</Text>
                         </View>
 
                         <View style={{ alignItems: 'center' }}>
-                            <View style={styles.noOfProjectsContainer}>
-                                <Text style={styles.noOfProjects}>{'4'}</Text>
-                            </View>
+                            <TouchableOpacity
+                                activeOpacity={0.4}
+                                style={styles.noOfProjectsContainer}
+                                onPress={() => navigation.navigate('PastProjects', { username: userDetails?.attributes ? (`${userDetails?.attributes?.firstname} ${userDetails?.attributes?.surname}`) : '' })}
+                            >
+                                <Text style={styles.noOfProjects}>{totalPast}</Text>
+                            </TouchableOpacity>
                             <Text style={styles.projectCat}>{'Past'}</Text>
                         </View>
+
                     </View>
                 </View>
 
@@ -251,22 +313,29 @@ const Home = ({ navigation }) => {
     return (
         <View style={styles.mainContainer}>
 
-            <View style={styles.innerContainer}>
-                <FlatList
-                    data={earningHistory}
-                    ListHeaderComponent={listHeaderComponent}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={(item) => renderItem(item)}
-                    style={{ width: '100%' }}
-                    contentContainerStyle={{ paddingBottom: 20, paddingTop: 30 }}
-                    ItemSeparatorComponent={() =>
-                        <View style={{ height: 12 }}>
+            {
+                isLoading ?
+                    <Loader visible={isLoading} />
+                    :
+                    <View style={styles.innerContainer}>
+                        <FlatList
+                            data={earningHistory}
+                            ListHeaderComponent={listHeaderComponent}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={item => item.id}
+                            renderItem={(item) => renderItem(item)}
+                            style={{ width: '100%' }}
+                            contentContainerStyle={{ paddingBottom: 20, paddingTop: 30 }}
+                            ItemSeparatorComponent={() =>
+                                <View style={{ height: 12 }}>
 
-                        </View>
-                    }
-                />
-            </View>
+                                </View>
+                            }
+                        />
+                    </View>
+            }
+
+
 
             <AddDetailsOptionPopup
                 visibility={visibility[1]}
@@ -274,6 +343,8 @@ const Home = ({ navigation }) => {
                 onContinueBtnClick={() => {
                     navigation.navigate('AddInformation')
                 }} />
+
+
         </View>
     )
 }
